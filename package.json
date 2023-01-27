@@ -1,0 +1,19 @@
+{
+  "name": "gp-ta",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kennyk22/GP-TA.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kennyk22/GP-TA/issues"
+  },
+  "homepage": "https://github.com/Kennyk22/GP-TA#readme"
+}
