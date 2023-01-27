@@ -1,8 +1,11 @@
 import React from 'react'
+import GPTA from './GPTA'
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div>
+      <GPTA/>
+    </div>
   )
 }
 
