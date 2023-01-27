@@ -3,13 +3,23 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {Auth0Provider} from '@auth0/auth0-react'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <Auth0Provider
+      domain={'dev-nuxp1yqmbgbv4efn.us.auth0.com'}
+      clientId={'bZp5c32OcQPovJab7resxLMaVnaB9CI5'}
+      authorizationParams={{
+        redirect_uri: window.location.origin,
+        audience: "gpt-tapi.com",
+        scope: 'openid profile email'
+      }}>
+      <App />
+    </Auth0Provider>
   </React.StrictMode>
 );
 

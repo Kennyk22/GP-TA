@@ -1,6 +1,29 @@
 import React from 'react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function GPTA() {
+  
+  const {isAuthenticated, getAccessTokenSilently} = useAuth0()
+
+
+  const authRequest = async () => {
+    try {
+      console.log(isAuthenticated)
+      
+      const unresponse = await fetch('http://localhost:3005/test')
+      const text = await unresponse.json()
+      console.log(text)
+      const token = await getAccessTokenSilently()
+      const response = await fetch('http://localhost:3005/testAuth', {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      console.log(await response.json())
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
 <section className="text-gray-600 body-font">
   <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -10,9 +33,9 @@ function GPTA() {
       </h1>
       <p className="mb-8 leading-relaxed">Import your document and get accurate notes </p>
           <div className="flex justify-center">
-<input placeholder="insert text here" type="text" className="inline-flex text-white bg-gray border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg"/>
+<input placeholder="insert text here" type="text" className="inline-flex text-black bg-gray border-0 py-2 px-6 focus:outline-none hover:bg-gray-400 rounded text-lg "/>
 <br/>
-  <button className="inline-flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
+  <button onClick={() => authRequest()} className="inline-flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
       </div>
     </div>
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
