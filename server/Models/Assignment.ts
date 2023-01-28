@@ -3,7 +3,7 @@ import { sequelize } from './index'
 
 interface AssignmentAttributes {
     id: number;
-    ownerId: number;
+    ownerId: string;
     text: string;
     response: string;
 }
@@ -14,7 +14,7 @@ export class Assignment
     extends Model<AssignmentAttributes, AssignmentCreationAttributes>
     implements AssignmentAttributes {
         public id!: number;
-        public ownerId!: number;
+        public ownerId!: string;
         public text!: string;
         public response!: string;
 
@@ -29,7 +29,7 @@ export class Assignment
                 primaryKey:true
             },
             ownerId: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING,
                 allowNull: false
             },
             text: {
