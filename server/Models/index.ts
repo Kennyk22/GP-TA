@@ -11,6 +11,6 @@ export const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST ?? "localhost",
         dialect: (process.env.DB_DIALECT as Dialect) ?? "postgres",
-        logging: true,
+        logging: false,
     }
 );

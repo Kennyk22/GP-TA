@@ -5,12 +5,14 @@ import { OpenAIApi, Configuration } from 'openai'
 import TeacherFolder from './TeacherFolder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { addFeedback } from '../Services/services';
-
+import {CircleLoader} from 'react-spinners'
 
 function GPTA() {
 
-  const [result, setResult] = useState("");
+  const [highlightResult, setHighlightResult] = useState("");
+  const [listResult, setListResult] = useState<JSX.Element[]>([])
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
 
   const {isAuthenticated, getAccessTokenSilently} = useAuth0()
@@ -19,21 +21,43 @@ function GPTA() {
 
     const token = await getAccessTokenSilently()
     try {
-      //calls to server to get ai response
-    //then post that response on the database using the post request from services
-    const postResult = await addFeedback(input, token)
-    //then we can also display the result using the AIresponse
-    console.log('hi from the client before i get the text')
-    console.log(postResult)
-    setResult(postResult)
+      setLoading(true)
+      //calls to server to get ai response then post that response on the database using the post request from services
+      const postResult = await addFeedback(input, token)
+      //then we can also display the result using the AIresponse
+      const Results = postResult.text.split('-+-')
+      const firstAnswer = Results[0]
+      const secondAnswer = Results[1]
+      setHighlightResult(formatAnswer(firstAnswer))
+      setListResult(formatText(secondAnswer))
+      setLoading(false)
     } catch (error) {
       console.log(error)
+      setLoading(false)
     }
-
-
   }
 
+  // changes the color of the mistakes to red
+  function formatAnswer( text:string ) {
+    const regex = /\*(.*?)\*/g;
+    const result = text.replace(regex, "<span style='color: red;'>$1</span>");
+    return result
+  }
 
+const formatText = (text:string) => {
+    let lines = text.split("\n");
+    let result:JSX.Element[] = [];
+    lines.forEach(line => {
+      let [bullet, arrow] = line.split("->");
+      let newLine = <>{bullet}<span style={{ color: "green" }}>{arrow}</span></>;
+      result.push(newLine);
+      result = result[0].props.children[0].split("\n")
+      console.log("this is my result", result)
+    });
+    return result
+  }
+
+  
   return (
     <section className="text-gray-600 body-font">
       <p>{isAuthenticated ? <p>you are logged in</p> : <p>you are not logged in</p> }</p>
@@ -54,10 +78,13 @@ function GPTA() {
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
           <img className="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600/adadad/070708&text=el+coche+es+no+bonito+y+a+mi+gustar+mucho+las+palomitas.+La+casa+ser+grande+y+mi+gato+muy+travieso" />
           <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
-          <ul>
-            <li>{result}</li>
-
-          </ul>
+          { !loading ? 
+            <ul>
+              <li dangerouslySetInnerHTML={{ __html: highlightResult }}></li>
+              {listResult.map((element) => <li dangerouslySetInnerHTML={{ __html: JSON.stringify(element) }}></li>)}
+          </ul> :
+          <CircleLoader color="#5f5f5f" />
+          }
     </div>
   </div>
 </section>  )
