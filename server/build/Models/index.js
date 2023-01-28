@@ -31,5 +31,5 @@ dotenv.config();
 exports.sequelize = new sequelize_1.Sequelize((_a = process.env.DB_NAME) !== null && _a !== void 0 ? _a : "my_db", (_b = process.env.DB_USER) !== null && _b !== void 0 ? _b : "postgres", (_c = process.env.DB_PASSWORD) !== null && _c !== void 0 ? _c : "passsword", {
     host: (_d = process.env.DB_HOST) !== null && _d !== void 0 ? _d : "localhost",
     dialect: (_e = process.env.DB_DIALECT) !== null && _e !== void 0 ? _e : "postgres",
-    logging: true,
+    logging: false,
 });

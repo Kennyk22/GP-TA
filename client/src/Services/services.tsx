@@ -10,8 +10,8 @@ const addFeedback = async (feedbackText:string, token:string) => {
             authorization : `Bearer ${token}`
         },
         body: JSON.stringify({content: feedbackText})
-    }).then(response => {
-        const result = response.json()
+    }).then(async response => {
+        const result = await response.json()
         console.log('this is the response.json', result)
         return result
    })

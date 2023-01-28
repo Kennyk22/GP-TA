@@ -14,7 +14,7 @@ function Dashboard() {
     <div>
       <GPTA />
       <Routes>
-      <Route path="/teacherFolder" element={isAuthenticated ? <TeacherFolder /> : <LoginPage/>} />
+        <Route path="/teacherFolder" element={isAuthenticated ? <TeacherFolder /> : <LoginPage/>} />
         <Route path="/teacherNotes" element={isAuthenticated ? <TeacherNotes /> : <LoginPage />}/>
       </Routes>
     </div>

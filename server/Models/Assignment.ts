@@ -33,11 +33,11 @@ export class Assignment
                 allowNull: false
             },
             text: {
-                type: new DataTypes.STRING,
+                type: new DataTypes.STRING(1028),
                 allowNull: false
             },
             response: {
-                type: new DataTypes.STRING,
+                type: new DataTypes.STRING(1028),
                 allowNull:false
             }
         },
