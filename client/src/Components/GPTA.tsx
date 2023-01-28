@@ -1,7 +1,10 @@
 import React from 'react'
 import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
-import {OpenAIApi, Configuration} from 'openai'
+import { OpenAIApi, Configuration } from 'openai'
+import TeacherFolder from './TeacherFolder';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+
 
 
 function GPTA() {
@@ -13,9 +16,9 @@ function GPTA() {
 
   const openai = new OpenAIApi(configuration);
 
-  
 
-  
+
+
   const [result, setResult] = useState("");
   const [input, setInput] = useState("");
 
@@ -37,7 +40,10 @@ function GPTA() {
 
 
   return (
-<section className="text-gray-600 body-font">
+    <section className="text-gray-600 body-font">
+
+  <Link to="/teacherFolder"><button className='bg-white m-1'>take me to teacher folder</button></Link><br />
+  <Link to="/teacherNotes"><button className='bg-white'>take me to teacher Notes</button></Link>
   <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
     <div className="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
       <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
@@ -55,7 +61,7 @@ function GPTA() {
           <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
           <ul>
             <li>{result}</li>
-            
+
           </ul>
     </div>
   </div>
@@ -68,7 +74,7 @@ export default GPTA
   //const authRequest = async () => {
   //   try {
   //     console.log(isAuthenticated)
-      
+
   //     const unresponse = await fetch('http://localhost:3005/test')
   //     const text = await unresponse.json()
   //     console.log(text)

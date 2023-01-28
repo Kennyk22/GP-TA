@@ -1,5 +1,11 @@
 import React from 'react'
-import {GiRainbowStar} from 'react-icons/gi'
+import { GiRainbowStar } from 'react-icons/gi'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import About from './About'
+import LoginPage from './LoginPage'
+import Pricing from './Pricing'
+import Dashboard from './Dashboard'
+
 
 function Header() {
   return (
@@ -12,8 +18,8 @@ function Header() {
       <span className="ml-3 text-xl">GP-TA</span>
     </a>
     <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-      <a className="mr-5 hover:text-yellow-400">About</a>
-      <a className="mr-5 hover:text-yellow-400">Pricing</a>
+     <Link to="/about"><a className="mr-5 hover:text-yellow-400">About</a></Link>
+      <Link to="/pricing"><a className="mr-5 hover:text-yellow-400">Pricing</a></Link>
 
     </nav>
     <button className="inline-flex items-center CPorange CPTextBlack border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">Log in
@@ -21,7 +27,10 @@ function Header() {
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
     </button>
-  </div>
+      </div>
+     
+
+
 </header>  )
 }
 
