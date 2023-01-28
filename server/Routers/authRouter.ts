@@ -1,9 +1,11 @@
 import Router from 'koa-router'
-import testControllers from '../Controllers/testControllers'
+import AssignmentController from '../Controllers/AssignmentControllers'
 
 const router = new Router()
 
+router.post('/user', AssignmentController.userAdd)
+router.post('/addFeedback', AssignmentController.aiPost)
 
-router.get('/testAuth', testControllers.testAuth)
+
 
 export default router

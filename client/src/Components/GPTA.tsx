@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import { OpenAIApi, Configuration } from 'openai'
 import TeacherFolder from './TeacherFolder';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom' 
+import { addFeedback } from '../Services/services';
 
 
 function GPTA() {
@@ -17,26 +17,29 @@ function GPTA() {
   const openai = new OpenAIApi(configuration);
 
 
-
-
   const [result, setResult] = useState("");
   const [input, setInput] = useState("");
 
-  const checkGrammar = async () => {
-    const response = await openai.createCompletion({
-      model: "text-davinci-003",
-      prompt: "Correct this to standard English:\n\nShe no went to the market." + input,
-      temperature: 0,
-      max_tokens: 60,
-      top_p: 1.0,
-      frequency_penalty: 0.0,
-      presence_penalty: 0.0,
-    });
-
-    setResult(JSON.stringify(response.data.choices[0].text))
-}
 
   const {isAuthenticated, getAccessTokenSilently} = useAuth0()
+
+  const checkGrammar = async () => {
+
+    const token = await getAccessTokenSilently()
+    try {
+      //calls to server to get ai response
+    //then post that response on the database using the post request from services
+    const postResult = await addFeedback(input, token)
+    //then we can also display the result using the AIresponse
+      console.log('hi from the client before i get the text')
+    console.log(postResult)
+    setResult(postResult)
+    } catch (error) {
+      console.log(error)
+    }
+    
+
+  }
 
 
   return (

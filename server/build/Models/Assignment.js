@@ -13,7 +13,7 @@ Assignment.init({
         primaryKey: true
     },
     ownerId: {
-        type: sequelize_1.DataTypes.INTEGER,
+        type: sequelize_1.DataTypes.STRING,
         allowNull: false
     },
     text: {
