@@ -23,6 +23,7 @@ exports.default = {
             //creates config and calls ai to make feedback
             const body = ctx.request.body;
             const content = body.content;
+            console.log("this is the teacher input", content);
             const configuration = new openai_1.Configuration({
                 apiKey: process.env.API_KEY,
             });
@@ -37,19 +38,18 @@ exports.default = {
                 presence_penalty: 0.0,
             });
             const feedback = JSON.stringify(aiResponse.data.choices[0].text);
-            console.log(feedback);
-            //calls auth0 for usertoken and extracts email
-            const accessToken = yield ctx.get('authorization').split(' ')[1];
-            const authResponse = yield fetch('https://dev-nuxp1yqmbgbv4efn.us.auth0.com/userinfo', {
-                headers: {
-                    authorization: `Bearer ${accessToken}`
-                }
-            });
-            const userInfo = yield authResponse.json();
-            const userId = userInfo.email;
-            console.log("userid ===", userId);
-            //
-            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userId), text: JSON.stringify(ctx.request.body), response: feedback });
+            console.log("this is the feedback from openai", feedback);
+            // calls auth0 for usertoken and extracts email
+            // const accessToken = await ctx.get('authorization').split(' ')[1]
+            // const authResponse = await fetch('https://dev-nuxp1yqmbgbv4efn.us.auth0.com/userinfo', {
+            //     headers: {
+            //         authorization: `Bearer ${accessToken}`
+            //     }
+            // });
+            // const userInfo:any = await authResponse.json()
+            // const userId = userInfo.email
+            // console.log("userid or email ===", userId)
+            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify('userId'), text: JSON.stringify(ctx.request.body), response: feedback });
             console.log(response);
             ctx.body = response.dataValues.response;
         }

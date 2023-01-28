@@ -3,19 +3,11 @@ import { useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import { OpenAIApi, Configuration } from 'openai'
 import TeacherFolder from './TeacherFolder';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom' 
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { addFeedback } from '../Services/services';
 
 
 function GPTA() {
-
-  const configuration = new Configuration({
-    // apiKey: process.env.OPENAI_API_KEY,
-    apiKey: "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",
-  });
-
-  const openai = new OpenAIApi(configuration);
-
 
   const [result, setResult] = useState("");
   const [input, setInput] = useState("");
@@ -31,20 +23,20 @@ function GPTA() {
     //then post that response on the database using the post request from services
     const postResult = await addFeedback(input, token)
     //then we can also display the result using the AIresponse
-      console.log('hi from the client before i get the text')
+    console.log('hi from the client before i get the text')
     console.log(postResult)
     setResult(postResult)
     } catch (error) {
       console.log(error)
     }
-    
+
 
   }
 
 
   return (
     <section className="text-gray-600 body-font">
-
+      <p>{isAuthenticated ? <p>you are logged in</p> : <p>you are not logged in</p> }</p>
   <Link to="/teacherFolder"><button className='bg-white m-1'>take me to teacher folder</button></Link><br />
   <Link to="/teacherNotes"><button className='bg-white'>take me to teacher Notes</button></Link>
   <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
