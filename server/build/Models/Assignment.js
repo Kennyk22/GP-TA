@@ -17,11 +17,11 @@ Assignment.init({
         allowNull: false
     },
     text: {
-        type: new sequelize_1.DataTypes.STRING(1028),
+        type: new sequelize_1.DataTypes.TEXT,
         allowNull: false
     },
     response: {
-        type: new sequelize_1.DataTypes.STRING(1028),
+        type: new sequelize_1.DataTypes.TEXT,
         allowNull: false
     }
 }, {
