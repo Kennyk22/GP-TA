@@ -32,6 +32,7 @@ export default {
             const userEmail = getAuth0Email(ctx)
 
             const response = await Assignment.create({ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback})
+            console.log(response.dataValues.response)
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
             console.log(error)

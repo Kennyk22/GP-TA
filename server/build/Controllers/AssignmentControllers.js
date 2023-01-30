@@ -38,6 +38,7 @@ exports.default = {
             //calls auth0 for usertoken and extracts email
             const userEmail = (0, Helpers_1.getAuth0Email)(ctx);
             const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback });
+            console.log(response.dataValues.response);
             ctx.body = { text: response.dataValues.response };
         }
         catch (error) {
