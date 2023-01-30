@@ -6,11 +6,13 @@ import TeacherFolder from './TeacherFolder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { addFeedback } from '../Services/services';
 import {CircleLoader} from 'react-spinners'
+import JSZip from 'jszip'
+
 
 
 function GPTA() {
 
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<string>("")
   const [highlightResult, setHighlightResult] = useState("");
   const [listResult, setListResult] = useState<JSX.Element[]>([])
   const [input, setInput] = useState("");
@@ -18,14 +20,17 @@ function GPTA() {
 
   const {isAuthenticated, getAccessTokenSilently} = useAuth0()
 
+
   const ref = useRef(null)
-  const checkGrammar = async () => {
+
+  const checkGrammar = async (type?: string) => {
+
 
     const token = await getAccessTokenSilently()
     try {
       setLoading(true)
       //calls to server to get ai response then post that response on the database using the post request from services
-      const postResult = await addFeedback(input, token)
+      const postResult = await addFeedback(type === 'file' ? file : input, token)
       //then we can also display the result using the AIresponse
       const Results = postResult.text.split('-+-')
       const firstAnswer = Results[0]
@@ -49,6 +54,7 @@ function GPTA() {
     return result
   }
 
+
 const formatText = (text:any) => {
     const errorList = text.split('\\n').slice(2);
     console.log('errorList', errorList)
@@ -66,7 +72,36 @@ const formatText = (text:any) => {
   //   }
   // }, []);
 
+  const extractText = async (doc: File) => {
+    const zip = await JSZip.loadAsync(doc)
+    const xml = await zip.file("word/document.xml")?.async("text")
+    if (!xml) return
+    const matchedxml = xml.match(/<w:t(.*?)>(.*?)<\/w:t>/g)?.join('').replace(/<w:t(.*?)>|<\/w:t>/g, "")
+    console.log(matchedxml)
+    return matchedxml
   }
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newFile = event.target.files !== null ? event.target.files[0]: undefined
+    console.log(newFile)
+    if (!newFile) return
+    const docText: any = await extractText(newFile)
+    setFile(docText);
+  }
+
+//const formatText = (text:string) => {
+//    let lines = text.split("\n");
+//    let result:JSX.Element[] = [];
+//    lines.forEach(line => {
+//      let [bullet, arrow] = line.split("->");
+//      let newLine = <>{bullet}<span style={{ color: "green" }}>{arrow}</span></>;
+//      result.push(newLine);
+//      result = result[0].props.children[0].split("\n")
+//      console.log("this is my result", result)
+//    });
+//    return result
+
+//  }
 
 
 
@@ -86,10 +121,14 @@ const formatText = (text:any) => {
           <h1>Text here for development purposes</h1>
           <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p>
           <div className="flex justify-center">
-          <form action="submit">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload file</label>
-          <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
-          </form>
+          {/* works start */}
+          <div className= 'flex justify-center flex-col'>          
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload file</label>
+            <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="file_input_help" id="file_input" type="file" onChange={e => handleFileUpload(e)}/>
+            <p className="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">DOCX (MAX. 800x400px).</p>
+            <button type='submit' className="inline-flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg" onClick={() => checkGrammar('file')}>Submit File</button>
+          </div>
+          {/* work end */}
 <textarea placeholder="insert text here" onChange={e=>setInput(e.target.value)} className="inline-flex text-black bg-gray border-0 py-2 px-6 focus:outline-none hover:bg-gray-400 rounded text-lg "/>
 <br/>
             <button onClick={() => checkGrammar()} className="inline-flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>

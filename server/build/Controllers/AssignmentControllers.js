@@ -36,9 +36,10 @@ exports.default = {
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
             // const feedback = feedback1
             const feedback = feedback1 + "-+-" + feedback2;
-            //calls auth0 for usertoken and extracts email
-            // const userEmail = getAuth0Email(ctx)
-            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify('fakeEmailforTest'), text: JSON.stringify(content), response: feedback });
+
+            const userEmail = (0, Helpers_1.getAuth0Email)(ctx);
+            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback });
+            console.log(response.dataValues.response);
             ctx.body = { text: response.dataValues.response };
         }
         catch (error) {

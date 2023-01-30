@@ -30,9 +30,10 @@ export default {
             const feedback = feedback1 + "-+-" +feedback2
 
             //calls auth0 for usertoken and extracts email
-            // const userEmail = getAuth0Email(ctx)
+            const userEmail = getAuth0Email(ctx)
 
-            const response = await Assignment.create({ownerId: JSON.stringify('fakeEmailforTest'), text: JSON.stringify(content), response: feedback})
+            const response = await Assignment.create({ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback})
+
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
             console.log(error)
