@@ -9,6 +9,7 @@ import {CircleLoader} from 'react-spinners'
 
 function GPTA() {
 
+  const [file, setFile] = useState()
   const [highlightResult, setHighlightResult] = useState("");
   const [listResult, setListResult] = useState<JSX.Element[]>([])
   const [input, setInput] = useState("");
@@ -57,7 +58,7 @@ const formatText = (text:string) => {
     return result
   }
 
-  
+
   return (
     <section className="text-gray-600 body-font">
       <p>{isAuthenticated ? <p>you are logged in</p> : <p>you are not logged in</p> }</p>
@@ -70,15 +71,18 @@ const formatText = (text:string) => {
       </h1>
       <p className="mb-8 leading-relaxed">Import your document and get accurate notes </p>
           <div className="flex justify-center">
+          <form action="submit">
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="file_input">Upload file</label>
+          <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
+          </form>
 <textarea placeholder="insert text here" onChange={e=>setInput(e.target.value)} className="inline-flex text-black bg-gray border-0 py-2 px-6 focus:outline-none hover:bg-gray-400 rounded text-lg "/>
 <br/>
             <button onClick={() => checkGrammar()} className="inline-flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
       </div>
     </div>
     <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
-          <img className="object-cover object-center rounded" alt="hero" src="https://dummyimage.com/720x600/adadad/070708&text=el+coche+es+no+bonito+y+a+mi+gustar+mucho+las+palomitas.+La+casa+ser+grande+y+mi+gato+muy+travieso" />
           <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
-          { !loading ? 
+          { !loading ?
             <ul>
               <li dangerouslySetInnerHTML={{ __html: highlightResult }}></li>
               {listResult.map((element) => <li dangerouslySetInnerHTML={{ __html: JSON.stringify(element) }}></li>)}
