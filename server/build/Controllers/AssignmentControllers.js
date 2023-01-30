@@ -28,14 +28,15 @@ exports.default = {
             });
             const openai = new openai_1.OpenAIApi(configuration);
             //FIRST AI CALL
-            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("surround grammatical errors in this text with astrisks:" + content));
+            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("surround grammatical errors in this text with astrisks but do not correct them:" + content));
             const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text);
-            //SECOND AI CALL
-            const aiResponse2 = yield openai.createCompletion((0, Helpers_1.aiProp)("provide a bullet list of grammatical errors in this text:" + content));
+            // SECOND AI CALL
+            const aiResponse2 = yield openai.createCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation:" + content));
             const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text);
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
+            // const feedback = feedback1
             const feedback = feedback1 + "-+-" + feedback2;
-            //calls auth0 for usertoken and extracts email
+
             const userEmail = (0, Helpers_1.getAuth0Email)(ctx);
             const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback });
             console.log(response.dataValues.response);

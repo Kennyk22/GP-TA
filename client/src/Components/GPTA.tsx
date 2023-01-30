@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import { OpenAIApi, Configuration } from 'openai'
 import TeacherFolder from './TeacherFolder';
@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { addFeedback } from '../Services/services';
 import {CircleLoader} from 'react-spinners'
 import JSZip from 'jszip'
+
 
 
 function GPTA() {
@@ -17,10 +18,13 @@ function GPTA() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
 
-
   const {isAuthenticated, getAccessTokenSilently} = useAuth0()
 
+
+  const ref = useRef(null)
+
   const checkGrammar = async (type?: string) => {
+
 
     const token = await getAccessTokenSilently()
     try {
@@ -43,9 +47,30 @@ function GPTA() {
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
     const regex = /\*(.*?)\*/g;
-    const result = text.replace(regex, "<span style='color: red;'>$1</span>");
+    console.log('text', text)
+    text = text.slice(5)
+    const result = text.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
+    console.log('result', result)
     return result
   }
+
+
+const formatText = (text:any) => {
+    const errorList = text.split('\\n').slice(2);
+    console.log('errorList', errorList)
+    return errorList
+}
+
+
+  const HoverAndHighlight = (word:any) => {
+    console.log('refcurrent', ref.current)
+  //   console.log(word.className)
+  //     useEffect(() => {
+  //   const elements = ref.current ? ref.current.getElementsByClassName(word.className) : null;
+  //   for (let element of elements) {
+  //     element.style.color = "blue";
+  //   }
+  // }, []);
 
   const extractText = async (doc: File) => {
     const zip = await JSZip.loadAsync(doc)
@@ -64,22 +89,26 @@ function GPTA() {
     setFile(docText);
   }
 
-const formatText = (text:string) => {
-    let lines = text.split("\n");
-    let result:JSX.Element[] = [];
-    lines.forEach(line => {
-      let [bullet, arrow] = line.split("->");
-      let newLine = <>{bullet}<span style={{ color: "green" }}>{arrow}</span></>;
-      result.push(newLine);
-      result = result[0].props.children[0].split("\n")
-      console.log("this is my result", result)
-    });
-    return result
-  }
+//const formatText = (text:string) => {
+//    let lines = text.split("\n");
+//    let result:JSX.Element[] = [];
+//    lines.forEach(line => {
+//      let [bullet, arrow] = line.split("->");
+//      let newLine = <>{bullet}<span style={{ color: "green" }}>{arrow}</span></>;
+//      result.push(newLine);
+//      result = result[0].props.children[0].split("\n")
+//      console.log("this is my result", result)
+//    });
+//    return result
+
+//  }
+
+
+
 
 
   return (
-    <section className="text-gray-600 body-font">
+    <section ref={ref} className="text-gray-600 body-font">
       <p>{isAuthenticated ? <p>you are logged in</p> : <p>you are not logged in</p> }</p>
   <Link to="/teacherFolder"><button className='bg-white m-1'>take me to teacher folder</button></Link><br />
   <Link to="/teacherNotes"><button className='bg-white'>take me to teacher Notes</button></Link>
@@ -88,7 +117,9 @@ const formatText = (text:string) => {
       <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
         <br className="hidden lg:inline-block"/>and have it marked in seconds
       </h1>
-      <p className="mb-8 leading-relaxed">Import your document and get accurate notes </p>
+          <p className="mb-8 leading-relaxed">Import your document and get accurate notes </p>
+          <h1>Text here for development purposes</h1>
+          <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p>
           <div className="flex justify-center">
           {/* works start */}
           <div className= 'flex justify-center flex-col'>          
@@ -103,12 +134,21 @@ const formatText = (text:string) => {
             <button onClick={() => checkGrammar()} className="inline-flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
       </div>
     </div>
-    <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+
           <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
           { !loading ?
             <ul>
               <li dangerouslySetInnerHTML={{ __html: highlightResult }}></li>
-              {listResult.map((element) => <li dangerouslySetInnerHTML={{ __html: JSON.stringify(element) }}></li>)}
+              <br/>
+              <h1><b>Here is your feedback</b></h1>
+              <br/>
+              {listResult.map((element: any) => {
+                element = element.replace(/\\/g, '');
+                let mistakes = element.match(/\"\w+\"/g)
+                let [intro, solution] = element.split('should be')
+                element = intro + `should be <span class='${mistakes}' style='color: green'>" ${solution} "</span>`
+                return <li className={mistakes} onClick={(e) => HoverAndHighlight(e.target) } dangerouslySetInnerHTML = {{ __html: element }}></li>})}
           </ul> :
           <CircleLoader color="#5f5f5f" />
           }

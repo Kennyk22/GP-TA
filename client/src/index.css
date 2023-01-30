@@ -46,3 +46,12 @@ body {
 .CPTextDarkGrey {
   color: #333533
 }
+
+.resultWord{
+  background-color: yellow;
+}
+
+.textHighlight {
+  background-color: blue;
+  transition: background-color 0.3s ease;
+}
