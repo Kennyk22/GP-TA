@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
-import { OpenAIApi, Configuration } from 'openai'
 import TeacherFolder from './TeacherFolder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import { addFeedback } from '../Services/services';
@@ -9,7 +8,7 @@ import {CircleLoader} from 'react-spinners'
 import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
-import DropDown from './DropwDown';
+import DropDown from './DropDown';
 
 
 
@@ -97,7 +96,8 @@ const formatText = (text:any) => {
         <p>{isAuthenticated ? <p className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>{user?.name}</p> : <p>you are not logged in</p> }</p>
         <Link to="/teacherFolder"><button className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>take me to teacher Notes</button></Link>
-        <DropDown />
+        <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add assignment')}/>
+        <DropDown name = {'Students'} array= {['student1', 'student2', 'student3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add student')}/>
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
