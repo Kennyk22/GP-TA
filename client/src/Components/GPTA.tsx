@@ -9,8 +9,7 @@ import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
 import DropDown from './DropDown';
-
-
+import { getAllStudents } from '../Services/services';
 
 function GPTA() {
   const [type, setType] = useState(true)
@@ -19,13 +18,23 @@ function GPTA() {
   const [listResult, setListResult] = useState<JSX.Element[]>([])
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [allStudents, setAllStudents] = useState<[]>([])
 
   const {isAuthenticated, getAccessTokenSilently, user} = useAuth0()
 
+  useEffect(  ()=>{
+    if (isAuthenticated) {
+      getAllStudentsData()
+    }}, [isAuthenticated])
+
+    const getAllStudentsData = async () => {
+    const token:string = await getAccessTokenSilently()
+    const data = await getAllStudents(token);
+    setAllStudents(data)
+  }
+
 
   const checkGrammar = async () => {
-
-
     const token = await getAccessTokenSilently()
     try {
       setLoading(true)
@@ -43,6 +52,8 @@ function GPTA() {
       setLoading(false)
     }
   }
+
+
 
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
@@ -90,6 +101,8 @@ const formatText = (text:any) => {
     }
   }
 
+
+
   return (
     <section ref={myRef} className="text-gray-600 body-font">
       <div className='flex flex-row justify-around content-center'>
@@ -97,7 +110,7 @@ const formatText = (text:any) => {
         <Link to="/teacherFolder"><button className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>take me to teacher Notes</button></Link>
         <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add assignment')}/>
-        <DropDown name = {'Students'} array= {['student1', 'student2', 'student3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add student')}/>
+        <DropDown name = {'Students'} array= {['allStudents']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add student')}/>
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
@@ -112,7 +125,7 @@ const formatText = (text:any) => {
             <button onClick={()=>setType(true)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
             <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
-              {type ? <SubmitText setInput = {setInput}/> : <SubmitFile handleFileUpload = {handleFileUpload}/>}  
+              {type ? <SubmitText setInput = {setInput}/> : <SubmitFile handleFileUpload = {handleFileUpload}/>}
         </div>
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 justify-center content-center">
             <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
@@ -138,7 +151,7 @@ const formatText = (text:any) => {
           }
         </div>
       </div>
-    </section> 
+    </section>
   )
 }
 

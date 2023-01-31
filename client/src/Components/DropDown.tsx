@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import DialogueBox from './DialogueBox'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -51,16 +52,7 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: s
             })}
             <Menu.Item>
               {({ active }) => (
-                <button
-                  type="button"
-                  onClick={add}
-                  className={classNames(
-                    active ? 'CPorange' :'bg-gray-700 text-gray-100' ,
-                    'block w-full px-4 py-2 text-left text-sm'
-                  )}
-                >
-                  Add {name}
-                </button>
+                <DialogueBox />
               )}
             </Menu.Item>
           </div>
@@ -69,3 +61,14 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: s
     </Menu>
   )
 }
+
+{/* <button
+type="button"
+onClick={add}
+className={classNames(
+  active ? 'CPorange' :'bg-gray-700 text-gray-100' ,
+  'block w-full px-4 py-2 text-left text-sm'
+)}
+>
+Add {name}
+</button> */}

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const Student_1 = require("../Models/Student");
+const Helpers_1 = require("../Middleware/Helpers");
 dotenv_1.default.config();
 exports.default = {
     getStudentInfo: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,8 +29,8 @@ exports.default = {
     }),
     getAllStudents: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const ownerId = ctx.params;
-            const allStudents = yield Student_1.Student.findAll();
+            const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
+            const allStudents = yield Student_1.Student.findAll({ where: { ownerId: ownerId } });
             ctx.body = allStudents;
         }
         catch (error) {
@@ -39,10 +40,10 @@ exports.default = {
     addStudent: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const body = ctx.request.body;
-            const ownerId = ctx.params;
+            const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
             const content = body.content;
             // const {name:String, id:Number} = content
-            const newStudent = yield Student_1.Student.create({ ownerId: ownerId, name: 'name' });
+            const newStudent = yield Student_1.Student.create({ ownerId: ownerId, name: body.content });
         }
         catch (error) {
             console.log(error);
