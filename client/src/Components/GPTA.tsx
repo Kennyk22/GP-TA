@@ -10,15 +10,15 @@ import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
 import DropDown from './DropDown';
 import { getAllStudents } from '../Services/services';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
+import { WholeState } from '../Types/Types';
+import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents } from '../Actions/actions';
 
 function GPTA() {
-  const [type, setType] = useState(true)
-  const [file, setFile] = useState<string>("")
-  const [highlightResult, setHighlightResult] = useState("");
-  const [listResult, setListResult] = useState<JSX.Element[]>([])
-  const [input, setInput] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [allStudents, setAllStudents] = useState<[]>([])
+
+  const dispatch = useDispatch()
+  const GPTAstate = useSelector((state: WholeState) => state.GPTA)
+
 
   const {isAuthenticated, getAccessTokenSilently, user} = useAuth0()
 
@@ -30,26 +30,26 @@ function GPTA() {
     const getAllStudentsData = async () => {
     const token:string = await getAccessTokenSilently()
     const data = await getAllStudents(token);
-    setAllStudents(data)
+    dispatch(actionAllStudents(data))
   }
 
 
   const checkGrammar = async () => {
     const token = await getAccessTokenSilently()
     try {
-      setLoading(true)
+      dispatch(actionLoading(true))
       //calls to server to get ai response then post that response on the database using the post request from services
-      const postResult = await addFeedback(type ? input : file, token)
+      const postResult = await addFeedback(GPTAstate.type ? GPTAstate.input : GPTAstate.file, token)
       //then we can also display the result using the AIresponse
       const Results = postResult.text.split('-+-')
       const firstAnswer = Results[0]
       const secondAnswer = Results[1]
-      setHighlightResult(formatAnswer(firstAnswer))
-      setListResult(formatText(secondAnswer))
-      setLoading(false)
+      dispatch(actionHighlight(formatAnswer(firstAnswer)))
+      dispatch(actionList(formatText(secondAnswer)))
+      dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
-      setLoading(false)
+      dispatch(actionLoading(false))
     }
   }
 
@@ -85,7 +85,7 @@ const formatText = (text:any) => {
     console.log(newFile)
     if (!newFile) return
     const docText: any = await extractText(newFile)
-    setFile(docText);
+    dispatch(actionFile(docText));
   }
 
 
@@ -121,21 +121,21 @@ const formatText = (text:any) => {
           <h1>Text here for development purposes</h1>
           <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p>
           <div className="flex flex-row justify-around w-full">
-            <button onClick={()=>setType(false)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
-            <button onClick={()=>setType(true)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
+            <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
+            <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
             <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
-              {type ? <SubmitText setInput = {setInput}/> : <SubmitFile handleFileUpload = {handleFileUpload}/>}
+              {GPTAstate.type ? <SubmitText /> : <SubmitFile handleFileUpload = {handleFileUpload}/>}
         </div>
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 justify-center content-center">
             <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
-          {!loading ?
+          {!GPTAstate.loading ?
             <ul>
-              <li dangerouslySetInnerHTML={{ __html: highlightResult }}></li>
+              <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li>
               <br />
               <h1><b>Here is your feedback</b></h1>
               <br />
-              {listResult.map((element: any, index) => {
+              {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
                 let mistakes = element.match(/\"\w+\"/g);
                 if (!mistakes) return;
