@@ -23,7 +23,7 @@ export default function Dialogue() {
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus ad
           reprehenderit omnis perspiciatis aut odit! Unde architecto
           perspiciatis, dolorum dolorem iure quia saepe autem accusamus eum
-          praesentium magni corrupti explicabo!
+          praesentium magni corrupti explicabo
         </DialogBody>
         <DialogFooter>
           <Button
