@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { Student } from "../Models/Student";
 import { getAuth0Email} from "../Middleware/Helpers";
 import { response } from "express";
+import { FindOptions } from "sequelize";
 dotenv.config()
 
 export default {
@@ -20,8 +21,8 @@ export default {
 
   getAllStudents: async (ctx: Context) => {
     try {
-      const ownerId = ctx.params
-      const allStudents = await Student.findAll()
+      const ownerId = await getAuth0Email(ctx)
+      const allStudents = await Student.findAll({where: {ownerId : ownerId}})
       ctx.body = allStudents
     } catch (error) {
       console.log(error)
@@ -31,10 +32,10 @@ export default {
   addStudent: async (ctx: Context) => {
     try {
       const body = ctx.request.body as { content: string }
-      const ownerId = ctx.params
-      const content = body.content
+      const ownerId = await getAuth0Email(ctx)
+      const content: string = body.content
       // const {name:String, id:Number} = content
-      const newStudent = await Student.create({ownerId: ownerId, name: 'name'})
+      const newStudent = await Student.create({ownerId: ownerId, name: body.content})
     } catch (error) {
       console.log(error)
     }
