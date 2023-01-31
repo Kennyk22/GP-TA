@@ -1,8 +1,4 @@
 "use strict";
-
-//this fixes the need fetch error
-const fetch = (url) => import('node-fetch').then(({default: fetch}) => fetch(url));
-
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -25,7 +21,7 @@ const aiProp = (string) => {
         model: "text-davinci-003",
         prompt: string,
         temperature: 0,
-        max_tokens: 200,
+        max_tokens: 500,
         top_p: 1.0,
         frequency_penalty: 0.0,
         presence_penalty: 0.0,

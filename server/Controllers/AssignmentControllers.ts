@@ -18,7 +18,7 @@ export default {
             const openai = new OpenAIApi(configuration)
 
             //FIRST AI CALL
-            const aiResponse1 = await openai.createCompletion(aiProp("surround grammatical errors in this text with astrisks but do not correct them:" + content));
+            const aiResponse1 = await openai.createCompletion(aiProp("wrap grammatical errors in this text with astrisks:" + content));
             const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text)
 
             // SECOND AI CALL
@@ -32,7 +32,7 @@ export default {
             //calls auth0 for usertoken and extracts email
             const userEmail = getAuth0Email(ctx)
 
-            const response = await Assignment.create({ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback})
+            const response = await Assignment.create({ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback})
 
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
