@@ -11,6 +11,9 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 function App() {
 
+  const colors = ["[#08415c]","[#cc2936]","[#ebbab9]","[#388697]","[#b5ffe1]"]
+  /////////////// Headers     Buttons   HOVER              Background
+
   const {isAuthenticated}= useAuth0()
 
   return (
