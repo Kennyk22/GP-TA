@@ -2,13 +2,15 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DialogueBox from './DialogueBox'
-import Modal from './Modal'
+import FormAddStudent from './FormAddStudent'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
 export default function DropDown({array, onSelect, add, remove, name}: {array: string[], onSelect:(e: any)=>any, add?:(e: any)=>any, remove?:(e: any)=>any, name: string}) {
+ ///({...etc, Modal})
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div className=' mt-5 lg:mt-2'>
@@ -53,7 +55,7 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: s
             })}
             <Menu.Item>
               {({ active }) => (
-                <Modal />
+                <FormAddStudent /> // {Modal}
               )}
             </Menu.Item>
           </div>

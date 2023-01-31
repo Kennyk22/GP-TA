@@ -102,7 +102,6 @@ const formatText = (text:any) => {
   }
 
 
-
   return (
     <section ref={myRef} className="text-gray-200 body-font">
       <div className='flex flex-row justify-around content-center'>
