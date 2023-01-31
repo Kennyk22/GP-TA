@@ -2,6 +2,7 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DialogueBox from './DialogueBox'
+import Modal from './Modal'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -52,7 +53,7 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: s
             })}
             <Menu.Item>
               {({ active }) => (
-                <DialogueBox />
+                <Modal />
               )}
             </Menu.Item>
           </div>
