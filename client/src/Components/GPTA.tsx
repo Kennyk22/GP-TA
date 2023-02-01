@@ -103,11 +103,11 @@ const formatText = (text:any) => {
 
 
   return (
-    <section ref={myRef} className="text-gray-600 body-font">
+    <section ref={myRef} className="text-gray-800 body-font">
       <div className='flex flex-row justify-around content-center'>
-        <p>{isAuthenticated ? <p className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>{user?.name}</p> : <p>you are not logged in</p> }</p>
-        <Link to="/teacherFolder"><button className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>take me to teacher folder</button></Link>
-        <Link to="/teacherNotes"><button className='bg-black text-white rounded p-1 border-2 border-gray-900 mt-2'>take me to teacher Notes</button></Link>
+        <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
+        <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
+        <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
         <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add assignment')}/>
         <DropDown name = {'Students'} array= {['allStudents']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add student')}/>
       </div>
@@ -120,9 +120,9 @@ const formatText = (text:any) => {
           <h1>Text here for development purposes</h1>
           <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p>
           <div className="flex flex-row justify-around w-full">
-            <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
-            <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
-            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-black border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
+            <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
+            <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
+            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
               {GPTAstate.type ? <SubmitText /> : <SubmitFile handleFileUpload = {handleFileUpload}/>}
         </div>
