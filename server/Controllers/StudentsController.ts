@@ -30,16 +30,12 @@ export default {
   },
 
   addStudent: async (ctx: Context) => {
-    console.log(ctx.request.body)
     try {
       const body: any = ctx.request.body as {name:string}
-      console.log('hi body', body)
       const content = body.name
       const ownerId = await getAuth0Email(ctx)
-      console.log(ownerId)
-      // const {name:String, id:Number} = content
-      const newStudent = await Student.create({ ownerId: ownerId, name: content })
-      ctx.body = newStudent;
+       await Student.create({ ownerId: ownerId, name: content })
+      ctx.body = await Student.findAll({where: {ownerId: ownerId}})
       ctx.status = 200
     } catch (error) {
       console.log(error)
@@ -48,9 +44,10 @@ export default {
 
   deleteOne: async (ctx: Context) => {
   try {
-      const StudentId = ctx.params as {content: string}
-      const studentProfile = await Student.destroy({where: {id: StudentId}})
-      ctx.body = studentProfile
+    const StudentId = ctx.params as { content: string }
+    const ownerId = await getAuth0Email(ctx)
+      await Student.destroy({where: {id: StudentId}})
+      ctx.body = await Student.findAll({where: {ownerId: ownerId}})
     } catch (error) {
       console.log(error)
     }

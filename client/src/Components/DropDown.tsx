@@ -9,7 +9,6 @@ function classNames(...classes: string[]) {
 }
 
 export default function DropDown({array, onSelect, add, remove, name}: {array: string[], onSelect:(e: any)=>any, add?:(e: any)=>any, remove?:(e: any)=>any, name: string}) {
- ///({...etc, Modal})
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -55,7 +54,7 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: s
             })}
             <Menu.Item>
               {({ active }) => (
-                <FormAddStudent /> // {Modal}
+                <FormAddStudent />
               )}
             </Menu.Item>
           </div>
@@ -64,14 +63,3 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: s
     </Menu>
   )
 }
-
-{/* <button
-type="button"
-onClick={add}
-className={classNames(
-  active ? 'CPorange' :'bg-gray-700 text-gray-100' ,
-  'block w-full px-4 py-2 text-left text-sm'
-)}
->
-Add {name}
-</button> */}

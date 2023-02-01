@@ -33,6 +33,9 @@ function GPTA() {
     dispatch(actionAllStudents(data))
   }
 
+  const handleStudentNames = () => {
+    return GPTAstate.allStudents.map((e) => e.name)
+  }
 
   const checkGrammar = async () => {
     const token = await getAccessTokenSilently()
@@ -102,7 +105,7 @@ const formatText = (text:any) => {
         <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
         <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add assignment')}/>
-        <DropDown name = {'Students'} array= {['allStudents']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add student')}/>
+        {GPTAstate.allStudents ? <DropDown name={'Students'} array={handleStudentNames()} onSelect={(e) => { console.log(e.currentTarget.innerHTML) }} remove={e => console.log('delete', e.currentTarget.id)} add={e => console.log('add student')} /> : 'loading students'}
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">

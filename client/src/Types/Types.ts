@@ -1,5 +1,10 @@
 
 
+export interface Student {
+    ownerId: string,
+    id: number,
+    name: string
+}
 
 export interface GPTAstate {
     type: boolean,
@@ -8,8 +13,9 @@ export interface GPTAstate {
     listResult: JSX.Element[],
     input: string,
     loading: boolean,
-    allStudents: string[]
+    allStudents: Student[]
 }
+
 
 export interface WholeState {
     GPTA: GPTAstate

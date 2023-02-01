@@ -34,7 +34,6 @@ exports.default = {
             const aiResponse2 = yield openai.createCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation:" + content));
             const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text);
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            // const feedback = feedback1
             const feedback = feedback1 + "-+-" + feedback2;
             //calls auth0 for usertoken and extracts email
             const userEmail = (0, Helpers_1.getAuth0Email)(ctx);

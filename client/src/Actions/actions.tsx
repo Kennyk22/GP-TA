@@ -1,3 +1,5 @@
+import {Student} from "../Types/Types"
+
 export const actionInputFile = {type: 'GPTA_TYPE', payload: false}
 
 export const actionInputText = {type: 'GPTA_TYPE', payload: true}
@@ -17,6 +19,6 @@ export const actionInput = (input:string) => {
 export const actionLoading = (loading:boolean) => {
     return {type: 'GPTA_LOADING', payload:loading}
 }
-export const actionAllStudents = (students: string[]) => {
+export const actionAllStudents = (students: Student[]) => {
     return {type: 'GPTA_ALLSTUDENTS', payload:students}
 }
