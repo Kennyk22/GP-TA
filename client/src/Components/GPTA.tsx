@@ -38,12 +38,18 @@ function GPTA() {
 
 
 
-  const checkGrammar = async () => {
+  const checkGrammar = async (get?: string) => {
     const token = await getAccessTokenSilently()
     try {
-      dispatch(actionLoading(true))
+      if (GPTAstate.select.studentId === null) return
+      let postResult : { text: string}
+      if (!get) {
+        dispatch(actionLoading(true))
       //calls to server to get ai response then post that response on the database using the post request from services
-      const postResult = await addFeedback(GPTAstate.type ? GPTAstate.input : GPTAstate.file, token)
+        postResult = await addFeedback(GPTAstate.type ? GPTAstate.input : GPTAstate.file, token, 1, GPTAstate.select.studentId)
+      } else {
+        postResult = {text: get}
+      }
       //then we can also display the result using the AIresponse
       const Results = postResult.text.split('-+-')
       const firstAnswer = Results[0]
@@ -102,8 +108,8 @@ const formatText = (text:any) => {
         <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
         <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
-        <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e => console.log('remove')} add={e =>console.log('add assignment')}/>
-        {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} onSelect={(e) => { console.log(e.currentTarget.innerHTML) }} remove={e => console.log(e.currentTarget.id)} add={e => console.log('add student')} /> : 'loading students'}
+        <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/>
+        {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> : 'loading students'}
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">

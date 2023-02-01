@@ -9,6 +9,7 @@ const StudentsController_1 = __importDefault(require("../Controllers/StudentsCon
 const router = new koa_router_1.default();
 //Requests to AI for feedback
 router.post('/addFeedback', AssignmentControllers_1.default.aiPost);
+router.get('/getFeedback/:titleId/:studentId', AssignmentControllers_1.default.getAssignment);
 //Requests to DB for students info
 router.get('/student/:id', StudentsController_1.default.getStudentInfo);
 router.get('/student', StudentsController_1.default.getAllStudents);

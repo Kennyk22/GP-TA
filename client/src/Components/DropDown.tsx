@@ -4,15 +4,16 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DialogueBox from './DialogueBox'
 import FormAddStudent from './FormAddStudent'
 import { useAuth0 } from '@auth0/auth0-react'
-import { deleteOneStudent } from '../Services/services'
+import { addFeedback, deleteOneStudent } from '../Services/services'
 import { Student, WholeState } from '../Types/Types'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionAllStudents, actionStudentSelect } from '../Actions/actions'
+import { getFeedback } from '../Services/services'
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DropDown({array, name}: {array: Student[], name: string}) {
+export default function DropDown({array, name, checkGrammar}: {array: Student[], name: string, checkGrammar:(get?:string) => Promise<void>}) {
 
   const dispatch = useDispatch()
   const dropState = useSelector((state:WholeState)=> state.GPTA)
@@ -26,8 +27,13 @@ export default function DropDown({array, name}: {array: Student[], name: string}
   }
 
   const onSelect =async (id: any) => {
-    const token = await  getAccessTokenSilently()
     dispatch(actionStudentSelect(id))
+    if (dropState.select.titleId === null) return
+    const token = await  getAccessTokenSilently()
+    const result = await getFeedback(token, dropState.select.titleId, id) as {text: string}
+    console.log(result)
+    if (!result.text) return
+    checkGrammar(result.text)
   }
 
 

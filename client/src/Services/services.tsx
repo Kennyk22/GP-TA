@@ -1,7 +1,7 @@
 const baseURL = 'http://localhost:3005'
 
 
-const addFeedback = async (feedbackText:string, token:string) => {
+const addFeedback = async (feedbackText:string, token:string, titleId: number, studentId: number) => {
     try {
     return await fetch(`${baseURL}/addFeedback`, {
         method: 'POST',
@@ -9,7 +9,7 @@ const addFeedback = async (feedbackText:string, token:string) => {
             'Content-Type' : 'application/json',
             authorization : `Bearer ${token}`
         },
-        body: JSON.stringify({content: feedbackText})
+        body: JSON.stringify({content: feedbackText, titleId: titleId, studentId: studentId})
     }).then(async response => {
         const result = await response.json()
         return result
@@ -20,7 +20,22 @@ const addFeedback = async (feedbackText:string, token:string) => {
     }
 }
 
-
+const getFeedback = async (token:string, titleId: number, studentId: number) => {
+    try {
+    return await fetch(`${baseURL}/getFeedback/${titleId}/${studentId}`, {
+        headers: {
+            'Content-Type' : 'application/json',
+            authorization : `Bearer ${token}`
+        },
+    }).then(async response => {
+        const result = await response.json()
+        return result
+   })
+    } catch (error) {
+      console.error(error);
+      return 'error'
+    }
+}
 
 const getAllStudents = async (token:string) => {
     try {
@@ -98,4 +113,4 @@ const deleteOneStudent = async (token: String, id: string) => {
 }
 
 
-export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent}
+export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getFeedback}

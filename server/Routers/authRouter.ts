@@ -6,7 +6,7 @@ const router = new Router()
 
 //Requests to AI for feedback
 router.post('/addFeedback', AssignmentController.aiPost)
-
+router.get('/getFeedback/:titleId/:studentId', AssignmentController.getAssignment)
 
 //Requests to DB for students info
 
