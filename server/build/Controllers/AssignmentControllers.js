@@ -38,8 +38,8 @@ exports.default = {
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
             const feedback = feedback1 + "-+-" + feedback2;
             //calls auth0 for usertoken and extracts email
-            const userEmail = (0, Helpers_1.getAuth0Email)(ctx);
-            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback, titleId: 1, studentId: studentId });
+            const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
+            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: 1, studentId: studentId });
             ctx.body = { text: response.dataValues.response };
         }
         catch (error) {
@@ -48,14 +48,19 @@ exports.default = {
     }),
     getAssignment: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const body = ctx.request.body;
+            const body = ctx.params;
             const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
-            const studentId = body.studentId;
-            const titleId = body.titleId;
-            const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: userEmail, titleId: titleId } });
+            const studentId = parseInt(body.studentId);
+            const titleId = parseInt(body.titleId);
+            console.log(studentId, titleId, userEmail);
+            const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: JSON.stringify(userEmail), titleId: titleId } });
+            console.log(response);
+            ctx.status = 200;
             ctx.body = response ? { text: response.dataValues.response } : { text: null };
         }
         catch (error) {
+            ctx.status = 500;
+            console.log(error);
         }
     })
 };
