@@ -52,9 +52,9 @@ exports.default = {
     }),
     deleteOne: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
-            const StudentId = ctx.params;
+            const StudentName = ctx.params;
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            yield Student_1.Student.destroy({ where: { id: StudentId } });
+            yield Student_1.Student.destroy({ where: { id: StudentName.id } });
             ctx.body = yield Student_1.Student.findAll({ where: { ownerId: ownerId } });
         }
         catch (error) {
