@@ -12,7 +12,6 @@ const addFeedback = async (feedbackText:string, token:string) => {
         body: JSON.stringify({content: feedbackText})
     }).then(async response => {
         const result = await response.json()
-        console.log('this is the response.json', result)
         return result
    })
     } catch (error) {
@@ -26,14 +25,12 @@ const addFeedback = async (feedbackText:string, token:string) => {
 const getAllStudents = async (token:string) => {
     try {
         return await fetch(`${baseURL}/student`, {
-            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 authorization: `Bearer ${token}`
             }
         }).then(async response => {
             const result = await response.json();
-            console.log('response json all students', result);
             return result
 })
     } catch (error) {
@@ -54,7 +51,6 @@ const addStudent = async (token: String, name: String) => {
         body: JSON.stringify({name: name})
     }).then(async response => {
         const result = await response.json()
-        console.log('this is the add student response.json', result)
         return result
    })
     } catch (error) {
@@ -77,7 +73,6 @@ const addStudent = async (token: String, name: String) => {
         body: JSON.stringify({title: title })
     }).then(async response => {
         const result = await response.json()
-        console.log('this is the add student response.json', result)
         return result
    })
     } catch (error) {
@@ -85,6 +80,18 @@ const addStudent = async (token: String, name: String) => {
       return 'error'
     }
 
+  }
+
+const deleteOneStudent = async (token:String, Id: id) => {
+  return fetch(`${baseURL}/student/${id}`, {
+    method: 'DELETE'
+  })
+    .then(response => response.json())
+    .then(response => response)
+  .catch(error => {
+     return console.log(error, 'delete error')
+  });
 }
+
 
 export {addFeedback, getAllStudents, addStudent, addAssignment}

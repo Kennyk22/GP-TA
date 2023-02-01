@@ -2,14 +2,22 @@ import React from "react";
 import { useState } from 'react'
 import {addStudent} from '../Services/services'
 import { useAuth0 } from "@auth0/auth0-react";
+import { useDispatch } from "react-redux";
+import { actionAllStudents } from "../Actions/actions";
+import {Student} from "../Types/Types"
+
 export default function FormAddStudent() {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState('')
 
 const {getAccessTokenSilently} = useAuth0()
+
+  const dispatch = useDispatch()
+
   const handleSubmit = async () => {
     const token = await getAccessTokenSilently()
-    addStudent(token, name)
+    const students = await addStudent(token, name)
+    dispatch(actionAllStudents(students))
   }
 
   return (

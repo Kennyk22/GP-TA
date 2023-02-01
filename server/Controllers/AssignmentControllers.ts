@@ -26,7 +26,6 @@ export default {
             const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text)
 
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            // const feedback = feedback1
             const feedback = feedback1 + "-+-" +feedback2
 
             //calls auth0 for usertoken and extracts email
