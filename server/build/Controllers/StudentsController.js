@@ -41,6 +41,7 @@ exports.default = {
         try {
             const body = ctx.request.body;
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
+            console.log('elbody', body);
             const content = body.content;
             // const {name:String, id:Number} = content
             const newStudent = yield Student_1.Student.create({ ownerId: ownerId, name: body.content });

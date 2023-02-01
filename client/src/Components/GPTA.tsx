@@ -58,17 +58,14 @@ function GPTA() {
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
     const regex = /\*(.*?)\*/g;
-    console.log('text', text)
     text = text.slice(5)
     const result = text.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
-    console.log('result', result)
     return result
   }
 
 
 const formatText = (text:any) => {
     const errorList = text.split('\\n').slice(2);
-    console.log('errorList', errorList)
     return errorList
 }
 
@@ -82,7 +79,6 @@ const formatText = (text:any) => {
 
   const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const newFile = event.target.files !== null ? event.target.files[0]: undefined
-    console.log(newFile)
     if (!newFile) return
     const docText: any = await extractText(newFile)
     dispatch(actionFile(docText));
@@ -91,12 +87,9 @@ const formatText = (text:any) => {
 
   const myRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const HoverAndHighlight = (word: string) => {
-    console.log('className to grab', word)
     const current: any = myRef.current
     const children: any = current.getElementsByClassName(word)
-    console.log(children)
     for (const child of children) {
-      console.log(child.style)
       child.style.backgroundColor = 'blue'
     }
   }
@@ -141,8 +134,6 @@ const formatText = (text:any) => {
                 mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
                 let [intro, solution] = element.split('should be')
                 element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
-                console.log('element', element)
-                console.log('solution', solution)
                 return <li key={index} onMouseOver={() => HoverAndHighlight(mistakes[1])} dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
             </ul> :
@@ -156,22 +147,3 @@ const formatText = (text:any) => {
 
 export default GPTA
 
-
-  //const authRequest = async () => {
-  //   try {
-  //     console.log(isAuthenticated)
-
-  //     const unresponse = await fetch('http://localhost:3005/test')
-  //     const text = await unresponse.json()
-  //     console.log(text)
-  //     const token = await getAccessTokenSilently()
-  //     const response = await fetch('http://localhost:3005/testAuth', {
-  //       headers: {
-  //         authorization: `Bearer ${token}`,
-  //       },
-  //     })
-  //     console.log(await response.json())
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
