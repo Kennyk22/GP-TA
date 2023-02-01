@@ -6,6 +6,8 @@ interface AssignmentAttributes {
     ownerId: string;
     text: string;
     response: string;
+    studentId: number;
+    titleId:number
 }
 
 interface AssignmentCreationAttributes extends Optional<AssignmentAttributes, "id"> {}
@@ -17,6 +19,8 @@ export class Assignment
         public ownerId!: string;
         public text!: string;
         public response!: string;
+        public studentId!: number;
+        public titleId!: number;
 
         public readonly createdAt!: Date
 }
@@ -39,6 +43,14 @@ export class Assignment
             response: {
                 type: new DataTypes.TEXT,
                 allowNull:false
+            },
+            studentId : {
+                type: new DataTypes.INTEGER,
+                allowNull: false
+            },
+            titleId : {
+                type: new DataTypes.INTEGER,
+                allowNull: false
             }
         },
         {

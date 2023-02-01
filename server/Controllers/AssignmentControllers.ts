@@ -3,14 +3,17 @@ import { OpenAIApi, Configuration } from "openai";
 import dotenv from 'dotenv';
 import { Assignment } from "../Models/Assignment";
 import {aiProp, getAuth0Email} from "../Middleware/Helpers";
+import { Student } from "../Models/Student";
 dotenv.config()
 
 export default {
     aiPost: async (ctx: Context) => {
         try {
             //creates config and calls ai to make feedback
-            const body = ctx.request.body as {content: string}
+            const body = ctx.request.body as {content: string, studentId: number, titleId: number}
             const content = body.content
+            const studentId = body.studentId
+            const titleId = body.titleId
 
             const configuration = new Configuration({
                 apiKey: process.env.API_KEY,
@@ -31,14 +34,24 @@ export default {
             //calls auth0 for usertoken and extracts email
             const userEmail = getAuth0Email(ctx)
 
-            const response = await Assignment.create({ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback})
+            const response = await Assignment.create({ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId:studentId})
 
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
             console.log(error)
         }
     },
-    userAdd: async (ctx: Context) => {
-
+    getAssignment: async (ctx: Context) => {
+        try {
+            const body = ctx.request.body as {studentId: number, titleId:number}
+            const userEmail = await getAuth0Email(ctx) as string
+            const studentId = body.studentId 
+            const titleId = body.titleId
+            const response = await Assignment.findOne({where: {studentId: studentId, ownerId:userEmail, titleId:titleId}})
+            
+            ctx.body = response? {text : response.dataValues.response} : {text: null}
+        } catch (error) {
+            
+        }
     }
 }
