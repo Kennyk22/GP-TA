@@ -103,11 +103,11 @@ const formatText = (text:any) => {
 
 
   return (
-    <section ref={myRef} className="text-gray-200 body-font">
+    <section ref={myRef} className="text-gray-800 body-font">
       <div className='flex flex-row justify-around content-center'>
-        <p>{isAuthenticated ? <p className='bg-[#cc2936] text-white rounded p-1 shadow-lg shadow-cyan-500/50 mt-2'>{user?.name}</p> : <p>you are not logged in</p> }</p>
-        <Link to="/teacherFolder"><button className='bg-[#cc2936] text-white rounded p-1  shadow-lg shadow-cyan-500/50 mt-2'>take me to teacher folder</button></Link>
-        <Link to="/teacherNotes"><button className='bg-[#cc2936] text-white rounded p-1  shadow-lg shadow-cyan-500/50 mt-2'>take me to teacher Notes</button></Link>
+        <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
+        <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
+        <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
         <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add assignment')}/>
         <DropDown name = {'Students'} array= {['allStudents']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add student')}/>
       </div>
