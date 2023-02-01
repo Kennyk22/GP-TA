@@ -43,10 +43,10 @@ export default {
   },
 
   deleteOne: async (ctx: Context) => {
-  try {
-    const StudentId = ctx.params as { content: string }
+    try {
+    const StudentName = ctx.params as { id: string }
     const ownerId = await getAuth0Email(ctx)
-      await Student.destroy({where: {id: StudentId}})
+      await Student.destroy({where: {id: StudentName.id}})
       ctx.body = await Student.findAll({where: {ownerId: ownerId}})
     } catch (error) {
       console.log(error)

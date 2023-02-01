@@ -82,10 +82,14 @@ const addStudent = async (token: String, name: String) => {
 
   }
 
-const deleteOneStudent = async (token:String, Id: id) => {
-  return fetch(`${baseURL}/student/${id}`, {
-    method: 'DELETE'
-  })
+const deleteOneStudent = async (token: String, id: string) => {
+    console.log('delete is happening')
+    return fetch(`${baseURL}/student/${id}`, {
+        method: 'DELETE',
+        headers: {
+            authorization: `Bearer ${token}`
+        },
+    } )
     .then(response => response.json())
     .then(response => response)
   .catch(error => {
@@ -94,4 +98,4 @@ const deleteOneStudent = async (token:String, Id: id) => {
 }
 
 
-export {addFeedback, getAllStudents, addStudent, addAssignment}
+export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent}

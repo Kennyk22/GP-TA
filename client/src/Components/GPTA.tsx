@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import TeacherFolder from './TeacherFolder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { addFeedback } from '../Services/services';
+import { addFeedback, deleteOneStudent } from '../Services/services';
 import {CircleLoader} from 'react-spinners'
 import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
@@ -14,10 +14,12 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents } from '../Actions/actions';
 
+
 function GPTA() {
 
   const dispatch = useDispatch()
   const GPTAstate = useSelector((state: WholeState) => state.GPTA)
+  const myRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
 
   const {isAuthenticated, getAccessTokenSilently, user} = useAuth0()
@@ -33,9 +35,8 @@ function GPTA() {
     dispatch(actionAllStudents(data))
   }
 
-  const handleStudentNames = () => {
-    return GPTAstate.allStudents.map((e) => e.name)
-  }
+
+
 
   const checkGrammar = async () => {
     const token = await getAccessTokenSilently()
@@ -55,8 +56,6 @@ function GPTA() {
       dispatch(actionLoading(false))
     }
   }
-
-
 
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
@@ -88,7 +87,6 @@ const formatText = (text:any) => {
   }
 
 
-  const myRef = useRef() as React.MutableRefObject<HTMLInputElement>;
   const HoverAndHighlight = (word: string) => {
     const current: any = myRef.current
     const children: any = current.getElementsByClassName(word)
@@ -104,8 +102,8 @@ const formatText = (text:any) => {
         <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
         <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
-        <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e =>console.log('delete', e.currentTarget.id)} add={e =>console.log('add assignment')}/>
-        {GPTAstate.allStudents ? <DropDown name={'Students'} array={handleStudentNames()} onSelect={(e) => { console.log(e.currentTarget.innerHTML) }} remove={e => console.log('delete', e.currentTarget.id)} add={e => console.log('add student')} /> : 'loading students'}
+        <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e => console.log('remove')} add={e =>console.log('add assignment')}/>
+        {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} onSelect={(e) => { console.log(e.currentTarget.innerHTML) }} remove={e => console.log(e.currentTarget.id)} add={e => console.log('add student')} /> : 'loading students'}
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
