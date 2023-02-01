@@ -38,13 +38,17 @@ exports.default = {
         }
     }),
     addStudent: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+        console.log(ctx.request.body);
         try {
             const body = ctx.request.body;
+            console.log('hi body', body);
+            const content = body.name;
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            console.log('elbody', body);
-            const content = body.content;
+            console.log(ownerId);
             // const {name:String, id:Number} = content
-            const newStudent = yield Student_1.Student.create({ ownerId: ownerId, name: body.content });
+            const newStudent = yield Student_1.Student.create({ ownerId: ownerId, name: content });
+            ctx.body = newStudent;
+            ctx.status = 200;
         }
         catch (error) {
             console.log(error);

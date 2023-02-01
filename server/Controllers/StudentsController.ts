@@ -30,13 +30,17 @@ export default {
   },
 
   addStudent: async (ctx: Context) => {
+    console.log(ctx.request.body)
     try {
-      const body = ctx.request.body as { content: string }
+      const body: any = ctx.request.body as {name:string}
+      console.log('hi body', body)
+      const content = body.name
       const ownerId = await getAuth0Email(ctx)
-      console.log('elbody', body)
-      const content: string = body.content
+      console.log(ownerId)
       // const {name:String, id:Number} = content
-      const newStudent = await Student.create({ownerId: ownerId, name: body.content})
+      const newStudent = await Student.create({ ownerId: ownerId, name: content })
+      ctx.body = newStudent;
+      ctx.status = 200
     } catch (error) {
       console.log(error)
     }

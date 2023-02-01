@@ -43,15 +43,15 @@ const getAllStudents = async (token:string) => {
 }
 
 
-    const addStudent = async (token:String, name: String) => {
-        try {
-    return await fetch(`${baseURL}/addStudent`, {
+const addStudent = async (token: String, name: String) => {
+    try {
+     return await fetch(`${baseURL}/addStudent`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
             authorization : `Bearer ${token}`
         },
-        body: JSON.stringify({name: name })
+        body: JSON.stringify({name: name})
     }).then(async response => {
         const result = await response.json()
         console.log('this is the add student response.json', result)
