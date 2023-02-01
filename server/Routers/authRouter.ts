@@ -5,7 +5,6 @@ import StudentsController from '../Controllers/StudentsController'
 const router = new Router()
 
 //Requests to AI for feedback
-router.post('/user', AssignmentController.userAdd)
 router.post('/addFeedback', AssignmentController.aiPost)
 
 

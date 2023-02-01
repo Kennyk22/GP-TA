@@ -23,6 +23,8 @@ exports.default = {
             //creates config and calls ai to make feedback
             const body = ctx.request.body;
             const content = body.content;
+            const studentId = body.studentId;
+            const titleId = body.titleId;
             const configuration = new openai_1.Configuration({
                 apiKey: process.env.API_KEY,
             });
@@ -37,13 +39,23 @@ exports.default = {
             const feedback = feedback1 + "-+-" + feedback2;
             //calls auth0 for usertoken and extracts email
             const userEmail = (0, Helpers_1.getAuth0Email)(ctx);
-            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback });
+            const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback, titleId: 1, studentId: studentId });
             ctx.body = { text: response.dataValues.response };
         }
         catch (error) {
             console.log(error);
         }
     }),
-    userAdd: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+    getAssignment: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            const body = ctx.request.body;
+            const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
+            const studentId = body.studentId;
+            const titleId = body.titleId;
+            const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: userEmail, titleId: titleId } });
+            ctx.body = response ? { text: response.dataValues.response } : { text: null };
+        }
+        catch (error) {
+        }
     })
 };

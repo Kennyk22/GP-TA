@@ -23,6 +23,14 @@ Assignment.init({
     response: {
         type: new sequelize_1.DataTypes.TEXT,
         allowNull: false
+    },
+    studentId: {
+        type: new sequelize_1.DataTypes.INTEGER,
+        allowNull: false
+    },
+    titleId: {
+        type: new sequelize_1.DataTypes.INTEGER,
+        allowNull: false
     }
 }, {
     tableName: "assignments",
