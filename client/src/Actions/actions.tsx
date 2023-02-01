@@ -22,3 +22,6 @@ export const actionLoading = (loading:boolean) => {
 export const actionAllStudents = (students: Student[]) => {
     return {type: 'GPTA_ALLSTUDENTS', payload:students}
 }
+export const actionStudentSelect = (id: number) => {
+    return {type: 'GPTA_SELECTSTUDENT', payload: id}
+}

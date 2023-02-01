@@ -5,16 +5,18 @@ import DialogueBox from './DialogueBox'
 import FormAddStudent from './FormAddStudent'
 import { useAuth0 } from '@auth0/auth0-react'
 import { deleteOneStudent } from '../Services/services'
-import { Student } from '../Types/Types'
-import { useDispatch } from 'react-redux'
-import { actionAllStudents } from '../Actions/actions'
+import { Student, WholeState } from '../Types/Types'
+import { useDispatch, useSelector } from 'react-redux'
+import { actionAllStudents, actionStudentSelect } from '../Actions/actions'
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DropDown({array, onSelect, add, remove, name}: {array: Student[], onSelect:(e: any)=>any, add?:(e: any)=>any, remove?:(e: any)=>any, name: string}) {
+export default function DropDown({array, name}: {array: Student[], name: string}) {
 
   const dispatch = useDispatch()
+  const dropState = useSelector((state:WholeState)=> state.GPTA)
+
   const { getAccessTokenSilently} = useAuth0()
 
   const removeItem = async (id: any) => {
@@ -22,6 +24,13 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: S
     const deleted = await deleteOneStudent(token, id)
     dispatch(actionAllStudents(deleted))
   }
+
+  const onSelect =async (id: any) => {
+    const token = await  getAccessTokenSilently()
+    dispatch(actionStudentSelect(id))
+  }
+
+
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -49,7 +58,7 @@ export default function DropDown({array, onSelect, add, remove, name}: {array: S
                   <div className='flex flex-row justify-center content-center'>
                   <button
                     type="button"
-                    onClick={onSelect}
+                    onClick={() => onSelect(el.id)}
                     className={classNames(
                       active ? 'bg-gray-700 text-gray-100' : ' text-gray-100',
                       'block w-full px-4 py-2 text-left text-sm'

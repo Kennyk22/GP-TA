@@ -14,6 +14,10 @@ export interface GPTAstate {
     input: string,
     loading: boolean,
     allStudents: Student[]
+    select: {
+        titleId: number | null,
+        studentId: number | null
+    }
 }
 
 

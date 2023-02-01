@@ -34,7 +34,7 @@ export default {
             //calls auth0 for usertoken and extracts email
             const userEmail = getAuth0Email(ctx)
 
-            const response = await Assignment.create({ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId:studentId})
+            const response = await Assignment.create({ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback, titleId: 1, studentId:studentId})
 
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
@@ -45,13 +45,13 @@ export default {
         try {
             const body = ctx.request.body as {studentId: number, titleId:number}
             const userEmail = await getAuth0Email(ctx) as string
-            const studentId = body.studentId 
+            const studentId = body.studentId
             const titleId = body.titleId
             const response = await Assignment.findOne({where: {studentId: studentId, ownerId:userEmail, titleId:titleId}})
-            
+
             ctx.body = response? {text : response.dataValues.response} : {text: null}
         } catch (error) {
-            
+
         }
     }
 }

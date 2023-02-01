@@ -8,7 +8,8 @@ const initGPTA = {
     listResult: [],
     input: "",
     loading: false,
-    allStudents: []
+    allStudents: [],
+    select:{titleId: 1, studentId: null}
 }
 
 const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})=>{
@@ -27,6 +28,8 @@ const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})
             return{...state, loading: action.payload}
         case 'GPTA_ALLSTUDENTS':
             return{...state, allStudents: action.payload}
+        case 'GPTA_SELECTSTUDENT':
+            return {...state, select: {...state.select, studentId: action.payload}}
         default:
             return state;
     }
