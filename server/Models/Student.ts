@@ -5,7 +5,7 @@ import { sequelize } from './index'
 interface StudentAttributes {
   name: string;
   id: number;
-  ownerId: number
+  ownerId: string
 }
 
 interface StudentCreationAttributes extends Optional<StudentAttributes, "id"> {}
@@ -15,7 +15,7 @@ export class Student
   implements StudentAttributes {
   public name!: string;
   public id!: number;
-  public ownerId!: number;
+  public ownerId!: string;
   public readonly createdAt!: Date
 
 }
@@ -28,7 +28,7 @@ Student.init(
       primaryKey: true
     },
     ownerId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false
     },
     name: {
