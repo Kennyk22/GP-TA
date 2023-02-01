@@ -33,6 +33,7 @@ export default {
     try {
       const body = ctx.request.body as { content: string }
       const ownerId = await getAuth0Email(ctx)
+      console.log('elbody', body)
       const content: string = body.content
       // const {name:String, id:Number} = content
       const newStudent = await Student.create({ownerId: ownerId, name: body.content})
