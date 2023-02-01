@@ -15,6 +15,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv_1 = __importDefault(require("dotenv"));
 const Assignment_1 = require("./Models/Assignment");
+const AssignmentTitles_1 = require("./Models/AssignmentTitles");
 const Student_1 = require("./Models/Student");
 const server_1 = require("./server");
 dotenv_1.default.config();
@@ -24,6 +25,7 @@ const PORT = parseInt((_a = process.env.PORT) !== null && _a !== void 0 ? _a : '
         console.log('syncing...');
         yield Assignment_1.Assignment.sync();
         yield Student_1.Student.sync();
+        yield AssignmentTitles_1.AssignmentTitle.sync();
         console.log("connected to db:", process.env.DB_NAME);
         (0, server_1.bootServer)(PORT);
     }
