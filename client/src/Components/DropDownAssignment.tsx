@@ -1,14 +1,13 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import DialogueBox from './DialogueBox'
 import FormAddAssignment from './FormAddAssignment'
 import { useAuth0 } from '@auth0/auth0-react'
-import { addFeedback, deleteOneStudent } from '../Services/services'
+import { getFeedback, deleteOneTitle } from '../Services/services'
 import { Assignment, WholeState } from '../Types/Types'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionAllAssignments, actionStudentSelect } from '../Actions/actions'
-import { getFeedback } from '../Services/services'
+import { actionAllAssignments, actionMenuTitle, actionTitleSelect } from '../Actions/actions'
+
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
@@ -22,15 +21,16 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
 
   const removeItem = async (id: any) => {
     const token = await getAccessTokenSilently()
-    const deleted = await deleteOneStudent(token, id)
+    const deleted = await deleteOneTitle(token, id)
     dispatch(actionAllAssignments(deleted))
   }
 
-  const onSelect =async (id: any) => {
-    dispatch(actionStudentSelect(id))
-    if (dropState.select.titleId === null) return
+  const onSelect =async (id: any, title:string) => {
+    dispatch(actionMenuTitle(title))
+    dispatch(actionTitleSelect(id))
+    if (dropState.select.studentId === null) return
     const token = await  getAccessTokenSilently()
-    const result = await getFeedback(token, dropState.select.titleId, id) as {text: string}
+    const result = await getFeedback(token, id, dropState.select.studentId) as {text: string}
     console.log(result)
     if (!result.text) return
     checkGrammar(result.text)
@@ -42,7 +42,7 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
     <Menu as="div" className="relative inline-block text-left">
       <div className=' mt-5 lg:mt-2'>
         <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-          {title}
+          {dropState.selectedTitle ? dropState.selectedTitle : title}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -64,7 +64,7 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
                   <div className='flex flex-row justify-center content-center'>
                   <button
                     type="button"
-                    onClick={() => onSelect(el.id)}
+                    onClick={() => onSelect(el.id, el.title)}
                     className={classNames(
                       active ? 'bg-gray-700 text-gray-100' : ' text-gray-100',
                       'block w-full px-4 py-2 text-left text-sm'

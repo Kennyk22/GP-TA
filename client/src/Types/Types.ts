@@ -25,6 +25,8 @@ export interface GPTAstate {
         studentId: number | null
     }
     allAssignments: Assignment[]
+    selectedStudent: string | boolean
+    selectedTitle: string | boolean
 }
 
 

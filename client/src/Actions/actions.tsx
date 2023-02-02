@@ -25,6 +25,17 @@ export const actionAllStudents = (students: Student[]) => {
 export const actionStudentSelect = (id: number) => {
     return {type: 'GPTA_SELECTSTUDENT', payload: id}
 }
+export const actionTitleSelect = (id: number) => {
+    return {type: 'GPTA_SELECTTITLE', payload: id}
+}
 export const actionAllAssignments = (assignments: Assignment[]) => {
     return {type: 'GPTA_ALLASSIGNMENTS', payload: assignments}
 }
+export const actionMenuTitle = (title: string) => {
+    return {type: 'GPTA_MENUTITLE', payload: title}
+}
+export const actionMenuStudent = (student: string) => {
+    return {type: 'GPTA_MENUSTUDENT', payload: student}
+}
+
+

@@ -111,6 +111,21 @@ const deleteOneStudent = async (token: String, id: string) => {
   });
 }
 
+const deleteOneTitle = async (token: String, id: string) => {
+    console.log('delete is happening')
+    return fetch(`${baseURL}/assignment/${id}`, {
+        method: 'DELETE',
+        headers: {
+            authorization: `Bearer ${token}`
+        },
+    } )
+    .then(response => response.json())
+    .then(response => response)
+  .catch(error => {
+     return console.log(error, 'delete error')
+  });
+}
+
 const getAllAssignments = async (token: String) => {
        try {
         return await fetch(`${baseURL}/assignment`, {
@@ -155,4 +170,4 @@ const getAllAssignments = async (token: String) => {
 
 
 
-export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback, payments}
+export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback, payments, deleteOneTitle}

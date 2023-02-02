@@ -22,7 +22,7 @@ export default {
   getAllAssignmentTitles: async (ctx: Context) => {
     try {
       const ownerId = await getAuth0Email(ctx)
-      const allTitles = await AssignmentTitle.findAll({where: {ownerId : ownerId}})
+      const allTitles = await AssignmentTitle.findAll({where: {ownerId : JSON.stringify(ownerId)}})
       ctx.body = allTitles
       ctx.status = 200
     } catch (error) {
@@ -36,9 +36,9 @@ export default {
       const body = ctx.request.body as { title: string }
       const title: string = body.title
       const ownerId = await getAuth0Email(ctx)
-      await AssignmentTitle.create({ownerId: ownerId, title: title})
+      await AssignmentTitle.create({ownerId: JSON.stringify(ownerId), title: title})
       ctx.status = 201
-      ctx.body = await AssignmentTitle.findAll({ where: { ownerId: ownerId } })
+      ctx.body = await AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } })
     } catch (error) {
       ctx.status = 500
       console.log(error)
@@ -47,10 +47,12 @@ export default {
 
   deleteOneTitle: async (ctx: Context) => {
   try {
-      const titleId = ctx.params as {content: string}
-      const title = await AssignmentTitle.destroy({where: {id: titleId}})
+      const titleId = ctx.params as {id: string}
+      const ownerId = await getAuth0Email(ctx)
+      console.log(ownerId)
+      const title = await AssignmentTitle.destroy({where: {id: parseInt(titleId.id)}})
       ctx.status = 201
-      ctx.body = title
+      ctx.body = await AssignmentTitle.findAll({where: {ownerId: JSON.stringify(ownerId)}})
     } catch (error) {
       ctx.status = 500
       console.log(error)

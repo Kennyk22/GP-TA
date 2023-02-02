@@ -35,7 +35,7 @@ export default {
             //calls auth0 for usertoken and extracts email
             const userEmail = await getAuth0Email(ctx)
 
-            const response = await Assignment.create({ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: 1, studentId:studentId})
+            const response = await Assignment.create({ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId:studentId})
 
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
