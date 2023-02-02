@@ -77,15 +77,15 @@ const addStudent = async (token: String, name: String) => {
 
 
 
-    const addAssignment = async (token:String, title: String) => {
+const addAssignment = async (token: String, title: String) => {
         try {
-    return await fetch(`${baseURL}/addStudent`, {
+    return await fetch(`${baseURL}/addAssignment`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
             authorization : `Bearer ${token}`
         },
-        body: JSON.stringify({title: title })
+        body: JSON.stringify({title: title})
     }).then(async response => {
         const result = await response.json()
         return result

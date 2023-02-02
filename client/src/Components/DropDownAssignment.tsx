@@ -2,7 +2,7 @@ import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import DialogueBox from './DialogueBox'
-import FormAddStudent from './FormAddStudent'
+import FormAddAssignment from './FormAddAssignment'
 import { useAuth0 } from '@auth0/auth0-react'
 import { addFeedback, deleteOneStudent } from '../Services/services'
 import { Assignment, WholeState } from '../Types/Types'
@@ -13,7 +13,7 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function DropDownAssignment({array, name, checkGrammar}: {array: Assignment[], name: string, checkGrammar:(get?:string) => Promise<void>}) {
+export default function DropDownAssignment({array, title, checkGrammar}: {array: Assignment[], title: string, checkGrammar:(get?:string) => Promise<void>}) {
 
   const dispatch = useDispatch()
   const dropState = useSelector((state:WholeState)=> state.GPTA)
@@ -42,7 +42,7 @@ export default function DropDownAssignment({array, name, checkGrammar}: {array: 
     <Menu as="div" className="relative inline-block text-left">
       <div className=' mt-5 lg:mt-2'>
         <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
-          {name}
+          {title}
           <ChevronDownIcon className="-mr-1 ml-2 h-5 w-5" aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -82,7 +82,7 @@ export default function DropDownAssignment({array, name, checkGrammar}: {array: 
             })}
             <Menu.Item>
               {({ active }) => (
-                <FormAddStudent />
+                <FormAddAssignment />
               )}
             </Menu.Item>
           </div>

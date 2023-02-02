@@ -10,7 +10,7 @@ const initGPTA = {
     loading: false,
     allStudents: [],
     select: { titleId: 1, studentId: null },
-    allAssignments: []
+    allAssignments: [{id: 3, ownerId: 'wow', title:'hello'}]
 }
 
 const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})=>{

@@ -44,11 +44,11 @@ exports.default = {
     addTitle: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const body = ctx.request.body;
-            const content = body.content;
+            const title = body.title;
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            const newTitle = yield AssignmentTitles_1.AssignmentTitle.create({ ownerId: ownerId, title: body.content });
+            yield AssignmentTitles_1.AssignmentTitle.create({ ownerId: ownerId, title: title });
             ctx.status = 201;
-            ctx.body = newTitle;
+            ctx.body = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: ownerId } });
         }
         catch (error) {
             ctx.status = 500;

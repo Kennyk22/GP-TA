@@ -33,12 +33,13 @@ export default {
 
   addTitle: async (ctx: Context) => {
     try {
-      const body = ctx.request.body as { content: string }
-      const content: string = body.content
+      const body = ctx.request.body as { title: string }
+      const title: string = body.title
       const ownerId = await getAuth0Email(ctx)
-      const newTitle = await AssignmentTitle.create({ownerId: ownerId, title: body.content})
+      await AssignmentTitle.create({ownerId: ownerId, title: title})
       ctx.status = 201
-      ctx.body = newTitle
+      ctx.body = await AssignmentTitle.findAll({ where: { ownerId: ownerId } })
+
     } catch (error) {
       ctx.status = 500
       console.log(error)
@@ -50,7 +51,7 @@ export default {
       const titleId = ctx.params as {content: string}
       const title = await AssignmentTitle.destroy({where: {id: titleId}})
       ctx.status = 201
-      ctx.body = title      
+      ctx.body = title
     } catch (error) {
       ctx.status = 500
       console.log(error)
