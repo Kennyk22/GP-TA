@@ -28,6 +28,7 @@ function GPTA() {
   useEffect(  ()=>{
     if (isAuthenticated) {
       getAllStudentsData()
+      getAllAssignmentsData()
     }}, [isAuthenticated])
 
   //getAllStudentData
@@ -35,26 +36,26 @@ function GPTA() {
     const token:string = await getAccessTokenSilently()
     const data = await getAllStudents(token);
       dispatch(actionAllStudents(data))
-
+    }
   //getAllAssignmentData
       const getAllAssignmentsData = async () => {
         const token: string = await getAccessTokenSilently()
         const data = await getAllAssignments(token);
         dispatch(actionAllAssignments(data))
     }
-  }
+  
 
 
 
   const checkGrammar = async (get?: string) => {
     const token = await getAccessTokenSilently()
     try {
-      if (GPTAstate.select.studentId === null) return
+      if (GPTAstate.select.studentId === null || GPTAstate.select.titleId === null) return
       let postResult : { text: string}
       if (!get) {
         dispatch(actionLoading(true))
       //calls to server to get ai response then post that response on the database using the post request from services
-        postResult = await addFeedback(GPTAstate.type ? GPTAstate.input : GPTAstate.file, token, 1, GPTAstate.select.studentId)
+        postResult = await addFeedback(GPTAstate.type ? GPTAstate.input : GPTAstate.file, token, GPTAstate.select.titleId, GPTAstate.select.studentId)
       } else {
         postResult = {text: get}
       }

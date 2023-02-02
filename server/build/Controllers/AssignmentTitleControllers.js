@@ -32,7 +32,7 @@ exports.default = {
     getAllAssignmentTitles: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            const allTitles = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: ownerId } });
+            const allTitles = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } });
             ctx.body = allTitles;
             ctx.status = 200;
         }
@@ -46,9 +46,9 @@ exports.default = {
             const body = ctx.request.body;
             const title = body.title;
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            yield AssignmentTitles_1.AssignmentTitle.create({ ownerId: ownerId, title: title });
+            yield AssignmentTitles_1.AssignmentTitle.create({ ownerId: JSON.stringify(ownerId), title: title });
             ctx.status = 201;
-            ctx.body = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: ownerId } });
+            ctx.body = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } });
         }
         catch (error) {
             ctx.status = 500;
@@ -58,9 +58,11 @@ exports.default = {
     deleteOneTitle: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const titleId = ctx.params;
-            const title = yield AssignmentTitles_1.AssignmentTitle.destroy({ where: { id: titleId } });
+            const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
+            console.log(ownerId);
+            const title = yield AssignmentTitles_1.AssignmentTitle.destroy({ where: { id: parseInt(titleId.id) } });
             ctx.status = 201;
-            ctx.body = title;
+            ctx.body = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } });
         }
         catch (error) {
             ctx.status = 500;
