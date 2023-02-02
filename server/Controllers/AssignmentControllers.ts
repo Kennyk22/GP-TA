@@ -40,18 +40,5 @@ export default {
         } catch (error) {
             console.log(error)
         }
-    },
-    getAssignment: async (ctx: Context) => {
-        try {
-            const body = ctx.request.body as {studentId: number, titleId:number}
-            const userEmail = await getAuth0Email(ctx) as string
-            const studentId = body.studentId
-            const titleId = body.titleId
-            const response = await Assignment.findOne({where: {studentId: studentId, ownerId:userEmail, titleId:titleId}})
-
-            ctx.body = response? {text : response.dataValues.response} : {text: null}
-        } catch (error) {
-
-        }
     }
 }

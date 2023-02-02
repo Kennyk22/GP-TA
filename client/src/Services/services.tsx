@@ -97,5 +97,22 @@ const deleteOneStudent = async (token: String, id: string) => {
   });
 }
 
+const getAllAssignments = async (token: String) => {
+       try {
+        return await fetch(`${baseURL}/assignment`, {
+            headers: {
+                'Content-Type': 'application/json',
+                authorization: `Bearer ${token}`
+            }
+        }).then(async response => {
+            const result = await response.json();
+            return result
+})
+    } catch (error) {
+        console.log(error);
+        return 'error'
+    }
+}
 
-export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent}
+
+export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments}

@@ -1,5 +1,6 @@
 import Router from 'koa-router'
-import AssignmentController from '../Controllers/AssignmentControllers'
+import AssignmentTitleControllers from '../Controllers/AssignmentTitleControllers'
+import AssignmentControllers from '../Controllers/AssignmentControllers'
 import StudentsController from '../Controllers/StudentsController'
 
 const router = new Router()
@@ -17,5 +18,11 @@ router.post('/addStudent', StudentsController.addStudent)
 router.delete('/student/:id', StudentsController.deleteOne)
 
 
+//Requests to DB for assignments info
+
+router.get('/assignment/:id', AssignmentTitleControllers.getAssignmentInfo)
+router.get('/assignment', AssignmentTitleControllers.getAllAssignmentTitles)
+router.post('/addAssignment', AssignmentTitleControllers.addTitle);
+router.delete('/assignment/:id', AssignmentTitleControllers.deleteOneTitle)
 
 export default router

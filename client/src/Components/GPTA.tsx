@@ -9,7 +9,7 @@ import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
 import DropDown from './DropDown';
-import { getAllStudents } from '../Services/services';
+import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents } from '../Actions/actions';
@@ -29,11 +29,20 @@ function GPTA() {
       getAllStudentsData()
     }}, [isAuthenticated])
 
+  //getAllStudentData
     const getAllStudentsData = async () => {
     const token:string = await getAccessTokenSilently()
     const data = await getAllStudents(token);
-    dispatch(actionAllStudents(data))
+      dispatch(actionAllStudents(data))
+
+  //getAllAssignmentData
+      const getAllAssignmentsData = async () => {
+        const token: string = await getAccessTokenSilently()
+        const data = await getAllAssignments(token);
+        dispatch(actionAllAssignments(data))
+    }
   }
+
 
 
 
@@ -102,7 +111,7 @@ const formatText = (text:any) => {
         <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
         <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
-        <DropDown name = {'Assignments'} array= {['essay1', 'essay2', 'essay3']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e => console.log('remove')} add={e =>console.log('add assignment')}/>
+        <DropDown name = {'Assignments'} array= {['assignmen']} onSelect={(e)=>{console.log(e.currentTarget.innerHTML)}} remove={e => console.log('remove')} add={e =>console.log('add assignment')}/>
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} onSelect={(e) => { console.log(e.currentTarget.innerHTML) }} remove={e => console.log(e.currentTarget.id)} add={e => console.log('add student')} /> : 'loading students'}
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">

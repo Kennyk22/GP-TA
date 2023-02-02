@@ -45,17 +45,5 @@ exports.default = {
         catch (error) {
             console.log(error);
         }
-    }),
-    getAssignment: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const body = ctx.request.body;
-            const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
-            const studentId = body.studentId;
-            const titleId = body.titleId;
-            const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: userEmail, titleId: titleId } });
-            ctx.body = response ? { text: response.dataValues.response } : { text: null };
-        }
-        catch (error) {
-        }
     })
 };
