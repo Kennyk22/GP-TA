@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { addAssignment } from "../Services/services";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { actionAllStudents } from "../Actions/actions";
+import { actionAllAssignments } from "../Actions/actions";
 import {Student} from "../Types/Types"
 
 export default function FormAddAssignment() {
@@ -17,7 +17,7 @@ const {getAccessTokenSilently} = useAuth0()
   const handleSubmit = async () => {
     const token = await getAccessTokenSilently()
     const students = await addAssignment(token, name)
-    dispatch(actionAllStudents(students))
+    dispatch(actionAllAssignments(students))
   }
 
   return (

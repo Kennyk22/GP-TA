@@ -9,7 +9,8 @@ const initGPTA = {
     input: "",
     loading: false,
     allStudents: [],
-    select:{titleId: 1, studentId: null}
+    select: { titleId: 1, studentId: null },
+    allAssignments: []
 }
 
 const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})=>{
@@ -29,7 +30,9 @@ const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})
         case 'GPTA_ALLSTUDENTS':
             return{...state, allStudents: action.payload}
         case 'GPTA_SELECTSTUDENT':
-            return {...state, select: {...state.select, studentId: action.payload}}
+            return { ...state, select: { ...state.select, studentId: action.payload } }
+        case 'GPTA_ALLASSIGNMENTS':
+            return {...state, allAssignments: action.payload}
         default:
             return state;
     }
