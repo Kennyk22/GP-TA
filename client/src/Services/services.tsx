@@ -76,16 +76,15 @@ const addStudent = async (token: String, name: String) => {
 }
 
 
-
-    const addAssignment = async (token:String, title: String) => {
+const addAssignment = async (token: String, title: String) => {
         try {
-    return await fetch(`${baseURL}/addStudent`, {
+    return await fetch(`${baseURL}/addAssignment`, {
         method: 'POST',
         headers: {
             'Content-Type' : 'application/json',
             authorization : `Bearer ${token}`
         },
-        body: JSON.stringify({title: title })
+        body: JSON.stringify({title: title})
     }).then(async response => {
         const result = await response.json()
         return result
@@ -126,9 +125,34 @@ const getAllAssignments = async (token: String) => {
     } catch (error) {
         console.log(error);
         return 'error'
-    }
+       }
+
+
+
 }
 
+ const payments = async (plan:string) => {
+     try {
+         console.log('are you happening')
+         return await fetch(`${baseURL}/create-checkout-session`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      items:
+        {plan: plan}
+    }),
+         })
+     .then(async response => {
+      const result = await response.json();
+     return result
+})
+     } catch (error) {
+         console.log(error)
+}
+ }
 
 
-export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback}
+
+export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback, payments}

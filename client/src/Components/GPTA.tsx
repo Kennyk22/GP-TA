@@ -9,10 +9,11 @@ import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
 import DropDown from './DropDown';
+import DropDownAssignment from './DropDownAssignment';
 import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
-import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents } from '../Actions/actions';
+import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
 
 
 function GPTA() {
@@ -115,7 +116,9 @@ const formatText = (text:any) => {
         <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
         <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
         <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
-        <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/>
+        {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
+        {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments} checkGrammar={checkGrammar} /> : 'loading assignments'}
+
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> : 'loading students'}
       </div>
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">

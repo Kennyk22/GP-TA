@@ -1,4 +1,4 @@
-import {Student} from "../Types/Types"
+import {Student, Assignment} from "../Types/Types"
 
 export const actionInputFile = {type: 'GPTA_TYPE', payload: false}
 
@@ -24,4 +24,7 @@ export const actionAllStudents = (students: Student[]) => {
 }
 export const actionStudentSelect = (id: number) => {
     return {type: 'GPTA_SELECTSTUDENT', payload: id}
+}
+export const actionAllAssignments = (assignments: Assignment[]) => {
+    return {type: 'GPTA_ALLASSIGNMENTS', payload: assignments}
 }
