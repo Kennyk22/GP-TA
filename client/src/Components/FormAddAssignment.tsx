@@ -18,7 +18,6 @@ const {getAccessTokenSilently} = useAuth0()
   const handleSubmit = async () => {
     const token = await getAccessTokenSilently()
     const assignment = await addAssignment(token, title)
-    console.log(assignment)
     dispatch(actionAllAssignments(assignment))
   }
 

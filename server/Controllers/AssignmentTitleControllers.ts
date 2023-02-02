@@ -39,7 +39,6 @@ export default {
       await AssignmentTitle.create({ownerId: ownerId, title: title})
       ctx.status = 201
       ctx.body = await AssignmentTitle.findAll({ where: { ownerId: ownerId } })
-
     } catch (error) {
       ctx.status = 500
       console.log(error)
