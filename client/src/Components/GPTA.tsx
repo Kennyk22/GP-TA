@@ -9,7 +9,7 @@ import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
 import DropDown from './DropDown';
-import { getAllStudents } from '../Services/services';
+import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents } from '../Actions/actions';
@@ -29,12 +29,19 @@ function GPTA() {
       getAllStudentsData()
     }}, [isAuthenticated])
 
+  //getAllStudentData
     const getAllStudentsData = async () => {
     const token:string = await getAccessTokenSilently()
     const data = await getAllStudents(token);
-    dispatch(actionAllStudents(data))
-  }
+      dispatch(actionAllStudents(data))
 
+  //getAllAssignmentData
+      const getAllAssignmentsData = async () => {
+        const token: string = await getAccessTokenSilently()
+        const data = await getAllAssignments(token);
+        dispatch(actionAllAssignments(data))
+    }
+  }
 
 
 
