@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import { Assignment } from "../Models/Assignment";
 import {aiProp, getAuth0Email} from "../Middleware/Helpers";
 import { Student } from "../Models/Student";
+import { Console } from "console";
 dotenv.config()
 
 export default {
@@ -32,13 +33,30 @@ export default {
             const feedback = feedback1 + "-+-" +feedback2
 
             //calls auth0 for usertoken and extracts email
-            const userEmail = getAuth0Email(ctx)
+            const userEmail = await getAuth0Email(ctx)
 
-            const response = await Assignment.create({ownerId: JSON.stringify('userEmail'), text: JSON.stringify(content), response: feedback, titleId: 1, studentId:studentId})
+            const response = await Assignment.create({ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: 1, studentId:studentId})
 
             ctx.body = {text : response.dataValues.response}
         } catch (error) {
             console.log(error)
         }
+    },
+    getAssignment: async (ctx: Context) => {
+        try {
+            const body = ctx.params as {studentId: string, titleId:string}
+            const userEmail = await getAuth0Email(ctx) as string
+            const studentId = parseInt(body.studentId)
+            const titleId = parseInt(body.titleId)
+            console.log(studentId, titleId, userEmail)
+            const response = await Assignment.findOne({where: {studentId: studentId, ownerId:JSON.stringify(userEmail), titleId:titleId}})
+            console.log(response)
+            ctx.status = 200
+            ctx.body = response ? {text : response.dataValues.response} : {text: null}
+        } catch (error) {
+            ctx.status = 500
+            console.log(error)
+        }
+
     }
 }
