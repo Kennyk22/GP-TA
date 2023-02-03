@@ -7,6 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import About from './Components/About';
 import Pricing from './Components/Payments/Pricing';
 import Payment from './Components/Payments/Payment';
+import Completion from './Components/Payments/Completion';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
 
@@ -28,6 +29,7 @@ function App() {
              }/>
           <Route path="/about" element={<About/>}/>
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/completion" element={<Completion/>}/>
         </Routes>
       </Router>
     </div>

@@ -31,11 +31,11 @@ router.post("/create-payment-intent", async (ctx) => {
       amount: 1999,
       automatic_payment_methods: { enabled: true },
     });
-
     // Send publishable key and PaymentIntent details to client
     ctx.body = ({
       clientSecret: paymentIntent.client_secret,
     });
+
   } catch (e) {
       ctx.status = 400
       ctx.body = e
