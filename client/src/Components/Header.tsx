@@ -14,9 +14,9 @@ function Header() {
 <header className="text-white body-font bg-[#08415c]">
   <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <a className="flex title-font font-medium items-center text-white mb-4 md:mb-0">
-      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-20 h-20 text-black p-1 bg-[#cc2936] rounded-full" viewBox="0 -2 13 19">
+     <Link to="/"> <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-20 h-20 text-black p-1 bg-[#cc2936] rounded-full" viewBox="0 -2 13 19">
             <GiRainbowStar />
-          </svg>
+          </svg></Link>
       <span className="ml-3 text-xl">GP-TA</span>
     </a>
     <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
