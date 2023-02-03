@@ -1,36 +1,54 @@
-import React from 'react'
-import Tesseract from 'tesseract.js'
-import { useState } from 'react';
+// import React from 'react'
+// import {createWorker} from 'tesseract.js'
+// import { useState, useCallback, useEffect } from 'react';
 
-function SubmitImage() {
+// function SubmitImage() {
 
-  const [image, setImage] = useState(null);
-  const [text, setText] = useState(null);
+//   const [selectedImage, setSelectedImage] = useState(null);
+//   const [textResult, setTextResult] = useState("");
 
-  const handleChange = (e) => {
-    const image = e.target.files[0];
-    setImage(image);
-    console.log(image)
-  }
+//   const worker = createWorker();
 
-  const handleImageToText = async () => {
-    Tesseract.recognize(image, "eng").then((res) => {
-      setText(res.data.text)
-    })
-      .catch(err) => {
-    console.error(err)
-  }
-  }
+//   const convertImageToText = useCallback(async () => {
+//     if(!selectedImage) return;
+//     await worker.load();
+//     await worker.loadLanguage("eng");
+//     await worker.initialize("eng");
+//     const { data } = await worker.recognize(selectedImage);
+//     setTextResult(data.text);
+//   }, [worker, selectedImage]);
 
+//   useEffect(() => {
+//     convertImageToText();
+//   }, [selectedImage, convertImageToText])
 
-  return (
-    <div className='flex justify-center w-full'>
-      <input title='fileInput' type="file" onChange={handleChange} />
+//   const handleChangeImage = e => {
+//     if(e.target.files[0]) {
+//       setSelectedImage(e.target.files[0]);
+//     } else {
+//       setSelectedImage(null);
+//       setTextResult("")
+//     }
+//   }
 
-      <button onClick={handleImageToText}>converToText</button>
-      <p>{text}</p>
-    </div>
-  )
-}
+//   return (
+//     <div className='flex justify-center w-full'>
+//     <h1>ImText</h1>
+//       <p>Gets words in image!</p>
+//       <div className="input-wrapper">
+//         <label htmlFor="upload">Upload Image</label>
+//         <input type="file" id="upload" accept='image/*' onChange={handleChangeImage} />
+//       </div>
 
-export default SubmitImage
+//       <div>
+//           {textResult && (
+//           <div className="box-p">
+//             <p>{textResult}</p>
+//           </div>
+//         )}
+//       </div>
+//     </div>
+//   )
+// }
+
+// export default SubmitImage
