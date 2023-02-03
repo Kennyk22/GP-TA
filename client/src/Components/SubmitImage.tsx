@@ -1,29 +1,34 @@
 import React from 'react'
+import Tesseract from 'tesseract.js'
+import { useState } from 'react';
 
+function SubmitImage() {
 
-function SubmitImage({handleFileUpload}: {handleFileUpload: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>} ) {
-var formData = new FormData();
-// formData.append('image', $('#YOUR_IMAGE_FILE')[0].files[0]);
-$.ajax({
-    method: 'POST',
-    url: 'https://api.api-ninjas.com/v1/imagetotext',
-    data: formData,
-    enctype: 'multipart/form-data',
-    processData: false,
-    contentType: false,
-    success: function(result) {
-        console.log(result);
-    },
-    error: function ajaxError(jqXHR, textStatus, errorThrown) {
-        alert(jqXHR.responseText);
-    }
-});
+  const [image, setImage] = useState(null);
+  const [text, setText] = useState(null);
 
+  const handleChange = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+    console.log(image)
+  }
+
+  const handleImageToText = async () => {
+    Tesseract.recognize(image, "eng").then((res) => {
+      setText(res.data.text)
+    })
+      .catch(err) => {
+    console.error(err)
+  }
+  }
 
 
   return (
     <div className='flex justify-center w-full'>
-      <input title='fileInput' type="file" onChange={(e)=>handleFileUpload(e)} className="" />
+      <input title='fileInput' type="file" onChange={handleChange} />
+
+      <button onClick={handleImageToText}>converToText</button>
+      <p>{text}</p>
     </div>
   )
 }

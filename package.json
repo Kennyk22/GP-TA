@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Kennyk22/GP-TA#readme",
   "dependencies": {
-    "react-stripe-js": "^1.1.2"
+    "react-stripe-js": "^1.1.2",
+    "tesseract.js": "^4.0.2",
+    "text-from-image": "^1.1.1"
   }
 }
