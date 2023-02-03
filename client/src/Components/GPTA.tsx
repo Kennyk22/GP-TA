@@ -13,7 +13,7 @@ import DropDownAssignment from './DropDownAssignment';
 import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
-import { actionInputFile, actionInputText, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
+import { actionInputFile, actionInputText, actionInputImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
 
 
 function GPTA() {
@@ -132,6 +132,7 @@ const formatText = (text:any) => {
           <div className="flex flex-row justify-around w-full">
             <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
             <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
+            <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Image</button>
             <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
               {GPTAstate.type ? <SubmitText /> : <SubmitFile handleFileUpload = {handleFileUpload}/>}

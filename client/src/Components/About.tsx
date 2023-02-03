@@ -1,6 +1,5 @@
 import React from 'react'
-
-function About() {
+ export default  function About() {
   //using this page to test syles, these colors ar fore dev puropses
   const colors = ["[#08415c]", "[#cc2936]", "[#ebbab9]", "[#388697]", "[#b5ffe1]"]
   //              Darkest Blue  Bright Red    Fade Red    Blue          cyan
@@ -18,4 +17,3 @@ function About() {
   )
 }
 
-export default About

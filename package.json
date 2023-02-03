@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Kennyk22/GP-TA/issues"
   },
-  "homepage": "https://github.com/Kennyk22/GP-TA#readme"
+  "homepage": "https://github.com/Kennyk22/GP-TA#readme",
+  "dependencies": {
+    "react-stripe-js": "^1.1.2"
+  }
 }

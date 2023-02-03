@@ -2,44 +2,46 @@
 import Router from 'koa-router'
 import { Context } from 'vm'
 require("dotenv").config()
+const serve = require('koa-static')
+// import koaCors from 'koa-cors'
 
-const stripe = require('stripe')(process.env.STRIPE_PRIVATE_KEY)
 
+
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const router = new Router()
 //stripe payments
-  const storeItems = new Map([
-        ['basic', { price: 5, name: 'basic plan' }],
-        ['pro', {price: 38, name: 'pro plan'}]
-  ])
+// router.use(koaCors())
+router.use(serve(process.env.STATIC_DIR));
 
-router.post("/create-checkout-session", async (ctx: Context) => {
-  try {
-    console.log(ctx.body)
-    console.log('it works')
-    const session:any = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      mode: "payment",
-      line_items: ctx.request.body.items.map(item => {
-        const storeItem:any = storeItems.get(item.id)
-        return {
-          price_data: {
-            currency: "usd",
-            product_data: {
-              name: storeItem.name,
-            },
-            unit_amount: storeItem.priceInCents,
-          },
-          quantity: item.quantity,
-        }
-      }),
-      success_url: `${process.env.CLIENT_URL}/success.html`,
-      cancel_url: `${process.env.CLIENT_URL}/cancel.html`,
-    })
-    ctx.body({ url: session.url })
-  } catch (e:any) {
-    ctx.status = 500
+router.get("/", (ctx) => {
+  const path = resolve(process.env.STATIC_DIR + "/index.html");
+  ctx.body = path;
+});
+
+router.get("/config", (ctx) => {
+  ctx.body = {
+    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
   }
-})
 
+});
+
+
+router.post("/create-payment-intent", async (ctx) => {
+  try {
+    const paymentIntent = await stripe.paymentIntents.create({
+      currency: "EUR",
+      amount: 1999,
+      automatic_payment_methods: { enabled: true },
+    });
+
+    // Send publishable key and PaymentIntent details to client
+    ctx.body = ({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (e) {
+      ctx.status = 400
+      ctx.body = e
+  }
+});
 export default router

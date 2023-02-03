@@ -3,7 +3,7 @@ import { GiRainbowStar } from 'react-icons/gi'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import About from './About'
 import LoginPage from './LoginPage'
-import Pricing from './Pricing'
+import Pricing from './Payments/Pricing'
 import Dashboard from './Dashboard'
 import { useAuth0 } from '@auth0/auth0-react'
 
