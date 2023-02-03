@@ -1,17 +1,15 @@
 
 import Router from 'koa-router'
-import { Context } from 'vm'
+import { Context } from 'koa'
 require("dotenv").config()
 const serve = require('koa-static')
-// import koaCors from 'koa-cors'
 
 
 
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const router = new Router()
-//stripe payments
-// router.use(koaCors())
+
 router.use(serve(process.env.STATIC_DIR));
 
 router.get("/", (ctx) => {

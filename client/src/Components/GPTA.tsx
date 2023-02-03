@@ -50,7 +50,6 @@ function GPTA() {
   const checkGrammar = async (get?: string) => {
     const token = await getAccessTokenSilently()
     try {
-      if (GPTAstate.select.studentId === null || GPTAstate.select.titleId === null) return
       let postResult : { text: string}
       if (!get) {
         dispatch(actionLoading(true))

@@ -17,9 +17,9 @@ function SubmitImage() {
     Tesseract.recognize(image, "eng").then((res) => {
       setText(res.data.text)
     })
-      .catch(err) => {
+      .catch((err) => {
     console.error(err)
-  }
+  })
   }
 
 
