@@ -5,7 +5,6 @@ require("dotenv").config()
 const serve = require('koa-static')
 
 
-
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const router = new Router()

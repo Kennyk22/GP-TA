@@ -4,7 +4,6 @@ import Header from './Components/Header';
 import Dashboard from './Components/Dashboard';
 import LoginPage from './Components/LoginPage';
 import { useAuth0 } from '@auth0/auth0-react';
-//import Payboard from './Components/Payments/PayBoard';
 import About from './Components/About';
 import Pricing from './Components/Payments/Pricing';
 import Payment from './Components/Payments/Payment';

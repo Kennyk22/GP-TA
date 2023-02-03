@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import TeacherFolder from './TeacherFolder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
@@ -14,6 +14,8 @@ import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionInputImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
+import SubmitImage from './SubmitImage';
+import { createWorker } from 'tesseract.js';
 
 
 function GPTA() {
@@ -43,7 +45,7 @@ function GPTA() {
         const data = await getAllAssignments(token);
         dispatch(actionAllAssignments(data))
     }
-  
+
 
 
 
@@ -85,6 +87,8 @@ const formatText = (text:any) => {
     return errorList
 }
 
+  //input by text
+
   const extractText = async (doc: File) => {
     const zip = await JSZip.loadAsync(doc)
     const xml = await zip.file("word/document.xml")?.async("text")
@@ -99,6 +103,40 @@ const formatText = (text:any) => {
     const docText: any = await extractText(newFile)
     dispatch(actionFile(docText));
   }
+// input by image
+
+  // const [selectedImage, setSelectedImage] = useState(null);
+  // const [textResult, setTextResult] = useState("");
+
+  // const worker = createWorker();
+
+  // const convertImageToText = useCallback(async () => {
+  //   if(!selectedImage) return;
+  //   await worker.load();
+  //   await worker.loadLanguage("eng");
+  //   await worker.initialize("eng");
+  //   const { data } = await worker.recognize(selectedImage);
+  //   setTextResult(data.text);
+  // }, [worker, selectedImage]);
+
+  // useEffect(() => {
+  //   convertImageToText();
+  // }, [selectedImage, convertImageToText])
+
+  // const handleChangeImage = e => {
+  //   if(e.target.files[0]) {
+  //     setSelectedImage(e.target.files[0]);
+  //   } else {
+  //     setSelectedImage(null);
+  //     setTextResult("")
+  //   }
+  // }
+  //
+
+
+
+
+
 
 
   const HoverAndHighlight = (word: string) => {
@@ -132,7 +170,7 @@ const formatText = (text:any) => {
           <div className="flex flex-row justify-around w-full">
             <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
             <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
-            <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Image</button>
+            {/* <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Image</button> */}
             <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
               {GPTAstate.type ? <SubmitText /> : <SubmitFile handleFileUpload = {handleFileUpload}/>}

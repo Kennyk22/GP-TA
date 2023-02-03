@@ -45,12 +45,8 @@ function Pricing() {
                 <path d="M20 6L9 17l-5-5"></path>
               </svg>
             </span>Spelling errors
-          </p>
-           <button className="flex items-center mt-auto text-black bg-gray-400 border-0 py-2 px-4 w-full focus:outline-none hover:bg-gray-500 rounded">Stripe
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </button>
+                </p>
+         <Payment/>
           <p className="text-xs text-gray-500 mt-3">You will not spend sunday evenings marking the same thing ever again</p>
         </div>
       </div>
@@ -90,19 +86,13 @@ function Pricing() {
               </svg>
             </span>Keep feedback in different folders and download to your computer
           </p>
-          <button onClick={() => clickPay('pro')}className="flex items-center mt-auto text-white bg-[#a70805] border-0 py-2 px-4 w-full focus:outline-none hover:bg-pink-600 rounded">Stripe
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-auto" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
-          </button>
+        <Payment/>
           <p className="text-xs text-gray-500 mt-3">Least effort, maximum results</p>
         </div>
       </div>
     </div>
-  </div>
+        </div>
       </section>
-
-      <Payment/>
  </div>
   )
 }
