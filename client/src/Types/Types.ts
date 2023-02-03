@@ -28,6 +28,7 @@ export interface GPTAstate {
     selectedStudent: string | boolean
     selectedTitle: string | boolean
     image: string
+    imgURL: string
 }
 
 

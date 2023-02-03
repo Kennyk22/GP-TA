@@ -13,7 +13,8 @@ const initGPTA = {
     allAssignments: [{id: 3, ownerId: 'wow', title:'hello'}],
     selectedStudent: false,
     selectedTitle: false,
-    image: ''
+    image: '',
+    imgURL: ''
 }
 
 const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})=>{
@@ -44,6 +45,8 @@ const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})
             return {...state, allAssignments: action.payload}
         case 'GPTA_IMAGE':
             return {...state, image: action.payload}
+        case 'GPTA_URL':
+            return {...state, imgURL: action.payload}
         default:
             return state;
     }
