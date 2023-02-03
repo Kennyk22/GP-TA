@@ -13,7 +13,7 @@ import DropDownAssignment from './DropDownAssignment';
 import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
-import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
+import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl } from '../Actions/actions';
 //import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
 import SubmitImage from './SubmitImage';
@@ -106,9 +106,6 @@ const formatText = (text:any) => {
   }
 // input by image
 
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  // const [textResult, setTextResult] = useState("");
-
   const convertImageToText = async (image: File | null) => {
     if (!image) return;
     const worker = await createWorker();
@@ -117,27 +114,9 @@ const formatText = (text:any) => {
     await worker.initialize("eng");
     const { data } = await worker.recognize(image);
     console.log(data, data.text)
+    dispatch(actionImgUrl(URL.createObjectURL(image)))
     dispatch(actionImage(data.text))
   };
-
-  // useEffect(() => {
-  //   convertImageToText();
-  // }, [selectedImage, convertImageToText])
-
-  // const handleChangeImage = e => {
-  //   if(e.target.files[0]) {
-  //     setSelectedImage(e.target.files[0]);
-  //   } else {
-  //     setSelectedImage(null);
-  //     setTextResult("")
-  //   }
-  // }
-  //
-
-
-
-
-
 
 
   const HoverAndHighlight = (word: string) => {
@@ -160,7 +139,7 @@ const formatText = (text:any) => {
 
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> : 'loading students'}
       </div>
-      <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
             <br className="hidden lg:inline-block"/>and have it marked in seconds
@@ -197,7 +176,11 @@ const formatText = (text:any) => {
             <CircleLoader color="#5f5f5f" />
           }
         </div>
-      </div>
+      </div> :
+       <div className='flex justify-center content-center h-full w-full'>
+        Please select a student and an assignment
+       </div>
+       }
     </section>
   )
 }
