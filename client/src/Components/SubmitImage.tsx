@@ -54,3 +54,17 @@
 
 // export default SubmitImage
 
+import React from 'react'
+
+
+function SubmitImage({handleImageUpload}: {handleImageUpload: (image: File | null) => Promise<void>} ) {
+
+  return (
+    <div className='flex justify-center w-full'>
+        <label htmlFor="image">this is for images development</label>
+      <input title='fileInput' id='image' type="file" onChange={(e)=>handleImageUpload(e.target.files ? e.target.files[0] : null)} className="" />
+    </div>
+  )
+}
+
+export default SubmitImage

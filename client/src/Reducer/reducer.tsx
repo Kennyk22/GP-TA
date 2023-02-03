@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { GPTAstate } from "../Types/Types";
 
 const initGPTA = {
-    type: false,
+    type: 'text',
     file: "",
     highlightResult: "",
     listResult: [],
@@ -12,7 +12,8 @@ const initGPTA = {
     select: { titleId: null, studentId: null },
     allAssignments: [{id: 3, ownerId: 'wow', title:'hello'}],
     selectedStudent: false,
-    selectedTitle: false, 
+    selectedTitle: false,
+    image: ''
 }
 
 const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})=>{
@@ -41,6 +42,8 @@ const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})
             return { ...state, selectedStudent: action.payload }
         case 'GPTA_ALLASSIGNMENTS':
             return {...state, allAssignments: action.payload}
+        case 'GPTA_IMAGE':
+            return {...state, image: action.payload}
         default:
             return state;
     }
