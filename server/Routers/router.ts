@@ -6,7 +6,6 @@ const serve = require('koa-static')
 // import koaCors from 'koa-cors'
 
 
-
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 
 const router = new Router()
