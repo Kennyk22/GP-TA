@@ -1,3 +1,4 @@
+
 // import React from 'react'
 // import {createWorker} from 'tesseract.js'
 // import { useState, useCallback, useEffect } from 'react';
@@ -52,3 +53,4 @@
 // }
 
 // export default SubmitImage
+

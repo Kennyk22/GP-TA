@@ -15,11 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const koa_router_1 = __importDefault(require("koa-router"));
 require("dotenv").config();
 const serve = require('koa-static');
-// import koaCors from 'koa-cors'
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const router = new koa_router_1.default();
-//stripe payments
-// router.use(koaCors())
 router.use(serve(process.env.STATIC_DIR));
 router.get("/", (ctx) => {
     const path = resolve(process.env.STATIC_DIR + "/index.html");

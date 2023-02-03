@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { getFeedback, deleteOneTitle } from '../Services/services'
 import { Assignment, WholeState } from '../Types/Types'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionAllAssignments, actionMenuTitle, actionTitleSelect } from '../Actions/actions'
+import { actionAllAssignments, actionMenuTitle, actionTitleSelect, actionHighlight, actionList } from '../Actions/actions'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -32,7 +32,11 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
     const token = await  getAccessTokenSilently()
     const result = await getFeedback(token, id, dropState.select.studentId) as {text: string}
     console.log(result)
-    if (!result.text) return
+    if (!result.text) {
+      dispatch(actionHighlight(''))
+      dispatch(actionList([]))
+      return
+    }
     checkGrammar(result.text)
   }
 
@@ -59,10 +63,10 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
         <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md border border-gray-300 bg-gray-900 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
             {array.map((el) => {
-              return <Menu.Item>
+              return <Menu.Item key={el.id}>
                 {({ active }) => (
-                  <div className='flex flex-row justify-center content-center'>
-                  <button
+                  <div className='flex flex-row justify-center content-center' >
+                  <button                    
                     type="button"
                     onClick={() => onSelect(el.id, el.title)}
                     className={classNames(
