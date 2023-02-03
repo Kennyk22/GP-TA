@@ -156,7 +156,7 @@ const getAllAssignments = async (token: String) => {
     },
     body: JSON.stringify({
       items:
-        {plan: plan}
+        [{plan: plan}]
     }),
          })
      .then(async response => {

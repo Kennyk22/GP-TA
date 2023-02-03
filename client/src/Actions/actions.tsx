@@ -2,10 +2,15 @@ import {Student, Assignment} from "../Types/Types"
 
 export const actionInputFile = {type: 'GPTA_TYPE', payload: false}
 
-export const actionInputText = {type: 'GPTA_TYPE', payload: true}
+export const actionInputText = { type: 'GPTA_TYPE', payload: true }
+
+export const actionInputImage = {type: 'GPTA_TYPE', payload: false}
 
 export const actionFile = (file:string) => {
     return {type: 'GPTA_FILE', payload:file}
+}
+export const actionImage = (image: string) => {
+    return {type: 'GPTA_IMAGE', payload:image}
 }
 export const actionHighlight = (result:string) => {
     return {type: 'GPTA_HIGHLIGHT', payload:result}
