@@ -13,9 +13,10 @@ import DropDownAssignment from './DropDownAssignment';
 import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
-import { actionInputFile, actionInputText, actionInputImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
-import SubmitImage from './SubmitImage';
+import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments } from '../Actions/actions';
+//import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
+import SubmitImage from './SubmitImage';
 
 
 function GPTA() {
@@ -56,7 +57,7 @@ function GPTA() {
       if (!get) {
         dispatch(actionLoading(true))
       //calls to server to get ai response then post that response on the database using the post request from services
-        postResult = await addFeedback(GPTAstate.type ? GPTAstate.input : GPTAstate.file, token, GPTAstate.select.titleId, GPTAstate.select.studentId)
+        postResult = await addFeedback(GPTAstate.type === 'text' ? GPTAstate.input: GPTAstate.type === 'file' ?  GPTAstate.file : GPTAstate.image, token, GPTAstate.select.titleId as number, GPTAstate.select.studentId as number)
       } else {
         postResult = {text: get}
       }
@@ -105,19 +106,19 @@ const formatText = (text:any) => {
   }
 // input by image
 
-  // const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   // const [textResult, setTextResult] = useState("");
 
-  // const worker = createWorker();
-
-  // const convertImageToText = useCallback(async () => {
-  //   if(!selectedImage) return;
-  //   await worker.load();
-  //   await worker.loadLanguage("eng");
-  //   await worker.initialize("eng");
-  //   const { data } = await worker.recognize(selectedImage);
-  //   setTextResult(data.text);
-  // }, [worker, selectedImage]);
+  const convertImageToText = async (image: File | null) => {
+    if (!image) return;
+    const worker = await createWorker();
+    await worker.load();
+    await worker.loadLanguage("eng");
+    await worker.initialize("eng");
+    const { data } = await worker.recognize(image);
+    console.log(data, data.text)
+    dispatch(actionImage(data.text))
+  };
 
   // useEffect(() => {
   //   convertImageToText();
@@ -170,10 +171,10 @@ const formatText = (text:any) => {
           <div className="flex flex-row justify-around w-full">
             <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
             <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
-            {/* <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Image</button> */}
+            <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Image</button>
             <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
-              {GPTAstate.type ? <SubmitText /> : <SubmitFile handleFileUpload = {handleFileUpload}/>}
+              {GPTAstate.type === 'text' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
         <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 justify-center content-center">
             <p>List of all the mistakes in Spanish that your teaching assistant has found</p>

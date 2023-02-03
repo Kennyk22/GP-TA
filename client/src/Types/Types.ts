@@ -13,7 +13,7 @@ export interface Assignment {
 }
 
 export interface GPTAstate {
-    type: boolean,
+    type: string,
     file: string,
     highlightResult: string,
     listResult: JSX.Element[],
@@ -27,6 +27,7 @@ export interface GPTAstate {
     allAssignments: Assignment[]
     selectedStudent: string | boolean
     selectedTitle: string | boolean
+    image: string
 }
 
 
