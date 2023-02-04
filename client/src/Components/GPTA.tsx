@@ -129,7 +129,7 @@ const formatText = (text:any) => {
 
 
   return (
-    <section ref={myRef} className="text-gray-800 body-font">
+    <section ref={myRef} className="text-gray-800 body-font flex flex-col h-full">
       <div className='flex flex-row justify-around content-center'>
         <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
         <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
@@ -177,8 +177,8 @@ const formatText = (text:any) => {
           }
         </div>
       </div> :
-       <div className='flex justify-center content-center h-full w-full'>
-        Please select a student and an assignment
+       <div className='flex justify-center items-center h-full w-full'>
+          Please select a student and an assignment
        </div>
        }
     </section>

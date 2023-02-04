@@ -76,3 +76,6 @@ body {
 /* div {
   outline: auto;
 } */
+section {
+  outline: red solid 2px;
+}
