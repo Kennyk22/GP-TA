@@ -18,7 +18,7 @@ dotenv_1.default.config();
 //creates prompt for ai
 const aiProp = (string) => {
     return {
-        model: "text-davinci-003",
+        model: "text-davinci-002",
         prompt: string,
         temperature: 0,
         max_tokens: 500,

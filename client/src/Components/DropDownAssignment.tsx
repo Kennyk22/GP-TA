@@ -34,7 +34,7 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
     console.log(result)
     if (!result.text) {
       dispatch(actionHighlight(''))
-      dispatch(actionList([]))
+      dispatch(actionList(''))
       return
     }
     checkGrammar(result.text)
