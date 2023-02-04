@@ -18,7 +18,7 @@ function App() {
   const {isAuthenticated}= useAuth0()
 
   return (
-    <div className='flex flex-col h-screen border border-red-600'>
+    <div className='flex flex-col h-screen'>
       <Router>
       <Header/>
         <Routes>

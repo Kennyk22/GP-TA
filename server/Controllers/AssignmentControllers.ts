@@ -20,18 +20,26 @@ export default {
                 apiKey: process.env.API_KEY,
             });
             const openai = new OpenAIApi(configuration)
+            const feedback1: string[] = []
 
+            const feedback2: string[] = []
+            const splitprompt = content.split('.')
+
+            for (let i=0; i < splitprompt.length-1; i++) {
             //FIRST AI CALL
-            const aiResponse1 = await openai.createCompletion(aiProp("wrap grammatical errors in this text with astrisks:" + content));
-            const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text)
+            const aiResponse1 = await openai.createCompletion(aiProp("wrap grammatical errors in this text with astrisks:" + splitprompt[i]));
+            feedback1.push(JSON.stringify(aiResponse1.data.choices[0].text))
 
             // SECOND AI CALL
-            const aiResponse2 = await openai.createCompletion(aiProp("provide a numbered list of grammatical errors in this text with a short explanation:" + content,));
-            const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text)
-
+            const aiResponse2 = await openai.createCompletion(aiProp("provide a numbered list of grammatical errors in this text with a short explanation:" + splitprompt[i],));
+            feedback2.push(JSON.stringify(aiResponse2.data.choices[0].text))
+            }
+            //THIRD AI CALL
+            const aiResponse3 = await openai.createCompletion(aiProp("Based on this text" + content + "can you tell me specific things I could do to improve my Spanish mentioning 5 of the mistakes. Answer this as if you were the teacher writing a feedback conclusion for an essay"))
+             const feedback3 = (JSON.stringify(aiResponse3.data.choices[0].text))
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            const feedback = feedback1 + "-+-" +feedback2
-
+            const feedback = feedback1.join(" ") + "-+-" + feedback2.join(" ") + "-+-" + feedback3
+            console.log(feedback)
             //calls auth0 for usertoken and extracts email
             const userEmail = await getAuth0Email(ctx)
 

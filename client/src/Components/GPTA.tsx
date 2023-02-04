@@ -13,7 +13,7 @@ import DropDownAssignment from './DropDownAssignment';
 import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
-import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl } from '../Actions/actions';
+import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl, actionSuggestion } from '../Actions/actions';
 //import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
 import SubmitImage from './SubmitImage';
@@ -65,8 +65,10 @@ function GPTA() {
       const Results = postResult.text.split('-+-')
       const firstAnswer = Results[0]
       const secondAnswer = Results[1]
+      const thirdAnswer = Results[2]
       dispatch(actionHighlight(formatAnswer(firstAnswer)))
       dispatch(actionList(formatText(secondAnswer)))
+      dispatch(actionSuggestion(formatAnswer(thirdAnswer)))
       dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
@@ -76,9 +78,11 @@ function GPTA() {
 
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
-    const regex = /\*(.*?)\*/g;
-    text = text.slice(5)
-    const result = text.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
+    const newtext = text.replace(/"\s"/g, " ")
+    const newnewtext = newtext.replace(/\\n\\n/g, "")
+    const regex = /\*+(.*?)\*+/g;
+    // text = text.slice(5)
+    const result = newnewtext.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
     return result
   }
 
@@ -127,6 +131,15 @@ const formatText = (text:any) => {
     }
   }
 
+  const unhighlight = (word: string) => {
+    const current: any = myRef.current
+    const children: any = current.getElementsByClassName(word)
+    for (const child of children) {
+      child.style.backgroundColor = 'transparent'
+    }
+  }
+
+
 
   return (
     <section ref={myRef} className="text-gray-800 body-font flex flex-col h-full">
@@ -170,8 +183,9 @@ const formatText = (text:any) => {
                 mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
                 let [intro, solution] = element.split('should be')
                 element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
-                return <li key={index} onMouseOver={() => HoverAndHighlight(mistakes[1])} dangerouslySetInnerHTML={{ __html: element }}></li>
+                return <li key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
+              <li>{GPTAstate.suggestionResult}</li>
             </ul> :
             <CircleLoader color="#5f5f5f" />
           }

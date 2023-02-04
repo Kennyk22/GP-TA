@@ -43,7 +43,7 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
 
 
   return (
-    <Menu as="div" className="relative inline-block text-left outline">
+    <Menu as="div" className="relative inline-block text-left">
       <div className=' mt-5 lg:mt-2'>
         <Menu.Button className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-100">
           {dropState.selectedTitle ? dropState.selectedTitle : title}
