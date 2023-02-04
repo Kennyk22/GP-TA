@@ -5,7 +5,8 @@ const initGPTA = {
     type: 'text',
     file: "",
     highlightResult: "",
-    listResult: [],
+    listResult: '',
+    suggestionResult: '',
     input: "",
     loading: false,
     allStudents: [],
@@ -47,6 +48,8 @@ const GPTA = (state: GPTAstate = initGPTA, action: {type: string, payload: any})
             return {...state, image: action.payload}
         case 'GPTA_URL':
             return {...state, imgURL: action.payload}
+        case 'GPTA_SUGGESTION':
+            return {...state, suggestionResult: action.payload}
         default:
             return state;
     }

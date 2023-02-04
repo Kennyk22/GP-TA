@@ -7,7 +7,7 @@ dotenv.config()
 //creates prompt for ai
 export const aiProp = (string:string) => {
     return {
-        model: "text-davinci-003",
+        model: "text-davinci-002",
         prompt: string,
         temperature: 0,
         max_tokens: 500,

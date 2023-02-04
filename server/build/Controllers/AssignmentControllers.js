@@ -30,13 +30,17 @@ exports.default = {
             });
             const openai = new openai_1.OpenAIApi(configuration);
             //FIRST AI CALL
-            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("wrap grammatical errors in this text with astrisks:" + content));
+            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("Please identify any errors and wrap each error in asterisks in the following Spanish text:" + content));
             const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text);
             // SECOND AI CALL
             const aiResponse2 = yield openai.createCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation:" + content));
             const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text);
+            //THIRD AI CALL
+            const aiResponse3 = yield openai.createCompletion((0, Helpers_1.aiProp)("tell me 5 general things I could do to improve this text with short examples and explain like you are a teacher:" + content));
+            const feedback3 = (JSON.stringify(aiResponse3.data.choices[0].text));
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            const feedback = feedback1 + "-+-" + feedback2;
+            const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3;
+            console.log(feedback);
             //calls auth0 for usertoken and extracts email
             const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
             const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId });

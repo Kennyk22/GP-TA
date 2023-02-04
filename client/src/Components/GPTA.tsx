@@ -13,7 +13,7 @@ import DropDownAssignment from './DropDownAssignment';
 import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
-import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl } from '../Actions/actions';
+import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl, actionSuggestion } from '../Actions/actions';
 //import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
 import SubmitImage from './SubmitImage';
@@ -65,8 +65,10 @@ function GPTA() {
       const Results = postResult.text.split('-+-')
       const firstAnswer = Results[0]
       const secondAnswer = Results[1]
-      dispatch(actionHighlight(formatAnswer(firstAnswer)))
-      dispatch(actionList(formatText(secondAnswer)))
+      const thirdAnswer = Results[2]
+      dispatch(actionHighlight(firstAnswer))
+      dispatch(actionList(secondAnswer))
+      dispatch(actionSuggestion(thirdAnswer))
       dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
@@ -76,9 +78,11 @@ function GPTA() {
 
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
-    const regex = /\*(.*?)\*/g;
-    text = text.slice(5)
-    const result = text.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
+    const newtext = text.replace(/"\s"/g, " ")
+    const newnewtext = newtext.replace(/\\n\\n/g, "")
+    const regex = /\*+(.*?)\*+/g;
+    // text = text.slice(5)
+    const result = newnewtext.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
     return result
   }
 
@@ -127,6 +131,15 @@ const formatText = (text:any) => {
     }
   }
 
+  const unhighlight = (word: string) => {
+    const current: any = myRef.current
+    const children: any = current.getElementsByClassName(word)
+    for (const child of children) {
+      child.style.backgroundColor = 'transparent'
+    }
+  }
+
+
 
   return (
     <section ref={myRef} className="text-gray-800 body-font flex flex-col h-full">
@@ -159,19 +172,23 @@ const formatText = (text:any) => {
             <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
           {!GPTAstate.loading ?
             <ul>
-              <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li>
+              <li>{GPTAstate.highlightResult}</li>
+              {/* <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li> */}
               <br />
               <h1><b>Here is your feedback</b></h1>
               <br />
-              {GPTAstate.listResult.map((element: any, index) => {
+              <li>{GPTAstate.listResult}</li>
+              {/* {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
                 let mistakes = element.match(/\"\w+\"/g);
                 if (!mistakes) return;
                 mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
                 let [intro, solution] = element.split('should be')
                 element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
-                return <li key={index} onMouseOver={() => HoverAndHighlight(mistakes[1])} dangerouslySetInnerHTML={{ __html: element }}></li>
-              })}
+                return <li key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
+              })} */}
+              <h1 className='font-extrabold'>This is the third prompt</h1>
+              <li>{GPTAstate.suggestionResult}</li>
             </ul> :
             <CircleLoader color="#5f5f5f" />
           }

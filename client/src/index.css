@@ -73,9 +73,3 @@ body {
 .Oswald {
   font-family: 'Oswald', sans-serif;
 }
-/* div {
-  outline: auto;
-} */
-section {
-  outline: red solid 2px;
-}

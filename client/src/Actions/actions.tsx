@@ -15,7 +15,7 @@ export const actionImage = (image: string) => {
 export const actionHighlight = (result:string) => {
     return {type: 'GPTA_HIGHLIGHT', payload:result}
 }
-export const actionList = (result:string[]) => {
+export const actionList = (result:string) => {
     return {type: 'GPTA_LIST', payload:result}
 }
 export const actionInput = (input:string) => {
@@ -44,6 +44,9 @@ export const actionMenuStudent = (student: string) => {
 }
 export const actionImgUrl = (url: string) => {
     return {type: 'GPTA_URL', payload: url}
+}
+export const actionSuggestion = (text:string) => {
+    return {type:'GPTA_SUGGESTION', payload:text}
 }
 
 

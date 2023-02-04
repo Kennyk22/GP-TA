@@ -11,7 +11,7 @@ function Dashboard() {
   const{isAuthenticated} = useAuth0()
 
   return (
-    <div className='flex flex-col h-full outline'>
+    <div className='flex flex-col h-full'>
       <GPTA />
       <Routes>
         <Route path="/teacherFolder" element={isAuthenticated ? <TeacherFolder /> : <LoginPage/>} />
