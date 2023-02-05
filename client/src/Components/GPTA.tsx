@@ -151,7 +151,7 @@ const formatText = (text:any) => {
         {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
         {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
         {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
-        {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments} checkGrammar={checkGrammar} /> : 'loading assignments'}
+        {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> : 'loading assignments'}
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> : 'loading students'}
       </div>
       {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
@@ -176,15 +176,20 @@ const formatText = (text:any) => {
 
         {/* container of the teacher feebdack */}
 
-        <div className="lg:max-w-lg p-4 shadow-lg lg:w-full md:w-1/2 w-5/6 justify-center content-center">
+        <div className="lg:max-w-xl p-9 lg:w-full md:w-1/2 w-5/6 justify-center content-center">
 
-
-                        {/* first feedback */}
           {!GPTAstate.loading ?
             <div>
+
+            {/* first feedback */}
+            <div className='feedbackWrap p-4 shadow-lg'>
              <h1 className="font-bold">Step 1: Spot your areas of improvement in your essay</h1>
-              <p className='shadow-lg' dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></p>
+              <p className='' dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></p>
+              </div>
               <br />
+
+              {/* //second feedback */}
+             <div className='feedbackWrap p-4 shadow-lg'>
              <h1 className='font-bold'>Step 2: A list with feedback for your corrections above</h1>
               {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
@@ -195,8 +200,14 @@ const formatText = (text:any) => {
                 element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
                 return <li  key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
+                </div>
+
+              {/* //third feedback */}
+              <div className='feedbackWrap p-4 shadow-lg'>
+               <h1 className='font-bold'>Step 3: General suggestions to expand your learning</h1>
               <li>{GPTAstate.suggestionResult}</li>
-            </div> :
+              </div>
+            </div>  :
             <CircleLoader color="#5f5f5f" />
           }
         </div>
