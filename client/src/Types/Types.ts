@@ -16,7 +16,7 @@ export interface GPTAstate {
     type: string,
     file: string,
     highlightResult: string,
-    listResult: string //JSX.Element[],
+    listResult: JSX.Element[],
     suggestionResult: string
     input: string,
     loading: boolean,

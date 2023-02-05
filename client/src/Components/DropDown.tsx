@@ -35,7 +35,7 @@ export default function DropDown({array, name, checkGrammar}: {array: Student[],
     console.log(result)
     if (!result.text) {
       dispatch(actionHighlight(''))
-      dispatch(actionList(''))
+      dispatch(actionList([]))
       return
     }
     checkGrammar(result.text)

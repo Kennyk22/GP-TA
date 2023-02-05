@@ -68,7 +68,7 @@ function GPTA() {
       const thirdAnswer = Results[2]
       dispatch(actionHighlight(formatAnswer(firstAnswer)))
       dispatch(actionList(formatText(secondAnswer)))
-      dispatch(actionSuggestion(thirdAnswer))
+      dispatch(actionSuggestion(formatAnswer(thirdAnswer)))
       dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
@@ -171,13 +171,11 @@ const formatText = (text:any) => {
             <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
           {!GPTAstate.loading ?
             <ul>
-              {/* <li>{GPTAstate.highlightResult}</li> */}
               <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li>
               <br />
               <h1><b>Here is your feedback</b></h1>
               <br />
-              <li>{GPTAstate.listResult}</li>
-              {/* {GPTAstate.listResult.map((element: any, index) => {
+              {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
                 let mistakes = element.match(/\"\w+\"/g);
                 if (!mistakes) return;
@@ -185,8 +183,7 @@ const formatText = (text:any) => {
                 let [intro, solution] = element.split('should be')
                 element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
                 return <li key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
-              })} */}
-              <h1 className='font-extrabold'>This is the third prompt</h1>
+              })}
               <li>{GPTAstate.suggestionResult}</li>
             </ul> :
             <CircleLoader color="#5f5f5f" />

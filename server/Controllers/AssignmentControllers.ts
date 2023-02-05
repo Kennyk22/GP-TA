@@ -20,7 +20,12 @@ export default {
                 apiKey: process.env.API_KEY,
             });
             const openai = new OpenAIApi(configuration)
+            const feedback1: string[] = []
 
+            const feedback2: string[] = []
+            const splitprompt = content.split('.')
+
+            for (let i=0; i < splitprompt.length-1; i++) {
             //FIRST AI CALL
 
             const aiResponse1 = await openai.createCompletion(aiProp("for the following text identify any grammatical errors and wrap each error in asterisks:" + content));
@@ -33,7 +38,7 @@ export default {
             const aiResponse3 = await openai.createCompletion(aiProp("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content))
              const feedback3 = (JSON.stringify(aiResponse3.data.choices[0].text))
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
-            const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3
+            const feedback = feedback1.join(" ") + "-+-" + feedback2.join(" ") + "-+-" + feedback3
             console.log(feedback)
             //calls auth0 for usertoken and extracts email
             const userEmail = await getAuth0Email(ctx)
