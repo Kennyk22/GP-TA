@@ -66,8 +66,8 @@ function GPTA() {
       const firstAnswer = Results[0]
       const secondAnswer = Results[1]
       const thirdAnswer = Results[2]
-      dispatch(actionHighlight(firstAnswer))
-      dispatch(actionList(secondAnswer))
+      dispatch(actionHighlight(formatAnswer(firstAnswer)))
+      dispatch(actionList(formatText(secondAnswer)))
       dispatch(actionSuggestion(thirdAnswer))
       dispatch(actionLoading(false))
     } catch (error) {
@@ -81,7 +81,6 @@ function GPTA() {
     const newtext = text.replace(/"\s"/g, " ")
     const newnewtext = newtext.replace(/\\n\\n/g, "")
     const regex = /\*+(.*?)\*+/g;
-    // text = text.slice(5)
     const result = newnewtext.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
     return result
   }
@@ -172,8 +171,8 @@ const formatText = (text:any) => {
             <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
           {!GPTAstate.loading ?
             <ul>
-              <li>{GPTAstate.highlightResult}</li>
-              {/* <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li> */}
+              {/* <li>{GPTAstate.highlightResult}</li> */}
+              <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li>
               <br />
               <h1><b>Here is your feedback</b></h1>
               <br />

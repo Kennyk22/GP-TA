@@ -22,14 +22,15 @@ export default {
             const openai = new OpenAIApi(configuration)
 
             //FIRST AI CALL
-            const aiResponse1 = await openai.createCompletion(aiProp("Please identify any errors and wrap each error in asterisks in the following Spanish text:" + content));
+
+            const aiResponse1 = await openai.createCompletion(aiProp("for the following text identify any grammatical errors and wrap each error in asterisks:" + content));
             const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text)
             // SECOND AI CALL
             const aiResponse2 = await openai.createCompletion(aiProp("provide a numbered list of grammatical errors in this text with a short explanation:" + content,));
-            const feedback2 =JSON.stringify(aiResponse2.data.choices[0].text)
+            const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text)
 
             //THIRD AI CALL
-            const aiResponse3 = await openai.createCompletion(aiProp("tell me 5 general things I could do to improve this text with  short examples and explain like you are a teacher:" + content))
+            const aiResponse3 = await openai.createCompletion(aiProp("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content))
              const feedback3 = (JSON.stringify(aiResponse3.data.choices[0].text))
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
             const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3
