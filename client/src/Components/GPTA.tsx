@@ -11,7 +11,7 @@ import SubmitText from './SubmitText';
 import DropDown from './DropDown';
 import DropDownAssignment from './DropDownAssignment';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { WholeState } from '../Types/Types';
+import { GPTAstate, WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl, actionSuggestion } from '../Actions/actions';
 //import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
@@ -49,7 +49,7 @@ function GPTA() {
       if (!get) {
         dispatch(actionLoading(true))
       //calls to server to get ai response then post that response on the database using the post request from services
-        postResult = await addFeedback(GPTAstate.type === 'text' ? GPTAstate.input: GPTAstate.type === 'file' ?  GPTAstate.file : GPTAstate.image, token, GPTAstate.select.titleId as number, GPTAstate.select.studentId as number)
+        postResult = await addFeedback(GPTAstate.type === 'input' ? GPTAstate.input: GPTAstate.type === 'file' ?  GPTAstate.file : GPTAstate.image, token, GPTAstate.select.titleId as number, GPTAstate.select.studentId as number)
       } else {
         postResult = {text: get}
       }
@@ -137,8 +137,8 @@ const formatText = (text:any) => {
     //whole dashboard
     <section ref={myRef} className="">
       {/* second header with dropdown menus */}
-      <div className='justify-between inline-block flex shadow'>
-        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 w-[100%]'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
+      <div className='justify-between flex shadow'>
+        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
         {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
         {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
         {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
@@ -165,9 +165,9 @@ const formatText = (text:any) => {
             <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">File</button>
             <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Text</button>
             <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Image</button>
-            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#020105] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
+            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#020105] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
           </div >
-              {GPTAstate.type === 'text' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
+              {GPTAstate.type === 'input' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
 
         {/* container of the teacher feebdack */}
