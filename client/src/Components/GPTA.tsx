@@ -138,7 +138,7 @@ const formatText = (text:any) => {
     <section ref={myRef} className="">
       {/* second header with dropdown menus */}
       <div className='justify-between inline-block flex shadow'>
-        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 w-[100%]'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
+        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 w-[100%] hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
         {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
         {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
         {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}

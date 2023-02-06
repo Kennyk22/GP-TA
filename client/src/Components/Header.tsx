@@ -25,7 +25,7 @@ function Header() {
       <Link to="/pricing"><a className="text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-200 ease-in-out mr-5">Pricing</a></Link>
 
     </nav>
-        {isAuthenticated ? <button onClick={() => logout() } className="inline-flex items-center bg-[#cc2936] text-white border-0 py-1 px-3 focus:outline-none hover:bg-red-700 hover:text-white rounded text-base mt-4 md:mt-0">Log out
+        {isAuthenticated ? <button onClick={() => logout() } className="inline-flex items-center bg-[#cc2936] text-white border-0 py-1 px-3 font-bold focus:outline-none hover:bg-red-700 hover:text-white rounded text-base mt-4 md:mt-0">Log out
       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4 ml-1" viewBox="0 0 24 24">
         <path d="M5 12h14M12 5l7 7-7 7"></path>
       </svg>
