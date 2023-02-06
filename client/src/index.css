@@ -73,3 +73,7 @@ body {
 .Oswald {
   font-family: 'Oswald', sans-serif;
 }
+
+.scrollstep::-webkit-scrollbar {
+  display: none;
+}
