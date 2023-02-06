@@ -137,34 +137,33 @@ const formatText = (text:any) => {
     //whole dashboard
     <section ref={myRef} className="">
       {/* second header with dropdown menus */}
-      <div className='justify-around space-around inline-block flex'>
-        <p>{isAuthenticated ? <p className='bg-white hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>Welcome {user?.name}!</p> : <p>you are not logged in</p> }</p>
+      <div className='justify-between inline-block flex shadow'>
+        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 w-[100%]'>Welcome {user?.name}!</p> : <p>you are not logged in</p> }</p>
         {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
         {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
         {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
-        <div>
+        <div className='mr-7 mt-1'>
         {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> : 'loading assignments'}
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> : 'loading students'}
         </div>
       </div>
 
-      <section className="text-gray-800 body-font flex-col h-full">
-      {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+      <section className="text-gray-800 body-font h-full">
+      {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-17 p-5 md:flex-row ">
 
        {/* //container of submission buttons */}
 
-        <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+        <div className="lg:flex-grow md:w-1/2 lg:mr-1 lg:mt-10 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
             <br className="hidden lg:inline-block"/>and have it marked in seconds
           </h1>
-          <p className="mb-8 leading-relaxed">Import your document and get accurate notes </p>
-          <h1>Text here for development purposes</h1>
-          <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p>
+          {/* <h1>Text here for development purposes</h1> */}
+          {/* <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p> */}
           <div className="flex flex-row justify-around w-full">
-            <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By File</button>
-            <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Text</button>
-            <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Input By Image</button>
-            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
+            <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">File</button>
+            <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Text</button>
+            <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Image</button>
+            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#020105] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg">Check grammar</button>
           </div >
               {GPTAstate.type === 'text' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
@@ -205,7 +204,7 @@ const formatText = (text:any) => {
 
 
             </div>  :
-            <CircleLoader color="#5f5f5f" />
+            <CircleLoader className="self-center items-center align-middle" color="red" />
           }
         </div>
       </div> :
