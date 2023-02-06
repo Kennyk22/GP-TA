@@ -79,7 +79,8 @@ function GPTA() {
 
 
 const formatText = (text:any) => {
-    const errorList = text.split('\\n').slice(2);
+    console.log(text)
+    const errorList = text.split('\\n').slice(1);
     console.log('now as an array here', errorList)
     return errorList
 }
@@ -209,6 +210,7 @@ const formatText = (text:any) => {
                 <ul>
                   {GPTAstate.suggestionResult.map((element: any, index) => {
                   element = element.replace(/\\/g, '');
+                  console.log(element)
                   return <li>{element}</li>})}
                 </ul>
               </div>
