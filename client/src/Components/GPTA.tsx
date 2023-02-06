@@ -3,7 +3,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import TeacherFolder from './TeacherFolder';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { addFeedback, deleteOneStudent } from '../Services/services';
+import { addFeedback, deleteOneStudent, getAllData } from '../Services/services';
 import {CircleLoader} from 'react-spinners'
 import JSZip from 'jszip'
 import SubmitFile from './SubmitFile';
@@ -30,8 +30,7 @@ function GPTA() {
 
   useEffect(  ()=>{
     if (isAuthenticated) {
-      getAllStudentsData()
-      getAllAssignmentsData()
+      getStudentsAndAssignments()
     }}, [isAuthenticated])
 
   //getAllStudentData
@@ -46,7 +45,14 @@ function GPTA() {
         const data = await getAllAssignments(token);
         dispatch(actionAllAssignments(data))
     }
-
+  //get AllDataForlists
+  const getStudentsAndAssignments = async () => {
+    const token: string = await getAccessTokenSilently()
+    const data = await getAllData(token);
+    console.log(data)
+    dispatch(actionAllAssignments(data.titles))
+    dispatch(actionAllStudents(data.students))
+  }
 
 
 

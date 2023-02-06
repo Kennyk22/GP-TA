@@ -168,6 +168,26 @@ const getAllAssignments = async (token: String) => {
 }
  }
 
+const getAllData = async (token: String) => {
+    try {
+     return await fetch(`${baseURL}/allstudentandassignments`, {
+         headers: {
+             'Content-Type': 'application/json',
+             authorization: `Bearer ${token}`
+         }
+     }).then(async response => {
+         const result = await response.json();
+         return result
+})
+ } catch (error) {
+     console.log(error);
+     return 'error'
+    }
 
 
-export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback, payments, deleteOneTitle}
+
+}
+
+
+
+export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback, payments, deleteOneTitle, getAllData}

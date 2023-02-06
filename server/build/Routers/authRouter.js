@@ -7,6 +7,7 @@ const koa_router_1 = __importDefault(require("koa-router"));
 const AssignmentTitleControllers_1 = __importDefault(require("../Controllers/AssignmentTitleControllers"));
 const AssignmentControllers_1 = __importDefault(require("../Controllers/AssignmentControllers"));
 const StudentsController_1 = __importDefault(require("../Controllers/StudentsController"));
+const getAllTest_1 = __importDefault(require("../Controllers/getAllTest"));
 const router = new koa_router_1.default();
 //Requests to AI for feedback
 router.post('/addFeedback', AssignmentControllers_1.default.aiPost);
@@ -21,4 +22,5 @@ router.get('/assignment/:id', AssignmentTitleControllers_1.default.getAssignment
 router.get('/assignment', AssignmentTitleControllers_1.default.getAllAssignmentTitles);
 router.post('/addAssignment', AssignmentTitleControllers_1.default.addTitle);
 router.delete('/assignment/:id', AssignmentTitleControllers_1.default.deleteOneTitle);
+router.get('/allstudentandassignments', getAllTest_1.default.getAllStudentsAndAssignments);
 exports.default = router;
