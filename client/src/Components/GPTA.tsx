@@ -58,10 +58,9 @@ function GPTA() {
       const firstAnswer = Results[0]
       const secondAnswer = Results[1]
       const thirdAnswer = Results[2]
-      console.log('EEEEEEEEEEEEEEEEEEEEEEEEE', secondAnswer)
       dispatch(actionHighlight(formatAnswer(firstAnswer)))
-      dispatch(actionList(formatText(secondAnswer)))
-      dispatch(actionSuggestion(formatText(thirdAnswer)))
+      dispatch(actionList(formatText(secondAnswer.slice(0, secondAnswer.length-1))))
+      dispatch(actionSuggestion(formatText(thirdAnswer.slice(0, thirdAnswer.length-1))))
       dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
@@ -139,7 +138,7 @@ const formatText = (text:any) => {
     <section ref={myRef} className="">
       {/* second header with dropdown menus */}
       <div className='justify-between inline-block flex shadow'>
-        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 w-[100%]'>Welcome {user?.name}!</p> : <p>you are not logged in</p> }</p>
+        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 w-[100%]'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
         {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
         {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
         {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
@@ -186,6 +185,7 @@ const formatText = (text:any) => {
               {/* //second feedback */}
              <div className='feedbackWrap rounded-lg p-4 border-red-700 border-2 shadow-lg margin-'>
              <h1 className='font-bold'>Step 2: A list with feedback for your corrections above</h1>
+             <ul>
               {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
                 return <li>{element}</li>
@@ -198,6 +198,7 @@ const formatText = (text:any) => {
                 // element = intro + `should be <span class='${'mistakes[1]'}' style='color: green'>" ${solution} "</span>`
                 // return <li  key={index} onMouseLeave={() => unhighlight('mistakes[1])')} onMouseOver={() => HoverAndHighlight('mistakes[1]')}  dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
+              </ul>
                 </div>
 
               {/* //third feedback */}
