@@ -21,7 +21,7 @@ export default {
             });
             const openai = new OpenAIApi(configuration)
             //FIRST AI CALL
-            const aiResponse1 = await openai.createCompletion(aiProp("for the following text identify any grammatical errors and wrap each error in asterisks:" + content));
+            const aiResponse1 = await openai.createCompletion(aiProp("for the following text identify any grammatical errors and wrap each error in asterisks" + content));
             const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text)
 
             // SECOND AI CALL

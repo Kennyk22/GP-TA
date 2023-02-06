@@ -30,7 +30,7 @@ exports.default = {
             });
             const openai = new openai_1.OpenAIApi(configuration);
             //FIRST AI CALL
-            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("for the following text identify any grammatical errors and wrap each error in asterisks:" + content));
+            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("for the following text identify any grammatical errors and wrap each error in asterisks" + content));
             const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text);
             // SECOND AI CALL
             const aiResponse2 = yield openai.createCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation and its correction" + content));
