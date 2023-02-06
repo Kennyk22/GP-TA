@@ -2,7 +2,7 @@ import {Student, Assignment} from "../Types/Types"
 
 export const actionInputFile = {type: 'GPTA_TYPE', payload: 'file'}
 
-export const actionInputText = { type: 'GPTA_TYPE', payload: 'text' }
+export const actionInputText = { type: 'GPTA_TYPE', payload: 'input' }
 
 export const actionInputImage = {type: 'GPTA_TYPE', payload: 'image'}
 

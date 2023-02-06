@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { GPTAstate } from "../Types/Types";
 
 const initGPTA = {
-    type: 'text',
+    type: 'input',
     file: "",
     highlightResult: "",
     listResult: [],
