@@ -10,7 +10,6 @@ import SubmitFile from './SubmitFile';
 import SubmitText from './SubmitText';
 import DropDown from './DropDown';
 import DropDownAssignment from './DropDownAssignment';
-import { getAllStudents, getAllAssignments } from '../Services/services';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl, actionSuggestion } from '../Actions/actions';
@@ -33,18 +32,6 @@ function GPTA() {
       getStudentsAndAssignments()
     }}, [isAuthenticated])
 
-  //getAllStudentData
-    const getAllStudentsData = async () => {
-    const token:string = await getAccessTokenSilently()
-    const data = await getAllStudents(token);
-      dispatch(actionAllStudents(data))
-    }
-  //getAllAssignmentData
-      const getAllAssignmentsData = async () => {
-        const token: string = await getAccessTokenSilently()
-        const data = await getAllAssignments(token);
-        dispatch(actionAllAssignments(data))
-    }
   //get AllDataForlists
   const getStudentsAndAssignments = async () => {
     const token: string = await getAccessTokenSilently()
@@ -161,7 +148,7 @@ const formatText = (text:any) => {
         </div>
       </div>
 
-      <section className="text-gray-800 body-font flex h-full">
+      <section className="text-gray-800 body-font flex-col h-full">
       {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
 
        {/* //container of submission buttons */}
@@ -216,7 +203,7 @@ const formatText = (text:any) => {
               <p>{GPTAstate.suggestionResult}</p>
                 </div>
 
-              
+
             </div>  :
             <CircleLoader color="#5f5f5f" />
           }

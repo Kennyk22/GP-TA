@@ -14,7 +14,6 @@ router.get('/getFeedback/:titleId/:studentId', AssignmentControllers.getAssignme
 
 
 router.get('/student/:id', StudentsController.getStudentInfo)
-router.get('/student', StudentsController.getAllStudents)
 router.post('/addStudent', StudentsController.addStudent)
 router.delete('/student/:id', StudentsController.deleteOne)
 
@@ -22,7 +21,6 @@ router.delete('/student/:id', StudentsController.deleteOne)
 //Requests to DB for assignments info
 
 router.get('/assignment/:id', AssignmentTitleControllers.getAssignmentInfo)
-router.get('/assignment', AssignmentTitleControllers.getAllAssignmentTitles)
 router.post('/addAssignment', AssignmentTitleControllers.addTitle);
 router.delete('/assignment/:id', AssignmentTitleControllers.deleteOneTitle)
 

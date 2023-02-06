@@ -37,22 +37,6 @@ const getFeedback = async (token:string, titleId: number, studentId: number) => 
     }
 }
 
-const getAllStudents = async (token:string) => {
-    try {
-        return await fetch(`${baseURL}/student`, {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`
-            }
-        }).then(async response => {
-            const result = await response.json();
-            return result
-})
-    } catch (error) {
-        console.log(error);
-        return 'error'
-    }
-}
 
 
 const addStudent = async (token: String, name: String) => {
@@ -126,26 +110,6 @@ const deleteOneTitle = async (token: String, id: string) => {
   });
 }
 
-const getAllAssignments = async (token: String) => {
-       try {
-        return await fetch(`${baseURL}/assignment`, {
-            headers: {
-                'Content-Type': 'application/json',
-                authorization: `Bearer ${token}`
-            }
-        }).then(async response => {
-            const result = await response.json();
-            return result
-})
-    } catch (error) {
-        console.log(error);
-        return 'error'
-       }
-
-
-
-}
-
  const payments = async (plan:string) => {
      try {
          console.log('are you happening')
@@ -190,4 +154,4 @@ const getAllData = async (token: String) => {
 
 
 
-export {addFeedback, getAllStudents, addStudent, addAssignment, deleteOneStudent, getAllAssignments, getFeedback, payments, deleteOneTitle, getAllData}
+export {addFeedback, addStudent, addAssignment, deleteOneStudent, getFeedback, payments, deleteOneTitle, getAllData}
