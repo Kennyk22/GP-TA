@@ -17,7 +17,7 @@ export interface GPTAstate {
     file: string,
     highlightResult: string,
     listResult: string[],
-    suggestionResult: string
+    suggestionResult: string[],
     input: string,
     loading: boolean,
     allStudents: Student[]
