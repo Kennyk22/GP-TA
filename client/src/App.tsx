@@ -19,9 +19,9 @@ function App() {
   const {isAuthenticated}= useAuth0()
 
   return (
-    <div className='flex flex-col h-screen'>
       <Router>
-      <Header/>
+      <Header />
+     <div className='flex flex-col h-screen'>
         <Routes>
           <Route path="/" element={isAuthenticated ?
              <Dashboard/> :
@@ -31,8 +31,8 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/completion" element={<Completion/>}/>
         </Routes>
+        </div>
       </Router>
-    </div>
   );
 }
 
