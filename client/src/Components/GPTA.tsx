@@ -141,17 +141,25 @@ const formatText = (text:any) => {
 
 
   return (
-    <section ref={myRef} className="text-gray-800 body-font flex flex-col h-full">
-      <div className='flex flex-row justify-around content-center'>
-        <p>{isAuthenticated ? <p className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>{user?.name}</p> : <p>you are not logged in</p> }</p>
-        <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link>
-        <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link>
+    //whole dashboard
+    <section ref={myRef} className="">
+      {/* second header with dropdown menus */}
+      <div className='justify-around space-around inline-block flex'>
+        <p>{isAuthenticated ? <p className='bg-white hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>Welcome {user?.name}!</p> : <p>you are not logged in</p> }</p>
+        {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
+        {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
         {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
-        {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments} checkGrammar={checkGrammar} /> : 'loading assignments'}
-
+        <div>
+        {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> : 'loading assignments'}
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> : 'loading students'}
+        </div>
       </div>
+
+      <section className="text-gray-800 body-font flex h-full">
       {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
+
+       {/* //container of submission buttons */}
+
         <div className="lg:flex-grow md:w-1/2 lg:mr-24 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
             <br className="hidden lg:inline-block"/>and have it marked in seconds
@@ -167,14 +175,24 @@ const formatText = (text:any) => {
           </div >
               {GPTAstate.type === 'text' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
-        <div className="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 justify-center content-center">
-            <p>List of all the mistakes in Spanish that your teaching assistant has found</p>
+
+        {/* container of the teacher feebdack */}
+
+        <div className="lg:max-w-xl p-9 flex-col lg:w-full md:w-1/2 w-5/6 justify-center content-center">
+
           {!GPTAstate.loading ?
-            <ul>
-              <li dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></li>
+            <div>
+
+            {/* first feedback */}
+            <div className='feedbackWrap  rounded-lg p-4 shadow-lg'>
+             <h1 className="font-bold">Step 1: Spot your areas of improvement in your essay</h1>
+              <p className='' dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></p>
+              </div>
               <br />
-              <h1><b>Here is your feedback</b></h1>
-              <br />
+
+              {/* //second feedback */}
+             <div className='feedbackWrap rounded-lg p-4 shadow-lg margin-'>
+             <h1 className='font-bold'>Step 2: A list with feedback for your corrections above</h1>
               {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
                 let mistakes = element.match(/\"\w+\"/g);
@@ -182,10 +200,16 @@ const formatText = (text:any) => {
                 mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
                 let [intro, solution] = element.split('should be')
                 element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
-                return <li key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
+                return <li  key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
+                </div>
+
+              {/* //third feedback */}
+              <div className='feedbackWrap rounded-lg p-4 shadow-lg'>
+               <h1 className='font-bold'>Step 3: General suggestions to expand your learning</h1>
               <li>{GPTAstate.suggestionResult}</li>
-            </ul> :
+              </div>
+            </div>  :
             <CircleLoader color="#5f5f5f" />
           }
         </div>
@@ -194,7 +218,8 @@ const formatText = (text:any) => {
           Please select a student and an assignment
        </div>
        }
-    </section>
+      </section>
+      </section>
   )
 }
 
