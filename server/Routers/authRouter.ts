@@ -2,6 +2,7 @@ import Router from 'koa-router'
 import AssignmentTitleControllers from '../Controllers/AssignmentTitleControllers'
 import AssignmentControllers from '../Controllers/AssignmentControllers'
 import StudentsController from '../Controllers/StudentsController'
+import getAll from '../Controllers/getAllTest'
 
 const router = new Router()
 
@@ -24,5 +25,7 @@ router.get('/assignment/:id', AssignmentTitleControllers.getAssignmentInfo)
 router.get('/assignment', AssignmentTitleControllers.getAllAssignmentTitles)
 router.post('/addAssignment', AssignmentTitleControllers.addTitle);
 router.delete('/assignment/:id', AssignmentTitleControllers.deleteOneTitle)
+
+router.get('/allstudentandassignments', getAll.getAllStudentsAndAssignments)
 
 export default router
