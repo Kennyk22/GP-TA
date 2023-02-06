@@ -213,8 +213,10 @@ const formatText = (text:any) => {
               {/* //third feedback */}
               <div className='feedbackWrap rounded-lg p-4 shadow-lg'>
                <h1 className='font-bold'>Step 3: General suggestions to expand your learning</h1>
-              <li>{GPTAstate.suggestionResult}</li>
-              </div>
+              <p>{GPTAstate.suggestionResult}</p>
+                </div>
+
+              
             </div>  :
             <CircleLoader color="#5f5f5f" />
           }

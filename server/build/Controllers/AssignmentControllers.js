@@ -29,7 +29,6 @@ exports.default = {
                 apiKey: process.env.API_KEY,
             });
             const openai = new openai_1.OpenAIApi(configuration);
-            const feedback1 = [];
             const feedback2 = [];
             const splitprompt = content.split('.');
             for (let i = 0; i < splitprompt.length - 1; i++) {
@@ -52,7 +51,6 @@ exports.default = {
                 const response = yield Assignment_1.Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId });
                 ctx.body = { text: response.dataValues.response };
             }
-
         }
         catch (error) {
             console.log(error);

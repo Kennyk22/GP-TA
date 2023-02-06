@@ -20,7 +20,7 @@ export default {
                 apiKey: process.env.API_KEY,
             });
             const openai = new OpenAIApi(configuration)
-            
+
             const feedback2: string[] = []
             const splitprompt = content.split('.')
 
