@@ -14,12 +14,10 @@ router.post('/addFeedback', AssignmentControllers_1.default.aiPost);
 router.get('/getFeedback/:titleId/:studentId', AssignmentControllers_1.default.getAssignment);
 //Requests to DB for students info
 router.get('/student/:id', StudentsController_1.default.getStudentInfo);
-router.get('/student', StudentsController_1.default.getAllStudents);
 router.post('/addStudent', StudentsController_1.default.addStudent);
 router.delete('/student/:id', StudentsController_1.default.deleteOne);
 //Requests to DB for assignments info
 router.get('/assignment/:id', AssignmentTitleControllers_1.default.getAssignmentInfo);
-router.get('/assignment', AssignmentTitleControllers_1.default.getAllAssignmentTitles);
 router.post('/addAssignment', AssignmentTitleControllers_1.default.addTitle);
 router.delete('/assignment/:id', AssignmentTitleControllers_1.default.deleteOneTitle);
 router.get('/allstudentandassignments', getAllTest_1.default.getAllStudentsAndAssignments);

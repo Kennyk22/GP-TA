@@ -19,16 +19,6 @@ export default {
     }
   },
 
-  getAllStudents: async (ctx: Context) => {
-    try {
-      const ownerId = await getAuth0Email(ctx)
-      const allStudents = await Student.findAll({where: {ownerId : ownerId}})
-      ctx.body = allStudents
-    } catch (error) {
-      console.log(error)
-    }
-  },
-
   addStudent: async (ctx: Context) => {
     try {
       const body: any = ctx.request.body as {name:string}

@@ -27,16 +27,6 @@ exports.default = {
             console.log(error);
         }
     }),
-    getAllStudents: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            const allStudents = yield Student_1.Student.findAll({ where: { ownerId: ownerId } });
-            ctx.body = allStudents;
-        }
-        catch (error) {
-            console.log(error);
-        }
-    }),
     addStudent: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const body = ctx.request.body;

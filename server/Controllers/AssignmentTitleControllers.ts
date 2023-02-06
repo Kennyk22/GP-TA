@@ -19,18 +19,6 @@ export default {
     }
   },
 
-  getAllAssignmentTitles: async (ctx: Context) => {
-    try {
-      const ownerId = await getAuth0Email(ctx)
-      const allTitles = await AssignmentTitle.findAll({where: {ownerId : JSON.stringify(ownerId)}})
-      ctx.body = allTitles
-      ctx.status = 200
-    } catch (error) {
-      ctx.status = 500
-      console.log(error)
-    }
-  },
-
   addTitle: async (ctx: Context) => {
     try {
       const body = ctx.request.body as { title: string }

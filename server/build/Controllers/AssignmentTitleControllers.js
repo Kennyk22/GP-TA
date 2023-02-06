@@ -29,18 +29,6 @@ exports.default = {
             console.log(error);
         }
     }),
-    getAllAssignmentTitles: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
-        try {
-            const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            const allTitles = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } });
-            ctx.body = allTitles;
-            ctx.status = 200;
-        }
-        catch (error) {
-            ctx.status = 500;
-            console.log(error);
-        }
-    }),
     addTitle: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const body = ctx.request.body;
