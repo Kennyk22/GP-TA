@@ -36,7 +36,6 @@ function GPTA() {
   const getStudentsAndAssignments = async () => {
     const token: string = await getAccessTokenSilently()
     const data = await getAllData(token);
-    console.log(data)
     dispatch(actionAllAssignments(data.titles))
     dispatch(actionAllStudents(data.students))
   }
@@ -59,9 +58,10 @@ function GPTA() {
       const firstAnswer = Results[0]
       const secondAnswer = Results[1]
       const thirdAnswer = Results[2]
+      console.log('EEEEEEEEEEEEEEEEEEEEEEEEE', secondAnswer)
       dispatch(actionHighlight(formatAnswer(firstAnswer)))
       dispatch(actionList(formatText(secondAnswer)))
-      dispatch(actionSuggestion(formatAnswer(thirdAnswer)))
+      dispatch(actionSuggestion(formatText(thirdAnswer)))
       dispatch(actionLoading(false))
     } catch (error) {
       console.log(error)
@@ -81,6 +81,7 @@ function GPTA() {
 
 const formatText = (text:any) => {
     const errorList = text.split('\\n').slice(2);
+    console.log('now as an array here', errorList)
     return errorList
 }
 
@@ -176,39 +177,42 @@ const formatText = (text:any) => {
             <div>
 
             {/* first feedback */}
-            <div className='feedbackWrap  rounded-lg p-4 shadow-lg'>
+            <div className='feedbackWrap border-red-700 border-2  rounded-lg p-4 shadow-lg'>
              <h1 className="font-bold">Step 1: Spot your areas of improvement in your essay</h1>
               <p className='' dangerouslySetInnerHTML={{ __html: GPTAstate.highlightResult }}></p>
               </div>
               <br />
 
               {/* //second feedback */}
-             <div className='feedbackWrap rounded-lg p-4 shadow-lg margin-'>
+             <div className='feedbackWrap rounded-lg p-4 border-red-700 border-2 shadow-lg margin-'>
              <h1 className='font-bold'>Step 2: A list with feedback for your corrections above</h1>
               {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
-                let mistakes = element.match(/\"\w+\"/g);
-                if (!mistakes) return;
-                mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
-                let [intro, solution] = element.split('should be')
-                element = intro + `should be <span class='${mistakes[1]}' style='color: green'>" ${solution} "</span>`
-                return <li  key={index} onMouseLeave={() => unhighlight(mistakes[1])} onMouseOver={() => HoverAndHighlight(mistakes[1])}  dangerouslySetInnerHTML={{ __html: element }}></li>
+                return <li>{element}</li>
+                // let mistakes = element.match(/\"\w+\"/g);
+                // console.log('mistakes', mistakes)
+                // if (!mistakes) return;
+                // mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
+                // let [intro, solution] = element.split('should be')
+                // console.log('element', element)
+                // element = intro + `should be <span class='${'mistakes[1]'}' style='color: green'>" ${solution} "</span>`
+                // return <li  key={index} onMouseLeave={() => unhighlight('mistakes[1])')} onMouseOver={() => HoverAndHighlight('mistakes[1]')}  dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
                 </div>
 
               {/* //third feedback */}
-              <div className='feedbackWrap rounded-lg p-4 shadow-lg'>
+              <div className='feedbackWrap border-red-700 border-2 mt-6 rounded-lg p-4 shadow-lg'>
                <h1 className='font-bold'>Step 3: General suggestions to expand your learning</h1>
               <p>{GPTAstate.suggestionResult}</p>
                 </div>
 
 
             </div>  :
-            <CircleLoader className="self-center items-center align-middle" color="red" />
+            <CircleLoader className="self-center top-30 left-30 items-center align-middle" color="red" />
           }
         </div>
       </div> :
-       <div className='flex justify-center items-center h-full w-full'>
+       <div className='flex justify-center  items-center h-full w-full'>
           Please select a student and an assignment
        </div>
        }
