@@ -20,8 +20,7 @@ export default {
                 apiKey: process.env.API_KEY,
             });
             const openai = new OpenAIApi(configuration)
-            const feedback1: string[] = []
-
+            
             const feedback2: string[] = []
             const splitprompt = content.split('.')
 
@@ -43,6 +42,7 @@ export default {
                 console.log(feedback)
                 //calls auth0 for usertoken and extracts email
                 const userEmail = await getAuth0Email(ctx)
+
 
                 const response = await Assignment.create({ ownerId: JSON.stringify(userEmail), text: JSON.stringify(content), response: feedback, titleId: titleId, studentId: studentId })
 
