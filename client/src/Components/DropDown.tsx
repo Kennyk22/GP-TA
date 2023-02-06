@@ -7,7 +7,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { addFeedback, deleteOneStudent } from '../Services/services'
 import { Student, WholeState } from '../Types/Types'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionAllStudents, actionMenuStudent, actionStudentSelect, actionHighlight, actionList } from '../Actions/actions'
+import { actionAllStudents, actionMenuStudent, actionStudentSelect, actionHighlight, actionList, actionSuggestion } from '../Actions/actions'
 import { getFeedback } from '../Services/services'
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -36,6 +36,7 @@ export default function DropDown({array, name, checkGrammar}: {array: Student[],
     if (!result.text) {
       dispatch(actionHighlight(''))
       dispatch(actionList([]))
+      dispatch(actionSuggestion([]))
       return
     }
     checkGrammar(result.text)

@@ -6,7 +6,7 @@ import { useAuth0 } from '@auth0/auth0-react'
 import { getFeedback, deleteOneTitle } from '../Services/services'
 import { Assignment, WholeState } from '../Types/Types'
 import { useDispatch, useSelector } from 'react-redux'
-import { actionAllAssignments, actionMenuTitle, actionTitleSelect, actionHighlight, actionList } from '../Actions/actions'
+import { actionAllAssignments, actionMenuTitle, actionTitleSelect, actionHighlight, actionSuggestion, actionList } from '../Actions/actions'
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
@@ -35,6 +35,7 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
     if (!result.text) {
       dispatch(actionHighlight(''))
       dispatch(actionList([]))
+      dispatch(actionSuggestion([]))
       return
     }
     checkGrammar(result.text)
