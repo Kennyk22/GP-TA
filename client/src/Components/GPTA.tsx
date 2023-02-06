@@ -202,9 +202,13 @@ const formatText = (text:any) => {
 
               {/* //third feedback */}
               <div className='feedbackWrap border-red-700 border-2 mt-6 rounded-lg p-4 shadow-lg'>
-               <h1 className='font-bold'>Step 3: General suggestions to expand your learning</h1>
-              <p>{GPTAstate.suggestionResult}</p>
-                </div>
+                <h1 className='font-bold'>Step 3: General suggestions to expand your learning</h1>
+                <ul>
+                  {GPTAstate.suggestionResult.map((element: any, index) => {
+                  element = element.replace(/\\/g, '');
+                  return <li>{element}</li>})}
+                </ul>
+              </div>
 
 
             </div>  :

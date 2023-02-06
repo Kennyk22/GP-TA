@@ -6,7 +6,7 @@ const initGPTA = {
     file: "",
     highlightResult: "",
     listResult: [],
-    suggestionResult: '',
+    suggestionResult: [],
     input: "",
     loading: false,
     allStudents: [],

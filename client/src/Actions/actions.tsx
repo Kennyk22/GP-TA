@@ -45,7 +45,7 @@ export const actionMenuStudent = (student: string) => {
 export const actionImgUrl = (url: string) => {
     return {type: 'GPTA_URL', payload: url}
 }
-export const actionSuggestion = (text:string) => {
+export const actionSuggestion = (text:string[]) => {
     return {type:'GPTA_SUGGESTION', payload:text}
 }
 
