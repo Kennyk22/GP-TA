@@ -5,7 +5,7 @@ function InputSubmitter({handleFileUpload}: {handleFileUpload: (event: React.Cha
 
   return (
     <div className='flex justify-center w-full'>
-      <input title='fileInput' type="file" onChange={(e)=>handleFileUpload(e)} className="" />
+      <input title='fileInput' type="file" onChange={(e)=>handleFileUpload(e)} className="docInput" />
     </div>
   )
 }

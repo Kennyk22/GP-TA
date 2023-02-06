@@ -77,3 +77,49 @@ body {
 .scrollstep::-webkit-scrollbar {
   display: none;
 }
+
+.imgInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.imgInput::before {
+  content: 'Upload Image';
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  background-color: #333533;
+  color: #f9f9f9;
+  border-radius: 3px;
+  padding: 5px 8px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.imgInput:hover::before {
+  background-color: #bbbbbb;
+  color: black;
+}
+
+.docInput::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.docInput::before {
+  content: 'Upload .docx File';
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  background-color: #333533;
+  color: #f9f9f9;
+  border-radius: 3px;
+  padding: 5px 8px;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 10pt;
+}
+.docInput:hover::before {
+  background-color: #bbbbbb;
+  color: black;
+}
