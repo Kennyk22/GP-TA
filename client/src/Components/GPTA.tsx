@@ -16,7 +16,7 @@ import { actionInputFile, actionInputText, actionInputImage, actionImage, action
 //import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
 import SubmitImage from './SubmitImage';
-
+import CopyToClipboardButton from './CopyToClipboardButton';
 
 function GPTA() {
 
@@ -174,6 +174,7 @@ const formatText = (text:any) => {
         {/* container of the teacher feebdack */}
 
         <div className="lg:max-w-xl p-9 flex-col lg:w-full md:w-1/2 w-5/6 justify-center content-center">
+        <CopyToClipboardButton/>
 
           {!GPTAstate.loading ?
             <div>
@@ -214,8 +215,6 @@ const formatText = (text:any) => {
                   return <li>{element}</li>})}
                 </ul>
               </div>
-
-
             </div>  :
             <CircleLoader className="self-center top-30 left-30 items-center align-middle" color="red" />
           }
