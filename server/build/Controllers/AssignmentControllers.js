@@ -40,7 +40,6 @@ exports.default = {
             const feedback3 = JSON.stringify(aiResponse3.data.choices[0].text);
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
             const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3;
-            console.log(feedback);
             //calls auth0 for usertoken and extracts email
             const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
             const updateCheck = yield Assignment_1.Assignment.findOne({ where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId } });
@@ -50,7 +49,6 @@ exports.default = {
             }
             else {
                 const response = yield Assignment_1.Assignment.update({ text: JSON.stringify(content), response: feedback }, { where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning: true });
-                console.log(response);
                 ctx.body = { text: response[1][0].dataValues.response };
             }
         }
@@ -64,13 +62,9 @@ exports.default = {
             const userEmail = yield (0, Helpers_1.getAuth0Email)(ctx);
             const studentId = parseInt(body.studentId);
             const titleId = parseInt(body.titleId);
-            // console.log(studentId, titleId, userEmail)
             const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: JSON.stringify(userEmail), titleId: titleId } });
-            // console.log(response)
             ctx.status = 200;
-            ctx.body = response ? { text: response.dataValues.response } : { text: null };
-        }
-        catch (error) {
+        } catch (error) {
             ctx.status = 500;
             console.log(error);
         }

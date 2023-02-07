@@ -5,8 +5,6 @@ import sample from '../images/GoodLoginPage.png'
 function LoginPage() {
 
   const { loginWithRedirect } = useAuth0()
-
-
   return (
 
     //main container

@@ -1,7 +1,7 @@
 import React from 'react'
-import {useDispatch, useSelector} from 'react-redux'
-import { actionInput } from '../Actions/actions'
-import { WholeState } from '../Types/Types'
+import {useDispatch} from 'react-redux'
+import { actionInput } from '../../Actions/actions'
+
 
 
 function SubmitText() {

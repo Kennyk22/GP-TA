@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import FormAddAssignment from './FormAddAssignment'
+import FormAddAssignment from './Forms/FormAddAssignment'
 import { useAuth0 } from '@auth0/auth0-react'
 import { getFeedback, deleteOneTitle } from '../Services/services'
 import { Assignment, WholeState } from '../Types/Types'
@@ -31,7 +31,6 @@ export default function DropDownAssignment({array, title, checkGrammar}: {array:
     if (dropState.select.studentId === null) return
     const token = await  getAccessTokenSilently()
     const result = await getFeedback(token, id, dropState.select.studentId) as {text: string}
-    console.log(result)
     if (!result.text) {
       dispatch(actionHighlight(''))
       dispatch(actionList([]))

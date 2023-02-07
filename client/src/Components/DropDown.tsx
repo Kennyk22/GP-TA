@@ -1,10 +1,9 @@
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import DialogueBox from './DialogueBox'
-import FormAddStudent from './FormAddStudent'
+import FormAddStudent from './Forms/FormAddStudent'
 import { useAuth0 } from '@auth0/auth0-react'
-import { addFeedback, deleteOneStudent } from '../Services/services'
+import { deleteOneStudent } from '../Services/services'
 import { Student, WholeState } from '../Types/Types'
 import { useDispatch, useSelector } from 'react-redux'
 import { actionAllStudents, actionMenuStudent, actionStudentSelect, actionHighlight, actionList, actionSuggestion } from '../Actions/actions'
@@ -32,7 +31,6 @@ export default function DropDown({array, name, checkGrammar}: {array: Student[],
     if (dropState.select.titleId === null) return
     const token = await getAccessTokenSilently()
     const result = await getFeedback(token, dropState.select.titleId, id) as {text: string}
-    console.log(result)
     if (!result.text) {
       dispatch(actionHighlight(''))
       dispatch(actionList([]))

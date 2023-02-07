@@ -9,45 +9,7 @@ body {
   background-color: #e6e6e6;
 }
 
-.CPgrey {
-  background-color: #d6d6d6
-}
 
-.CPyellow {
-  background-color: #ffee32
-}
-
-.CPorange {
-  background-color: #ffd100
-}
-
-.CPblack {
-  background-color: #202020
-}
-
-.CPdarkGrey {
-  background-color: #333533
-}
-
-.CPTextGrey {
-  color: #d6d6d6
-}
-
-.CPTextYellow {
-  color: #ffee32
-}
-
-.CPTextOrange {
-  color: #ffd100
-}
-
-.CPTextBlack {
-  color: #202020
-}
-
-.CPTextDarkGrey {
-  color: #333533
-}
 
 .resultWord{
   background-color: yellow;

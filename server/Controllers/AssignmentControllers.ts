@@ -34,7 +34,6 @@ export default {
 
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
             const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3
-            console.log(feedback)
             //calls auth0 for usertoken and extracts email
             const userEmail = await getAuth0Email(ctx)
             const updateCheck = await Assignment.findOne({where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }})
@@ -43,7 +42,6 @@ export default {
                 ctx.body = { text: response.dataValues.response }
             } else {
                 const response = await Assignment.update({text: JSON.stringify(content), response: feedback}, {where: { ownerId: JSON.stringify(userEmail), titleId: titleId, studentId: studentId }, returning:true})
-                console.log(response)
                 ctx.body = { text: response[1][0].dataValues.response}
             }
 
@@ -58,9 +56,7 @@ export default {
             const userEmail = await getAuth0Email(ctx) as string
             const studentId = parseInt(body.studentId)
             const titleId = parseInt(body.titleId)
-            // console.log(studentId, titleId, userEmail)
             const response = await Assignment.findOne({where: {studentId: studentId, ownerId:JSON.stringify(userEmail), titleId:titleId}})
-            // console.log(response)
             ctx.status = 200
             ctx.body = response ? {text : response.dataValues.response} : {text: null}
         } catch (error) {

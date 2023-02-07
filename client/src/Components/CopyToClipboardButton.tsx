@@ -11,7 +11,6 @@ export default function CopyToClipboardButton() {
 
   const onCopyText = () => {
     setIsCopied(true);
-    console.log(textToCopy)
     setTimeout(() => {
       setIsCopied(false);
     }, 1000);

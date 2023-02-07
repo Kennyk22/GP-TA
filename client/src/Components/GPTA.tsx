@@ -1,21 +1,18 @@
 import React from 'react'
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
-import TeacherFolder from './TeacherFolder';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import { addFeedback, deleteOneStudent, getAllData } from '../Services/services';
+import { addFeedback, getAllData } from '../Services/services';
 import {CircleLoader} from 'react-spinners'
 import JSZip from 'jszip'
-import SubmitFile from './SubmitFile';
-import SubmitText from './SubmitText';
+import SubmitFile from './Forms/SubmitFile';
+import SubmitText from './Forms/SubmitText';
 import DropDown from './DropDown';
 import DropDownAssignment from './DropDownAssignment';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import { GPTAstate, WholeState } from '../Types/Types';
 import { actionInputFile, actionInputText, actionInputImage, actionImage, actionFile, actionHighlight, actionList, actionLoading, actionAllStudents, actionAllAssignments, actionImgUrl, actionSuggestion } from '../Actions/actions';
-//import SubmitImage from './SubmitImage';
 import { createWorker } from 'tesseract.js';
-import SubmitImage from './SubmitImage';
+import SubmitImage from './Forms/SubmitImage';
 import CopyToClipboardButton from './CopyToClipboardButton';
 
 function GPTA() {
@@ -79,9 +76,7 @@ function GPTA() {
 
 
 const formatText = (text:any) => {
-    console.log(text)
     const errorList = text.split('\\n').slice(1);
-    console.log('now as an array here', errorList)
     return errorList
 }
 
@@ -110,27 +105,26 @@ const formatText = (text:any) => {
     await worker.loadLanguage("eng");
     await worker.initialize("eng");
     const { data } = await worker.recognize(image);
-    console.log(data, data.text)
     dispatch(actionImgUrl(URL.createObjectURL(image)))
     dispatch(actionImage(data.text))
   };
 
+  // ON CHOPPING BLOCK
+  // const HoverAndHighlight = (word: string) => {
+  //   const current: any = myRef.current
+  //   const children: any = current.getElementsByClassName(word)
+  //   for (const child of children) {
+  //     child.style.backgroundColor = 'blue'
+  //   }
+  // }
 
-  const HoverAndHighlight = (word: string) => {
-    const current: any = myRef.current
-    const children: any = current.getElementsByClassName(word)
-    for (const child of children) {
-      child.style.backgroundColor = 'blue'
-    }
-  }
-
-  const unhighlight = (word: string) => {
-    const current: any = myRef.current
-    const children: any = current.getElementsByClassName(word)
-    for (const child of children) {
-      child.style.backgroundColor = 'transparent'
-    }
-  }
+  // const unhighlight = (word: string) => {
+  //   const current: any = myRef.current
+  //   const children: any = current.getElementsByClassName(word)
+  //   for (const child of children) {
+  //     child.style.backgroundColor = 'transparent'
+  //   }
+  // }
 
 
 
@@ -140,9 +134,6 @@ const formatText = (text:any) => {
       {/* second header with dropdown menus */}
       <div className='justify-between flex shadow'>
         <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
-        {/* <Link to="/teacherFolder"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher folder</button></Link> */}
-        {/* <Link to="/teacherNotes"><button className='bg-[#cc2936] hover:bg-[#cc2936] text-black font-bold py-2 bg-opacity-90 px-4 rounded-md shadow-md m-3 w-[60%]'>take me to teacher Notes</button></Link> */}
-        {/* <DropDown name = {'Assignments'} array= {GPTAstate.allStudents} checkGrammar={checkGrammar}/> */}
         <div className='mr-7 mt-1'>
         {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> :  <p className="bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 ml-7 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all duration-150"
 > loading assignments</p>}
@@ -160,8 +151,6 @@ const formatText = (text:any) => {
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
             <br className="hidden lg:inline-block"/>and have it marked in seconds
           </h1>
-          {/* <h1>Text here for development purposes</h1> */}
-          {/* <p>Yo estudia en la escuela secundaria. Yo no gusto estudiar matematicas pero si me gusta jugar futbol. El fin de semana yo jugaba con mis amigos en el parque. Yo no tiene mucho tiempo libre porque yo tienes que hacer tareas mucho. Mi mama siempre dice que yo debo esforzarme mas. Yo trataré de hacerlo.</p> */}
           <div className="flex flex-row justify-around w-full">
             <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">File</button>
             <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Text</button>
@@ -193,14 +182,6 @@ const formatText = (text:any) => {
               {GPTAstate.listResult.map((element: any, index) => {
                 element = element.replace(/\\/g, '');
                 return <li>{element}</li>
-                // let mistakes = element.match(/\"\w+\"/g);
-                // console.log('mistakes', mistakes)
-                // if (!mistakes) return;
-                // mistakes = mistakes.map((el: string) => el.replace(/\"/g, ''))
-                // let [intro, solution] = element.split('should be')
-                // console.log('element', element)
-                // element = intro + `should be <span class='${'mistakes[1]'}' style='color: green'>" ${solution} "</span>`
-                // return <li  key={index} onMouseLeave={() => unhighlight('mistakes[1])')} onMouseOver={() => HoverAndHighlight('mistakes[1]')}  dangerouslySetInnerHTML={{ __html: element }}></li>
               })}
               </ul>
                 </div>
@@ -211,7 +192,6 @@ const formatText = (text:any) => {
                 <ul>
                   {GPTAstate.suggestionResult.map((element: any, index) => {
                   element = element.replace(/\\/g, '');
-                  console.log(element)
                   return <li>{element}</li>})}
                 </ul>
               </div>

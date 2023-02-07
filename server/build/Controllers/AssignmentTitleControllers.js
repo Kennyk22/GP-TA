@@ -47,7 +47,6 @@ exports.default = {
         try {
             const titleId = ctx.params;
             const ownerId = yield (0, Helpers_1.getAuth0Email)(ctx);
-            console.log(ownerId);
             const title = yield AssignmentTitles_1.AssignmentTitle.destroy({ where: { id: parseInt(titleId.id) } });
             ctx.status = 201;
             ctx.body = yield AssignmentTitles_1.AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } });

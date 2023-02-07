@@ -81,7 +81,6 @@ const addAssignment = async (token: String, title: String) => {
   }
 
 const deleteOneStudent = async (token: String, id: string) => {
-    console.log('delete is happening')
     return fetch(`${baseURL}/student/${id}`, {
         method: 'DELETE',
         headers: {
@@ -96,7 +95,6 @@ const deleteOneStudent = async (token: String, id: string) => {
 }
 
 const deleteOneTitle = async (token: String, id: string) => {
-    console.log('delete is happening')
     return fetch(`${baseURL}/assignment/${id}`, {
         method: 'DELETE',
         headers: {
@@ -112,7 +110,6 @@ const deleteOneTitle = async (token: String, id: string) => {
 
  const payments = async (plan:string) => {
      try {
-         console.log('are you happening')
          return await fetch(`${baseURL}/create-checkout-session`, {
     method: "POST",
     headers: {

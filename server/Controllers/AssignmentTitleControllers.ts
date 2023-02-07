@@ -37,7 +37,6 @@ export default {
   try {
       const titleId = ctx.params as {id: string}
       const ownerId = await getAuth0Email(ctx)
-      console.log(ownerId)
       const title = await AssignmentTitle.destroy({where: {id: parseInt(titleId.id)}})
       ctx.status = 201
       ctx.body = await AssignmentTitle.findAll({where: {ownerId: JSON.stringify(ownerId)}})

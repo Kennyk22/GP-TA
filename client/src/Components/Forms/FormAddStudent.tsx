@@ -1,10 +1,9 @@
 import React from "react";
 import { useState } from 'react'
-import {addStudent} from '../Services/services'
+import {addStudent} from '../../Services/services'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useDispatch } from "react-redux";
-import { actionAllStudents } from "../Actions/actions";
-import {Student} from "../Types/Types"
+import { actionAllStudents } from "../../Actions/actions";
 
 export default function FormAddStudent() {
   const [showModal, setShowModal] = useState(false);

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { WholeState } from '../Types/Types'
+import { WholeState } from '../../Types/Types'
 
 function SubmitImage({handleImageUpload}: {handleImageUpload: (image: File | null) => Promise<void>} ) {
     const imgState = useSelector((state: WholeState) => state.GPTA.imgURL)

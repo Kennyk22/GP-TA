@@ -2,11 +2,7 @@ import React from 'react'
 import { payments } from '../../Services/services'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 
-
 import Payment from './Payment'
-
-
-
 
 function Pricing() {
 

@@ -1,8 +1,5 @@
 import React from 'react'
  export default  function About() {
-  //using this page to test syles, these colors ar fore dev puropses
-  const colors = ["[#08415c]", "[#cc2936]", "[#ebbab9]", "[#388697]", "[#b5ffe1]"]
-  //              Darkest Blue  Bright Red    Fade Red    Blue          cyan
   return (
     <div className='w-full flex flex-col justify-center content-center'>
       <h1 className='title-font font-bold text-3xl text-[#08415c] Hind py-5 px-5'>About Us</h1>

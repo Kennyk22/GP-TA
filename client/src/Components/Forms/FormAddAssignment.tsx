@@ -1,10 +1,9 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { addAssignment } from "../Services/services";
+import { addAssignment } from "../../Services/services";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { actionAllAssignments } from "../Actions/actions";
-import {Student, Assignment} from "../Types/Types"
+import { actionAllAssignments } from "../../Actions/actions";
 
 export default function FormAddAssignment() {
 
