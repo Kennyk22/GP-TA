@@ -2,7 +2,7 @@ import React from 'react'
 import { useRef, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react'
 import { addFeedback, getAllData } from '../Services/services';
-import {CircleLoader} from 'react-spinners'
+import {CircleLoader, HashLoader} from 'react-spinners'
 import JSZip from 'jszip'
 import SubmitFile from './Forms/SubmitFile';
 import SubmitText from './Forms/SubmitText';
@@ -142,12 +142,12 @@ const formatText = (text:any) => {
         </div>
       </div>
 
-      <section className="text-gray-800 body-font h-full">
-      {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto flex px-5 py-17 p-5 md:flex-row ">
+      <section className="text-gray-800   body-font h-full">
+      {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto px-5 py-17 p-5 sm:flex sm:flex-col md:flex md:flex-col lg:flex lg:flex-row ">
 
        {/* //container of submission buttons */}
 
-        <div className="lg:flex-grow md:w-1/2 lg:mr-1 lg:mt-10 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
+        <div className="lg:flex-grow md:w-1/2 lg:mr-1 lg:mt-10 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center relative">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
             <br className="hidden lg:inline-block"/>and have it marked in seconds
           </h1>
@@ -162,7 +162,7 @@ const formatText = (text:any) => {
 
         {/* container of the teacher feebdack */}
 
-        <div className="lg:max-w-xl p-9 flex-col lg:w-full md:w-1/2 w-5/6 justify-center content-center">
+        <div className="lg:max-w-xl p-9 flex-col md:flex-shrink-0 sm:flex-shrink-0 lg:w-full md:w-1/2 w-5/6 justify-center content-center">
         <CopyToClipboardButton/>
 
           {!GPTAstate.loading ?
@@ -196,7 +196,7 @@ const formatText = (text:any) => {
                 </ul>
               </div>
             </div>  :
-            <CircleLoader className="self-center top-30 left-30 items-center align-middle" color="red" />
+            <HashLoader className="left-44 top-44 absolute" color='red' size={80}/>
           }
         </div>
       </div> :
