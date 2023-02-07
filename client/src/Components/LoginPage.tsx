@@ -8,25 +8,25 @@ function LoginPage() {
   return (
 
     //main container
-  <div className='w-100%'>
-
+  <div className='w-100% flex sm:flex-col md:flex-col lg:flex-col'>
       {/* //first block with login button  */}
-   <section className="text-gray-600 h-60 body-font">
-  <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
+   <section className="text-gray-600 h-60 body-font flex sm:flex-col md:flex-col lg:flex-row ">
+    <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
     <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
       <h1 className="title-font font-bold text-3xl text-gray-900">Hey Teacher, we hear you, this is your new TA</h1>
       <p className="leading-relaxed mt-4 font-medium">You keep asking your principal for support, the workload is unmanageable, worry no more, forget about endless hours of repetitive marking with GP-TA</p>
           </div>
 
-   <div className='bg-gray-400 rounded flex ml-20 items-center justify-center'>
+   <div className='bg-gray-400 rounded ml-20 items-center justify-center'>
   <button onClick={() => loginWithRedirect() } className="bg-black text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 m-5 rounded shadow hover:shadow-lg outline-none focus:outline-none hover:px-8 hover:py-8  ease-linear transition-all duration-150"
    >Log in / Register</button>
     </div>
-  </div>
-      </section>
+          </div>
+
+ </section>
 
       {/* //second block with steps */}
-
+<div className='border-2 border-black'>
    <section className="text-gray-600 body-font">
     <div className="container px-5 py-9 mx-auto flex flex-wrap">
       <div className="flex flex-wrap w-full">
@@ -107,7 +107,7 @@ function LoginPage() {
       </div>
     </div>
   </section>
-
+</div>
     </div>
   )
 }
