@@ -64,7 +64,9 @@ exports.default = {
             const titleId = parseInt(body.titleId);
             const response = yield Assignment_1.Assignment.findOne({ where: { studentId: studentId, ownerId: JSON.stringify(userEmail), titleId: titleId } });
             ctx.status = 200;
-        } catch (error) {
+            ctx.body = response ? { text: response.dataValues.response } : { text: null };
+        }
+        catch (error) {
             ctx.status = 500;
             console.log(error);
         }
