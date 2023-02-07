@@ -37,8 +37,6 @@ function GPTA() {
     dispatch(actionAllStudents(data.students))
   }
 
-
-
   const checkGrammar = async (get?: string) => {
     const token = await getAccessTokenSilently()
     try {
@@ -130,11 +128,11 @@ const formatText = (text:any) => {
 
   return (
     //whole dashboard
-    <section ref={myRef} className="">
+    <section ref={myRef} className="flex justify-center items-center flex-col" data-testid="GPTAcontainer">
       {/* second header with dropdown menus */}
-      <div className='justify-between flex shadow'>
-        <p>{isAuthenticated ? <p className='border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
-        <div className='mr-7 mt-1'>
+      <div className='justify-center md:justify-between flex shadow w-full px-5'>
+        <p>{isAuthenticated ? <p className=' hidden md:flex border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
+        <div className='flex items-center justify-center'>
         {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> :  <p className="bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 ml-7 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all duration-150"
 > loading assignments</p>}
         {GPTAstate.allStudents ? <DropDown name={'Students'} array={GPTAstate.allStudents} checkGrammar={checkGrammar} /> :  <p className="bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 ml-7 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all duration-150"
@@ -142,31 +140,32 @@ const formatText = (text:any) => {
         </div>
       </div>
 
-      <section className="text-gray-800   body-font h-full">
-      {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto px-5 py-17 p-5 sm:flex sm:flex-col md:flex md:flex-col lg:flex lg:flex-row ">
+      <section className="text-gray-800  body-font h-full w-full flex justify-center">
+        {GPTAstate.select.studentId !== null && GPTAstate.select.titleId !== null ? <div className="container mx-auto px-5 py-17 p-5 flex flex-col lg:flex-row lg:items-start justify-center items-center">
 
        {/* //container of submission buttons */}
 
-        <div className="lg:flex-grow md:w-1/2 lg:mr-1 lg:mt-10 md:mr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center relative">
+        <div className="lg:flex-grow md:w-1/2 lg:mr-1 lg:mt-10 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center relative ">
           <h1 className="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Upload your file here
-            <br className="hidden lg:inline-block"/>and have it marked in seconds
+            <br className="hidden lg:inline-block" data-testid='GPTA-Text'/>and have it marked in seconds
           </h1>
-          <div className="flex flex-row justify-around w-full">
-            <button onClick={()=>dispatch(actionInputFile)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">File</button>
-            <button onClick={()=>dispatch(actionInputText)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Text</button>
-            <button onClick={()=>dispatch(actionInputImage)} className="flex m-2 text-white bg-[#cc2936] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded items-center text-lg">Image</button>
-            <button onClick={() => checkGrammar()} className="flex m-2 text-white bg-[#020105] border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
+          <div className="flex flex-row justify-around  w-full">
+            <button onClick={()=>dispatch(actionInputFile)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] border-2 border-black md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">File</button>
+            <button onClick={()=>dispatch(actionInputText)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] border-2 border-black md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Text</button>
+            <button onClick={()=>dispatch(actionInputImage)} className="flex mb-1 md:m-2 text-white bg-[#cc2936] border-2 border-black md:border-0 py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded items-center text-lg">Image</button>
+            <button onClick={() => checkGrammar()} className="flex mb-1 md:m-2 text-white bg-[#020105] md:border-0 border-2 border-black py-2 px-6 focus:outline-none hover:bg-gray-600 md:rounded text-lg disabled:bg-gray-400 disabled:text-gray-700" disabled={(GPTAstate[GPTAstate.type as keyof GPTAstate] as string).length === 0 ? true : false }>Check grammar</button>
           </div >
               {GPTAstate.type === 'input' ? <SubmitText /> : GPTAstate.type==='file' ? <SubmitFile handleFileUpload = {handleFileUpload}/> : <SubmitImage handleImageUpload = {convertImageToText}/>}
         </div>
 
         {/* container of the teacher feebdack */}
 
-        <div className="lg:max-w-xl p-9 flex-col md:flex-shrink-0 sm:flex-shrink-0 lg:w-full md:w-1/2 w-5/6 justify-center content-center">
+          <div className="lg:max-w-xl sm:p-9 flex flex-col md:flex-shrink-0 sm:flex-shrink-0 w-full justify-center content-center">
+
         <CopyToClipboardButton/>
 
           {!GPTAstate.loading ?
-            <div>
+            <div className='w-full'>
 
             {/* first feedback */}
             <div className='feedbackWrap border-red-700 border-2  rounded-lg p-4 shadow-lg'>
@@ -201,7 +200,7 @@ const formatText = (text:any) => {
         </div>
       </div> :
        <div className='flex justify-center  items-center h-full w-full'>
-        <p className="bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 ml-7 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all duration-150"
+        <p className=" mt-20 bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all text-center duration-150" data-testid='unSelected'
 > Please select a student and an assignment</p>
        </div>
        }

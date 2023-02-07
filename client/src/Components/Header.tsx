@@ -17,8 +17,8 @@ function Header() {
       <span className="text-white text-xl font-bold py-2 px-4 hover:text-black cursor-pointer transition duration-200 ease-in-out">GP-TA</span></Link>
     </a>
     <nav className="md:ml-auto flex flex-wrap items-center text-base justify-center">
-     <Link to="/about"><a className="text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-200 ease-in-out" href='about'>About</a></Link>
-      <Link to="/pricing"><a className="text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-200 ease-in-out mr-5" href='pricing'>Pricing</a></Link>
+     <Link to="/about"><a className="text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-200 ease-in-out" href='about' data-testid={'About-Header'}>About</a></Link>
+      <Link to="/pricing"><a className="text-white font-bold py-2 px-4 rounded hover:bg-black transition duration-200 ease-in-out mr-5" href='pricing' data-testid={'Price-Header'}>Pricing</a></Link>
 
     </nav>
         {isAuthenticated ? <button onClick={() => logout() } className="inline-flex items-center bg-[#cc2936] text-white border-0 py-1 px-3 font-bold focus:outline-none hover:bg-red-700 hover:text-white rounded text-base mt-4 md:mt-0">Log out
