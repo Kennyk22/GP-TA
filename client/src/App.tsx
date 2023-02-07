@@ -17,7 +17,7 @@ function App() {
   return (
       <Router>
       <Header />
-     <div className='flex flex-col h-screen'>
+     <div className='flex flex-col h-full w-full'>
         <Routes>
           <Route path="/" element={isAuthenticated ?
              <Dashboard/> :
