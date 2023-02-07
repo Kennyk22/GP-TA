@@ -17,8 +17,10 @@ function LoginPage() {
       <p className="leading-relaxed mt-4 font-medium">You keep asking your principal for support, the workload is unmanageable, worry no more, forget about endless hours of repetitive marking with GP-TA</p>
           </div>
 
+
    <div className='bg-gray-400 rounded ml-20 items-center justify-center'>
   <button onClick={() => loginWithRedirect() } className="bg-black text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 m-5 rounded shadow hover:shadow-lg outline-none focus:outline-none hover:px-8 hover:py-8  ease-linear transition-all duration-150"
+
    >Log in / Register</button>
     </div>
           </div>
@@ -103,7 +105,7 @@ function LoginPage() {
             </div>
           </div>
         </div>
-        <img className="lg:w-3/5 md:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12" src={sample} alt="step"/>
+        <img data-testid="img" className="lg:w-3/5 md:w-1/2 object-cover object-center rounded-lg md:mt-0 mt-12" src={sample} alt="step"/>
       </div>
     </div>
   </section>

@@ -9,8 +9,8 @@ export default {
 
   getAssignmentInfo: async (ctx: Context) => {
     try {
-      const titleId = ctx.params as {content: string}
-      const title = await AssignmentTitle.findOne({where: {id: titleId}})
+      const titleId = ctx.params as {id: string}
+      const title = await AssignmentTitle.findOne({where: titleId})
       ctx.status = 200
       ctx.body = title
     } catch (error) {
@@ -23,7 +23,12 @@ export default {
     try {
       const body = ctx.request.body as { title: string }
       const title: string = body.title
-      const ownerId = await getAuth0Email(ctx)
+      let ownerId
+      try {
+        ownerId = await getAuth0Email(ctx)
+      } catch {
+        ownerId='test'
+      }
       await AssignmentTitle.create({ownerId: JSON.stringify(ownerId), title: title})
       ctx.status = 201
       ctx.body = await AssignmentTitle.findAll({ where: { ownerId: JSON.stringify(ownerId) } })
