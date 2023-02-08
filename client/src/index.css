@@ -85,3 +85,10 @@ body {
   background-color: #bbbbbb;
   color: black;
 }
+
+#root {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+  outline: auto;
+}

@@ -8,9 +8,9 @@ function LoginPage() {
   return (
 
     //main container
-  <div className='w-100% flex sm:flex-col md:flex-col lg:flex-col'>
+  <div className='w-full flex flex-col'>
       {/* //first block with login button  */}
-   <section className="text-gray-600 h-60 body-font flex sm:flex-col md:flex-col lg:flex-row ">
+   <section className="text-gray-600 h-fit body-font flex sm:flex-col md:flex-col lg:flex-row ">
     <div className="container px-5 py-24 mx-auto flex flex-wrap items-center">
     <div className="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
       <h1 className="title-font font-bold text-3xl text-gray-900">Hey Teacher, we hear you, this is your new TA</h1>
@@ -28,7 +28,7 @@ function LoginPage() {
  </section>
 
       {/* //second block with steps */}
-<div className='border-2 border-black'>
+<div className=''>
    <section className="text-gray-600 body-font">
     <div className="container px-5 py-9 mx-auto flex flex-wrap">
       <div className="flex flex-wrap w-full">

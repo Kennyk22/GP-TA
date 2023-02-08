@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Footer from './Components/Footer';
 import Header from './Components/Header';
 import Dashboard from './Components/Dashboard';
 import LoginPage from './Components/LoginPage';
@@ -27,7 +28,9 @@ function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/completion" element={<Completion/>}/>
         </Routes>
+       
         </div>
+        <Footer />
       </Router>
   );
 }
