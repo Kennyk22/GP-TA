@@ -14,6 +14,7 @@ import { actionInputFile, actionInputText, actionInputImage, actionImage, action
 import { createWorker } from 'tesseract.js';
 import SubmitImage from './Forms/SubmitImage';
 import CopyToClipboardButton from './CopyToClipboardButton';
+import { input } from '@material-tailwind/react';
 
 function GPTA() {
 
@@ -66,7 +67,7 @@ function GPTA() {
   // changes the color of the mistakes to red
   function formatAnswer( text:string ) {
     const newtext = text.replace(/"\s"/g, " ")
-    const newnewtext = newtext.replace(/\\n\\n/g, "")
+    const newnewtext = newtext.replace(/\\+n+/g, "")
     const regex = /\*+(.*?)\*+/g;
     const result = newnewtext.replace(regex, "<span class='$1' style='color: red;'><u>$1</u></span>");
     return result
@@ -107,31 +108,12 @@ const formatText = (text:any) => {
     dispatch(actionImage(data.text))
   };
 
-  // ON CHOPPING BLOCK
-  // const HoverAndHighlight = (word: string) => {
-  //   const current: any = myRef.current
-  //   const children: any = current.getElementsByClassName(word)
-  //   for (const child of children) {
-  //     child.style.backgroundColor = 'blue'
-  //   }
-  // }
-
-  // const unhighlight = (word: string) => {
-  //   const current: any = myRef.current
-  //   const children: any = current.getElementsByClassName(word)
-  //   for (const child of children) {
-  //     child.style.backgroundColor = 'transparent'
-  //   }
-  // }
-
-
-
   return (
     //whole dashboard
     <section ref={myRef} className="flex justify-center items-center flex-col" data-testid="GPTAcontainer">
       {/* second header with dropdown menus */}
       <div className='justify-center md:justify-between flex shadow w-full px-5'>
-        <p>{isAuthenticated ? <p className=' hidden md:flex border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{user?.name}'s <span className=''>classroom</span></p> : <p>you are not logged in</p> }</p>
+        <p>{isAuthenticated ? <p className=' hidden md:flex border-red-700 border-2 text-black font-bold py-2 bg-opacity-90 px-4 rounded-md m-3 hover:bg-black hover:text-white ease-linear transition-all duration-150 cursor-pointer w-fit'>{`${user?.name}'s classroom`}</p> : <p>you are not logged in</p> }</p>
         <div className='flex items-center justify-center'>
         {GPTAstate.allAssignments ? <DropDownAssignment title={'assignments'} array={GPTAstate.allAssignments}  checkGrammar={checkGrammar} /> :  <p className="bg-red-700 text-white active:bg-black-600 font-bold uppercase text-sm px-4 py-2 ml-7 rounded shadow hover:shadow-lg outline-none focus:outline-none mb-1  ease-linear transition-all duration-150"
 > loading assignments</p>}
