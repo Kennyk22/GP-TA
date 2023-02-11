@@ -75,4 +75,4 @@ npm run dev
 
 ## Author
 Jose Alberto Gomez - [Github](https://github.com/Josequesada9393) - [LinkedIn](https://www.linkedin.com/in/jose-alberto-gomez/)
-Kennth Karter - [Github] (https://github.com/Kennyk22) - [LinkedIn](https://www.linkedin.com/in/kenneth-karter-253a89265/)
+Kenneth Karter - [Github](https://github.com/Kennyk22) - [LinkedIn](https://www.linkedin.com/in/kenneth-karter-253a89265/)
