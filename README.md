@@ -1,9 +1,7 @@
 # GP-TA
 
 
-<p align="center">
-  <img src="Images/LOGO.png" width="150" height="150"/>
-</p>
+![GPTA](Images/LOGO.png)
 
 GP-TA is an AI Teaching Assistant to mark grades automatically. It aims at reducing foreing language teachers workload while still providing helpful and accurate feedback.
 
@@ -20,14 +18,13 @@ GP-TA is an AI Teaching Assistant to mark grades automatically. It aims at reduc
 
 ## Screenshots
 
-<p align="center">
-  <img src="Images/Landing.png" width="350" height="450"/>
-  <img src="Images/loading.png" width="350" height="450"/>
-  <img src="Images/StudentList.png" width="350" height="450"/>
-  <img src="Images/Feedback.png" width="350" height="450"/>
-  <img src="Images/Payments.png" width="350" height="450"/>
 
-</p>
+  ![GPTA Landing](Images/Landing.png)
+  ![GPTA loading](Images/loading.png)
+  ![GPTA Students](Images/StudentList.png)
+  ![GPTA Feedback](Images/Feedback.png)
+  ![GPTA Payments](Images/Payments.png)
+
 
 
 ## Getting started
