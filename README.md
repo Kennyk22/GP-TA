@@ -21,11 +21,11 @@ GP-TA is an AI Teaching Assistant to mark grades automatically. It aims at reduc
 ## Screenshots
 
 <p align="center">
-  <img src="Images/Landing.png" width="250" height="350"/>
-  <img src="Images/loading.png" width="250" height="350"/>
-  <img src="Images/StudentList.png" width="250" height="350"/>
-  <img src="Images/Feedback.png" width="250" height="350"/>
-  <img src="Images/Payments.png" width="250" height="350"/>
+  <img src="Images/Landing.png" width="350" height="450"/>
+  <img src="Images/loading.png" width="350" height="450"/>
+  <img src="Images/StudentList.png" width="350" height="450"/>
+  <img src="Images/Feedback.png" width="350" height="450"/>
+  <img src="Images/Payments.png" width="350" height="450"/>
 
 </p>
 
@@ -74,5 +74,5 @@ npm run dev
 
 
 ## Author
-Jose Alberto Gomez - [Github](https://github.com/Josequesada9393) - [LinkedIn](https://www.linkedin.com/in/jose-alberto-gomez/)
-Kenneth Karter - [Github](https://github.com/Kennyk22) - [LinkedIn](https://www.linkedin.com/in/kenneth-karter-253a89265/)
+* Jose Alberto Gomez - [Github](https://github.com/Josequesada9393) - [LinkedIn](https://www.linkedin.com/in/jose-alberto-gomez/)
+* Kenneth Karter - [Github](https://github.com/Kennyk22) - [LinkedIn](https://www.linkedin.com/in/kenneth-karter-253a89265/)
