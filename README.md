@@ -18,12 +18,9 @@ GP-TA is an AI Teaching Assistant to mark grades automatically. It aims at reduc
 
 ## Screenshots
 
-
-  ![GPTA Landing](Images/Landing.png)
-  ![GPTA loading](Images/loading.png)
-  ![GPTA Students](Images/StudentList.png)
-  ![GPTA Feedback](Images/Feedback.png)
-  ![GPTA Payments](Images/Payments.png)
+<p align="center">
+<img src="Images/GPTAImages.png" width="700" height="700"/>
+</p>
 
 
 
