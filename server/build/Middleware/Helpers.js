@@ -18,8 +18,11 @@ dotenv_1.default.config();
 //creates prompt for ai
 const aiProp = (string) => {
     return {
-        model: "text-davinci-003",
-        prompt: string,
+        model: "gpt-3.5-turbo",
+        messages: [{
+                role: 'user',
+                content: string
+            }],
         temperature: 0,
         max_tokens: 500,
         top_p: 1.0,

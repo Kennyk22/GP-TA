@@ -13,13 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const koa_router_1 = __importDefault(require("koa-router"));
+const path_1 = require("path");
 require("dotenv").config();
 const serve = require('koa-static');
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const router = new koa_router_1.default();
 router.use(serve(process.env.STATIC_DIR));
 router.get("/", (ctx) => {
-    const path = resolve(process.env.STATIC_DIR + "/index.html");
+    const path = (0, path_1.resolve)(process.env.STATIC_DIR + "/index.html");
     ctx.body = path;
 });
 router.get("/config", (ctx) => {

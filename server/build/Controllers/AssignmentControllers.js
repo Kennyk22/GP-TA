@@ -19,6 +19,7 @@ const Helpers_1 = require("../Middleware/Helpers");
 dotenv_1.default.config();
 exports.default = {
     aiPost: (ctx) => __awaiter(void 0, void 0, void 0, function* () {
+        var _a, _b, _c;
         try {
             //creates config and calls ai to make feedback
             const body = ctx.request.body;
@@ -30,14 +31,14 @@ exports.default = {
             });
             const openai = new openai_1.OpenAIApi(configuration);
             //FIRST AI CALL
-            const aiResponse1 = yield openai.createCompletion((0, Helpers_1.aiProp)("for the following text identify any grammatical errors and wrap each error in asterisks" + content));
-            const feedback1 = JSON.stringify(aiResponse1.data.choices[0].text);
+            const aiResponse1 = yield openai.createChatCompletion((0, Helpers_1.aiProp)("return the same text and wrap only grammar or spelling mistakes in asterisks" + content));
+            const feedback1 = JSON.stringify((_a = aiResponse1.data.choices[0].message) === null || _a === void 0 ? void 0 : _a.content);
             // SECOND AI CALL
-            const aiResponse2 = yield openai.createCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation and its correction" + content));
-            const feedback2 = JSON.stringify(aiResponse2.data.choices[0].text);
+            const aiResponse2 = yield openai.createChatCompletion((0, Helpers_1.aiProp)("provide a numbered list of grammatical errors in this text with a short explanation and its correction" + content));
+            const feedback2 = JSON.stringify((_b = aiResponse2.data.choices[0].message) === null || _b === void 0 ? void 0 : _b.content);
             //THIRD AI CALL
-            const aiResponse3 = yield openai.createCompletion((0, Helpers_1.aiProp)("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content));
-            const feedback3 = JSON.stringify(aiResponse3.data.choices[0].text);
+            const aiResponse3 = yield openai.createChatCompletion((0, Helpers_1.aiProp)("tell me 5 general things I could do to improve this text with short examples from the text and explain like you are a teacher:" + content));
+            const feedback3 = JSON.stringify((_c = aiResponse3.data.choices[0].message) === null || _c === void 0 ? void 0 : _c.content);
             //COMBINES AI CALLS WITH WITH REMOVABLE ELEMENT INBETWEEN
             const feedback = feedback1 + "-+-" + feedback2 + "-+-" + feedback3;
             //calls auth0 for usertoken and extracts email

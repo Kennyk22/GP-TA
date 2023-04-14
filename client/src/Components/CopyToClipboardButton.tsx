@@ -16,7 +16,7 @@ export default function CopyToClipboardButton() {
     }, 1000);
   };
 
-function cleanText(html:any) {
+function cleanText(html: string) {
   let cleaned = html.replace(/<[^>]*>/g, '').replace(/\\/g, '');
   return cleaned;
 }
