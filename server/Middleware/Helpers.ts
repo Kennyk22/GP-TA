@@ -5,10 +5,13 @@ import { Context } from 'koa'
 dotenv.config()
 
 //creates prompt for ai
-export const aiProp = (string:string) => {
+export const aiProp =  (string:string) => {
     return {
-        model: "text-davinci-003",
-        prompt: string,
+       model: "gpt-3.5-turbo",
+        messages: [{
+            role: 'user',
+            content: string
+        }],
         temperature: 0,
         max_tokens: 500,
         top_p: 1.0,
@@ -16,7 +19,6 @@ export const aiProp = (string:string) => {
         presence_penalty: 0.0,
     }
 }
-
 //gets email from auth0 token
 export const getAuth0Email = async (ctx: Context) => {
     const accessToken = await ctx.get('authorization').split(' ')[1]

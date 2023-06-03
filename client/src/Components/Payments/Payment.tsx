@@ -8,6 +8,7 @@ function Payment() {
   const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
   const [clientSecret, setClientSecret] = useState("");
   const [clicked, setClicked] = useState(false)
+  
   useEffect(() => {
     fetch("http://localhost:3005/config").then(async (r) => {
       const result = await r.json()
